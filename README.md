@@ -69,13 +69,36 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 # About Frontend
 
-## prepare
+## frontend
+
+### prepare
 
 - 目录结构
-
+  
   Arco Pro 参考结构:
   https://arco.design/vue/docs/pro/directory
-
+  
+  nuxt3 参考结构
+  https://nuxt.com.cn/docs/guide/directory-structure/nuxt
+  
   nuxt3 对引用方式的改进使目录结构有些许变化。
 
-- 
+### config
+
+- backend env
+
+| | |
+|-|-|
+| | |
+
+- frontend env
+
+| | |
+|-|-|
+| | |
+
+- nuxt config
+
+| | |
+|-|-|
+| | |

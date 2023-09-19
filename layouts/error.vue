@@ -1,5 +1,8 @@
 <template>
-    <button @click="handleError">Clear errors</button>
+    <div>
+        <button @click="handleError">Clear errors</button>
+        <slot/>
+    </div>
 </template>
 
 <script setup>

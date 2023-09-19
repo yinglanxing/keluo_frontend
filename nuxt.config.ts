@@ -68,4 +68,12 @@ export default defineNuxtConfig({
         // }
     },
 
+    // 注册自动引入组件
+    components: [
+        {
+            path: '~/components',
+            extensions: ['.vue'],
+        }
+    ]
+
 })
