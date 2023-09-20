@@ -14,8 +14,7 @@
             </n-card>
         </n-card>
 
-        <!--右边组件-->
-        <a-space direction="vertical">
+    <!--右边组件-->
 
             <!--签到-->
             <checkin></checkin>

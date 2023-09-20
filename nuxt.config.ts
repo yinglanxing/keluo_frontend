@@ -5,6 +5,7 @@ import Components from "unplugin-vue-components/vite";
 import {NaiveUiResolver} from "unplugin-vue-components/resolvers";
 
 export default defineNuxtConfig({
+
     devtools: {enabled: true},
 
     // TODO <Suspense> is an experimental feature and its API will likely change.
@@ -40,7 +41,6 @@ export default defineNuxtConfig({
     modules: [
         // ui 组件
         "arco-design-nuxt-module",
-
         // 状态管理
         "@pinia/nuxt",
     ],

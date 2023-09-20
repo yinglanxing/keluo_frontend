@@ -1,6 +1,9 @@
 <template>
     <!--头部-->
-    <a-layout-header>
+  <!-- 设置导航栏宽度为自动-->
+    <a-layout-header :style="{
+      width: 'auto'
+    }">
         <!--TODO-->
         <a-menu :default-selected-keys="[]">
 <!--          在元素之间均匀分配空间，并在首尾两端留有一半的空间-->
@@ -13,12 +16,14 @@
                     <!--<a-avatar :style="{ backgroundColor: '#09f' }">科洛</a-avatar>-->
                     <a-image src="/favicon.ico"></a-image>
 
-                    <a-menu-item key="home">
-                        {{ "首页" }}
+                    <a-menu-item key="/">
+<!--                        {{ "首页" }}-->
+                       <nuxt-link to="/">首页</nuxt-link>
                     </a-menu-item>
 
-                    <a-menu-item key="2">
-                        {{ "话题" }}
+                    <a-menu-item key="/talks">
+<!--                        {{ "话题" }}-->
+                       <nuxt-link to="/talks">话题</nuxt-link>
                     </a-menu-item>
 
                     <a-menu-item key="3">
@@ -48,8 +53,29 @@
                         </template>
                     </n-input>
 
-                    <n-button secondary size="large" type="info">{{ "发布" }}</n-button>
-                    <n-button secondary size="large" type="primary">{{ "登录" }}</n-button>
+                    <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
+                    <a-dropdown>
+                      <n-button secondary size="large" type="info" shape="round">
+                        <template #icon>
+                          <icon-edit/>
+                        </template>
+                        {{ "创作中心" }}
+                      </n-button>
+                      <template #content>
+                        <a-doption>
+                          写文章
+                        </a-doption>
+                        <a-doption>
+                          发表话题
+                        </a-doption>
+                        <a-doption>
+                          提问
+                        </a-doption>
+                      </template>
+                    </a-dropdown>
+
+                  <!--弹窗登录-->
+                  <popup-login></popup-login>
 
                     <!--主题切换-->
                     <n-button secondary size="large" @click="change_theme()" circle>
@@ -69,6 +95,10 @@
 <script lang="ts">
 export default {
 
+  setup() {
+    // TODO setup
+  },
+
     data() {
         return {
             // 主题 flag
@@ -84,7 +114,7 @@ export default {
         // TODO 点击跳转路由
         chang_route(key: string) {
             // Message.info({content: `select ${key}`, showIcon: true});
-        }
+        },
     },
     // 监听
     watch: {
@@ -94,3 +124,5 @@ export default {
     }
 }
 </script>
+<style>
+</style>
