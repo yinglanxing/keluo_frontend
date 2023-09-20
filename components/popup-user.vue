@@ -1,11 +1,7 @@
 <template>
     <!--用户信息弹窗-->
     <!--todo 头像hover弹出详细信息-->
-    <a-avatar>
-
-    </a-avatar>
-
-    <a-popover title="Title">
+    <a-popover>
         <!--头像-->
         <!--todo 全局登录状态-->
         <a-avatar>

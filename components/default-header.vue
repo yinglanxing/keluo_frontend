@@ -5,7 +5,7 @@
       width: 'auto'
     }">
         <!--TODO-->
-        <a-menu :default-selected-keys="[]">
+        <a-menu :default-selected-keys="['/']">
 <!--          在元素之间均匀分配空间，并在首尾两端留有一半的空间-->
             <n-space justify="space-around">
 
@@ -14,7 +14,9 @@
 
                     <!--项目logo-->
                     <!--<a-avatar :style="{ backgroundColor: '#09f' }">科洛</a-avatar>-->
-                    <a-image src="/favicon.ico"></a-image>
+                    <a-link>
+                      <a-image src="/favicon.ico"></a-image>
+                    </a-link>
 
                     <a-menu-item key="/">
 <!--                        {{ "首页" }}-->
@@ -27,20 +29,24 @@
                     </a-menu-item>
 
                     <a-menu-item key="3">
-                        {{ "文章" }}
+<!--                        {{ "文章" }}-->
+                      <nuxt-link to="/">文章</nuxt-link>
                     </a-menu-item>
 
                     <a-menu-item key="4">
-                        {{ "问答" }}
+<!--                        {{ "问答" }}-->
+                        <nuxt-link to="/">问答</nuxt-link>
                     </a-menu-item>
 
-                  <a-menu-item key="5">
-                    {{ "组件商城" }}
-                  </a-menu-item>
+                    <a-menu-item key="5">
+<!--                      {{ "组件商城" }}-->
+                      <nuxt-link to="/">硬件商城</nuxt-link>
+                    </a-menu-item>
 
-                  <a-menu-item key="6">
-                    {{ "文档" }}
-                  </a-menu-item>
+                    <a-menu-item key="6">
+<!--                      {{ "文档" }}-->
+                      <nuxt-link to="/">文档</nuxt-link>
+                    </a-menu-item>
 
                 </n-space>
 

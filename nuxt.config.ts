@@ -52,17 +52,17 @@ export default defineNuxtConfig({
                 resolvers: [
                     // naive-ui 自动加载
                     NaiveUiResolver(),
-                    // arco 在模块中已存在
+                    // arco 在模块中已存在不需要自动引入
                     // ArcoResolver(),
                 ]
             })
         ],
 
         // 暂未学习用途
-        // optimizeDeps: {
-        //     include:
-        //         process.env.NODE_ENV === "development" ? ["naive-ui"] : []
-        // }
+        optimizeDeps: {
+            include:
+                process.env.NODE_ENV === "development" ? ["naive-ui"] : []
+        }
     },
 
     // 注册自动引入组件
@@ -71,6 +71,12 @@ export default defineNuxtConfig({
             path: '~/components',
             extensions: ['.vue'],
         }
-    ]
+    ],
+
+    build: {
+        transpile:
+            process.env.NODE_ENV === 'production'
+                ? ['naive-ui', '@css-render/vue3-ssr',] : []
+    }
 
 })
