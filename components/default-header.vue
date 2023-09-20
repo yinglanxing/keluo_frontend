@@ -3,11 +3,12 @@
     <a-layout-header>
         <!--TODO-->
         <a-menu :default-selected-keys="[]">
-
+<!--          在元素之间均匀分配空间，并在首尾两端留有一半的空间-->
             <n-space justify="space-around">
 
-                <!--左边菜单-->
+                <!--使用左边菜单当导航栏-->
                 <n-space>
+
                     <!--项目logo-->
                     <a-avatar :style="{ backgroundColor: '#09f' }">科洛</a-avatar>
 
@@ -22,6 +23,19 @@
                     <a-menu-item key="3">
                         {{ "文章" }}
                     </a-menu-item>
+
+                    <a-menu-item key="4">
+                        {{ "问答" }}
+                    </a-menu-item>
+
+                  <a-menu-item key="5">
+                    {{ "组件商城" }}
+                  </a-menu-item>
+
+                  <a-menu-item key="6">
+                    {{ "文档" }}
+                  </a-menu-item>
+
                 </n-space>
 
                 <!--右边菜单-->
