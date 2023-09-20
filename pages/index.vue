@@ -30,10 +30,10 @@
 // arco 官方 布局示例
 // https://arco.design/vue/component/layout#breakpoint
 
-import {defineComponent, ref} from 'vue';
-import {Message} from '@arco-design/web-vue';
+// import {defineComponent, ref} from 'vue';
+// import {Message} from '@arco-design/web-vue';
 
-export default defineComponent({
+export default {
     setup() {
 
         // 官方布局示例侧边栏参数
@@ -52,30 +52,7 @@ export default defineComponent({
         //     onCollapse,
         // };
     },
-    data() {
-        return {
-            // 主题 flag
-            theme_style: false,
-        }
-    },
-    methods: {
-        // 切换主题
-        change_theme() {
-            // 切换 flag
-            this.theme_style = !this.theme_style
-        },
-        // TODO 点击跳转路由
-        chang_route(key: string) {
-            // Message.info({content: `select ${key}`, showIcon: true});
-        }
-    },
-    // 监听
-    watch: {
-        // TODO 切换主题flag时改动组件的配色
-        theme_style() {
-        },
-    }
-});
+}
 </script>
 
 <style scoped>
