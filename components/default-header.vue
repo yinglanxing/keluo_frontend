@@ -10,7 +10,8 @@
                 <n-space>
 
                     <!--项目logo-->
-                    <a-avatar :style="{ backgroundColor: '#09f' }">科洛</a-avatar>
+                    <!--<a-avatar :style="{ backgroundColor: '#09f' }">科洛</a-avatar>-->
+                    <a-image src="/favicon.ico"></a-image>
 
                     <a-menu-item key="home">
                         {{ "首页" }}

@@ -4,14 +4,16 @@
 
         <!--todo 签到货币-->
         <n-space>
-            <a-button type="text">
+            <n-button type="text">
                 ￥: {{ 0 }}
-            </a-button>
+            </n-button>
 
-            <a-button>
-                <icon-calendar/>
+            <n-button>
+                <template #icon>
+                    <icon-calendar/>
+                </template>
                 {{ "签到" }}
-            </a-button>
+            </n-button>
         </n-space>
 
         <a-divider></a-divider>

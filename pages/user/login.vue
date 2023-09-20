@@ -10,60 +10,59 @@
             <!--登录页面-->
             <n-tab-pane name="login" tab="登录">
 
-                <a-form layout="vertical" :model="login_from">
+                <n-form :model="login_from">
 
-                    <a-form-item label="账号">
-                        <a-input v-model="login_from.account"/>
-                    </a-form-item>
+                    <n-form-item label="账号">
+                        <n-input v-model="login_from.account"/>
+                    </n-form-item>
 
-                    <a-form-item label="密码">
-                        <a-input-password v-model="login_from.password"/>
-                    </a-form-item>
+                    <n-form-item label="密码">
+                        <n-input v-model="login_from.password" type="password"/>
+                    </n-form-item>
 
-                    <a-form-item label="验证码">
-                        <a-input v-model="login_from.verify"/>
+                    <n-form-item label="验证码">
+                        <n-input v-model="login_from.verify"/>
                         <n-divider vertical></n-divider>
                         <a-image width="150px" height="50px"></a-image>
-                    </a-form-item>
+                    </n-form-item>
 
-                    <a-button>{{ "登录" }}</a-button>
+                    <n-button>{{ "登录" }}</n-button>
 
-
-                </a-form>
+                </n-form>
 
             </n-tab-pane>
 
             <!--注册页面-->
             <n-tab-pane name="signup" tab="注册">
 
-                <a-form layout="vertical" :model="signup_from">
+                <n-form :model="signup_from">
 
-                    <a-form-item label="用户名">
-                        <a-input v-model="signup_from.name"/>
-                    </a-form-item>
+                    <n-form-item label="用户名">
+                        <n-input v-model="signup_from.name"/>
+                    </n-form-item>
 
-                    <a-form-item label="邮箱">
-                        <a-input v-model="signup_from.email"/>
-                    </a-form-item>
+                    <n-form-item label="邮箱">
+                        <n-input v-model="signup_from.email"/>
+                    </n-form-item>
 
-                    <a-form-item label="密码">
-                        <a-input-password v-model="signup_from.password"/>
-                    </a-form-item>
+                    <n-form-item label="密码">
+                        <n-input type="password" v-model="signup_from.password"/>
+                    </n-form-item>
 
-                    <a-form-item label="重复密码">
-                        <a-input-password v-model="signup_from.re_password"/>
-                    </a-form-item>
+                    <n-form-item label="重复密码">
+                        <n-input type="password" v-model="signup_from.re_password"/>
+                    </n-form-item>
 
-                    <a-form-item label="验证码">
-                        <a-input v-model="signup_from.verify"/>
+                    <n-form-item label="验证码">
+                        <n-input v-model="signup_from.verify"/>
                         <n-divider vertical></n-divider>
                         <a-image width="150px" height="50px"></a-image>
-                    </a-form-item>
+                    </n-form-item>
 
-                    <a-button>{{ "登录" }}</a-button>
+                    <n-button>{{ "注册" }}</n-button>
 
 
-                </a-form>
+                </n-form>
 
             </n-tab-pane>
         </n-tabs>
@@ -88,13 +87,13 @@
 </template>
 
 <script lang="ts">
-import {NTab, NTabPane} from "naive-ui"
+// import {NTab, NTabPane} from "naive-ui"
 
 export default {
-    components: {
-        NTab,
-        NTabPane,
-    },
+    // components: {
+    //     NTab,
+    //     NTabPane,
+    // },
     data() {
 
         return {

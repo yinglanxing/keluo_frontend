@@ -2,8 +2,7 @@
 
 // 组件自动按需引用
 import Components from "unplugin-vue-components/vite";
-import {NaiveUiResolver, ArcoResolver} from "unplugin-vue-components/resolvers";
-
+import {NaiveUiResolver} from "unplugin-vue-components/resolvers";
 
 export default defineNuxtConfig({
     devtools: {enabled: true},
@@ -23,7 +22,7 @@ export default defineNuxtConfig({
             charset: "f-16",
             viewport: "width=500, initial-scale=1",
             // 标题模版 页面标题 + 主标题
-            titleTemplate(title) {
+            titleTemplate(title: string | undefined): string {
                 return title ? title + " -科洛-" : "-科洛-"
             },
             // 元数据
@@ -53,8 +52,8 @@ export default defineNuxtConfig({
                 resolvers: [
                     // naive-ui 自动加载
                     NaiveUiResolver(),
-                    // arco design 自动加载
-                    ArcoResolver(),
+                    // arco 在模块中已存在
+                    // ArcoResolver(),
                 ]
             })
         ],
@@ -62,9 +61,7 @@ export default defineNuxtConfig({
         // 暂未学习用途
         // optimizeDeps: {
         //     include:
-        //         process.env.NODE_ENV === "development"
-        //             ? ["naive-ui", "vueuc", "date-fns-tz/esm/formatInTimeZone"]
-        //             : []
+        //         process.env.NODE_ENV === "development" ? ["naive-ui"] : []
         // }
     },
 

@@ -7,12 +7,12 @@
 </template>
 
 <script lang="ts">
-// 后续丢进全局状态中
-export default defineComponent({
+//todo 后续丢进全局状态中
+export default {
     data() {
         return {
             layout: "default",
         }
     },
-})
+}
 </script>
