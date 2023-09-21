@@ -1,87 +1,82 @@
 <template>
     <!--主布局-->
     <!--todo 明天创建一下话题，文章等组件文件结构 --2023920-->
-    <n-space justify="center">
-        <n-space vertical>
-            <n-card v-for="q in 10">
+    <n-space vertical>
+        <n-card v-for="q in 5">
 
-                <!--信息-->
-                <template #header>
-                    <a-comment>
-                        <template #avatar>
-                            <!--弹出信息弹框-->
-                            <popup-user></popup-user>
-                        </template>
+            <!--信息-->
+            <template #header>
+                <a-comment>
+                    <template #avatar>
+                        <!--弹出信息弹框-->
+                        <popup-user></popup-user>
+                    </template>
 
-                        <template #author>
-                            user name
-                        </template>
+                    <template #author>
+                        user name
+                    </template>
 
-                        <template #content>
-                            <n-time></n-time>
-                        </template>
-                    </a-comment>
-                </template>
+                    <template #content>
+                        <n-time></n-time>
+                    </template>
+                </a-comment>
+            </template>
 
-                <!--更多操作-->
-                <template #header-extra>
-                    <n-button circle>
-                        <template #icon>
-                            <icon-more-vertical/>
-                        </template>
-                    </n-button>
-                </template>
+            <!--更多操作-->
+            <template #header-extra>
+                <n-button circle>
+                    <template #icon>
+                        <icon-more-vertical/>
+                    </template>
+                </n-button>
+            </template>
 
-                <n-h3>
-                    title {{ q }}
-                </n-h3>
+            <n-h3>
+                title {{ q }}
+            </n-h3>
 
-                <a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 2]" readonly/>
+            <a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 2]" readonly/>
 
-                <n-space vertical>
-                    <!--文字部分-->
-                    <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
+            <n-space vertical>
+                <!--文字部分-->
+                <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
 
-                    <!--图片区-->
-                    <n-space>
-                        <a-image width="200" height="100"></a-image>
-                        <a-image width="200" height="100"></a-image>
-                        <a-image width="200" height="100"></a-image>
-                    </n-space>
+                <!--图片区-->
+                <n-space>
+                    <a-image width="200" height="100"></a-image>
+                    <a-image width="200" height="100"></a-image>
+                    <a-image width="200" height="100"></a-image>
                 </n-space>
+            </n-space>
 
-                <!--底部图标-->
-                <!--<template #action>-->
-                <template #footer>
-                    <n-space justify="end">
+            <!--底部图标-->
+            <!--<template #action>-->
+            <template #footer>
+                <n-space justify="end">
                         <span>
                             <icon-heart-fill/>
                             {{ 83 }}
                         </span>
-                        <span>
+                    <span>
                             <icon-star-fill/>
                             {{ 3 }}
                         </span>
-                        <span>
+                    <span>
                             <icon-message/>
                             {{ 3 }}
                         </span>
-                        <span>
+                    <span>
                             <icon-eye></icon-eye>
                             {{ 5 }}
                         </span>
-                    </n-space>
-                </template>
-            </n-card>
+                </n-space>
+            </template>
+        </n-card>
 
-            <!--翻页器-->
-            <a-pagination :total="100" show-jumper/>
-            <a-pagination :total="100" simple/>
-            <n-pagination :page-count="100" show-quick-jumper></n-pagination>
-            <n-pagination :page-count="100" simple></n-pagination>
-        </n-space>
-
+        <!--翻页器-->
+        <a-pagination :total="100" show-jumper/>
     </n-space>
+
 </template>
 
 

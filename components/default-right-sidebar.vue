@@ -3,7 +3,7 @@
 
         <!--用户组件-->
         <n-card>
-
+            user info
         </n-card>
 
         <!--todo 签到组件-->

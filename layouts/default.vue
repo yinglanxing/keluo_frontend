@@ -6,22 +6,45 @@
             <!--页首-->
             <default-header></default-header>
 
-            <!--内容最大1000px，居中-->
             <!--embedded 增加背景对于header、卡片等组件的对比度-->
             <n-layout embedded content-style="padding: 24px">
-                <div style="max-width: 1200px;margin: auto">
-                    <!-- 首页顶部-->
-                    <default-nav></default-nav>
-                    <n-space justify="center">
-                        <div style="margin-top: 10px">
-                            <!--页面内容-->
-                            <slot/>
-                        </div>
 
-                        <!--右侧侧边栏-->
-                        <default-right-sidebar></default-right-sidebar>
-                    </n-space>
-                </div>
+                <a-grid :cols="24" :colGap="16" :rowGap="16">
+                    <!--空白边-->
+                    <a-grid-item :span="{xl:3}"></a-grid-item>
+
+
+                    <!--内容-->
+                    <a-grid-item :span="{xs:22, sm:22, xl:18}">
+                        <!-- 顶部nav-->
+                        <default-nav></default-nav>
+
+                        <a-grid :cols="24" :colGap="16" :rowGap="16">
+
+                            <!--页面左侧边栏-->
+                            <a-grid-item :span="5">
+                                <default-left-sidebar></default-left-sidebar>
+                            </a-grid-item>
+
+
+                            <!--页面内容-->
+                            <a-grid-item :span="14">
+                                <slot/>
+                            </a-grid-item>
+
+
+                            <!--页面右侧边栏-->
+                            <a-grid-item :span="5">
+                                <default-right-sidebar></default-right-sidebar>
+                            </a-grid-item>
+                        </a-grid>
+
+                    </a-grid-item>
+
+                    <!--空白边-->
+                    <a-grid-item :span="{xl:3}"></a-grid-item>
+                </a-grid>
+
             </n-layout>
 
             <!--页尾-->

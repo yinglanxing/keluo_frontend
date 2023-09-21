@@ -26,6 +26,7 @@ declare module 'vue' {
     NPopover: typeof import('naive-ui')['NPopover']
     NSkeleton: typeof import('naive-ui')['NSkeleton']
     NSpace: typeof import('naive-ui')['NSpace']
+      NTab: typeof import('naive-ui')['NTab']
     NTabPane: typeof import('naive-ui')['NTabPane']
     NTabs: typeof import('naive-ui')['NTabs']
       NTime: typeof import('naive-ui')['NTime']
