@@ -1,6 +1,6 @@
 <template>
-    <!-- 首页左菜单-->
-    <a-menu :default-selected-keys="['1']">
+    <!--细分菜单-->
+    <a-menu mode="horizontal" :default-selected-keys="['1']">
         <!--todo 后台传参动态渲染-->
         <a-menu-item key="1">
             <template #icon>
@@ -70,7 +70,7 @@ export default {
             this.theme_style = !this.theme_style
         },
         // TODO 点击跳转路由
-        chang_route(key: string) {
+        chang_route(_key: string) {
             // Message.info({content: `select ${key}`, showIcon: true});
         }
     },

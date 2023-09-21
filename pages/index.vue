@@ -2,83 +2,84 @@
     <!--主布局-->
     <!--todo 明天创建一下话题，文章等组件文件结构 --2023920-->
     <n-space justify="center">
+        <n-space vertical>
+            <n-card v-for="q in 10">
 
+                <!--信息-->
+                <template #header>
+                    <a-comment>
+                        <template #avatar>
+                            <!--弹出信息弹框-->
+                            <popup-user></popup-user>
+                        </template>
 
-        <!-- 首页左菜单-->
-        <left-nav></left-nav>
+                        <template #author>
+                            user name
+                        </template>
 
-        <!--列表-->
-        <div style="max-width: 700px">
-            <n-space vertical>
-                <!--<n-card style="min-width: 700px" v-for="x in 20">-->
-                <!--    只要是 看到天边云一朵<br>-->
-                <!--    逐天拢有好心情-->
-                <!--</n-card>-->
-                <n-card v-for="q in 10">
+                        <template #content>
+                            <n-time></n-time>
+                        </template>
+                    </a-comment>
+                </template>
 
-                    <!--信息-->
-                    <template #header>
-                        <a-comment>
-                            <template #avatar>
-                                <!--弹出信息弹框-->
-                                <popup-user></popup-user>
-                            </template>
+                <!--更多操作-->
+                <template #header-extra>
+                    <n-button circle>
+                        <template #icon>
+                            <icon-more-vertical/>
+                        </template>
+                    </n-button>
+                </template>
 
-                            <template #author>
-                                title
-                            </template>
+                <n-h3>
+                    title {{ q }}
+                </n-h3>
 
-                            <template #content>
-                                <n-space>
-                                <span>
-                                    <icon-heart-fill/>
-                                    {{ 83 }}
-                                </span>
-                                    <span>
-                                <icon-star-fill/>
-                                    {{ 3 }}
-                                </span>
-                                    <span>
-                                    <icon-message/>
-                                    {{ 3 }}
-                                </span>
-                                    <span>
-                                    <icon-eye></icon-eye>
-                                    {{ 5 }}
-                                </span>
-                                </n-space>
-                            </template>
-                        </a-comment>
-                    </template>
+                <a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 2]" readonly/>
 
-                    <!--更多操作-->
-                    <template #header-extra>
-                        <n-button circle>
-                            <template #icon>
-                                <icon-more-vertical/>
-                            </template>
-                        </n-button>
-                    </template>
+                <n-space vertical>
+                    <!--文字部分-->
+                    <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
 
-                    <n-space vertical>
-                        <!--图片区-->
-                        <n-space>
-                            <a-image width="200" height="100"></a-image>
-                            <a-image width="200" height="100"></a-image>
-                            <a-image width="200" height="100"></a-image>
-                        </n-space>
-
-                        <!--文字部分-->
-                        <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
+                    <!--图片区-->
+                    <n-space>
+                        <a-image width="200" height="100"></a-image>
+                        <a-image width="200" height="100"></a-image>
+                        <a-image width="200" height="100"></a-image>
                     </n-space>
-                </n-card>
-            </n-space>
-        </div>
+                </n-space>
 
-        <!--右边组件-->
+                <!--底部图标-->
+                <!--<template #action>-->
+                <template #footer>
+                    <n-space justify="end">
+                        <span>
+                            <icon-heart-fill/>
+                            {{ 83 }}
+                        </span>
+                        <span>
+                            <icon-star-fill/>
+                            {{ 3 }}
+                        </span>
+                        <span>
+                            <icon-message/>
+                            {{ 3 }}
+                        </span>
+                        <span>
+                            <icon-eye></icon-eye>
+                            {{ 5 }}
+                        </span>
+                    </n-space>
+                </template>
+            </n-card>
 
-        <!--签到-->
-        <index-right-sidebar></index-right-sidebar>
+            <!--翻页器-->
+            <a-pagination :total="100" show-jumper/>
+            <a-pagination :total="100" simple/>
+            <n-pagination :page-count="100" show-quick-jumper></n-pagination>
+            <n-pagination :page-count="100" simple></n-pagination>
+        </n-space>
 
     </n-space>
 </template>
@@ -93,7 +94,6 @@
 
 export default {
     setup() {
-
         // 官方布局示例侧边栏参数
 
         // const collapsed = ref(false);

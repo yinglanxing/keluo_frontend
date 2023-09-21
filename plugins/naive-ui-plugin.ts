@@ -14,6 +14,7 @@ import { defineNuxtPlugin } from '#app';
 export default defineNuxtPlugin((nuxtApp) => {
     if (process.server) {
         const {collect} = setup(nuxtApp.vueApp);
+        const originalRenderMeta = nuxtApp.ssrContext?.renderMeta;
         nuxtApp.ssrContext = nuxtApp.ssrContext || {};
         nuxtApp.ssrContext.renderMeta = () => {
             if (!originalRenderMeta) {
