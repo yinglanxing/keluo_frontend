@@ -1,86 +1,86 @@
 <template>
-  <!--主布局-->
-  <!--todo 明天创建一下话题，文章等组件文件结构 --2023920-->
-  <n-space justify="center">
+    <!--主布局-->
+    <!--todo 明天创建一下话题，文章等组件文件结构 --2023920-->
+    <n-space justify="center">
 
 
-    <!-- 首页左菜单-->
-    <left-nav></left-nav>
+        <!-- 首页左菜单-->
+        <left-nav></left-nav>
 
-    <!--列表-->
-    <div style="max-width: 700px">
-      <n-space vertical>
-        <!--<n-card style="min-width: 700px" v-for="x in 20">-->
-        <!--    只要是 看到天边云一朵<br>-->
-        <!--    逐天拢有好心情-->
-        <!--</n-card>-->
-        <n-card v-for="q in 10">
+        <!--列表-->
+        <div style="max-width: 700px">
+            <n-space vertical>
+                <!--<n-card style="min-width: 700px" v-for="x in 20">-->
+                <!--    只要是 看到天边云一朵<br>-->
+                <!--    逐天拢有好心情-->
+                <!--</n-card>-->
+                <n-card v-for="q in 10">
 
-          <!--信息-->
-          <template #header>
-            <a-comment>
-              <template #avatar>
-                <!--弹出信息弹框-->
-                <popup-user></popup-user>
-              </template>
+                    <!--信息-->
+                    <template #header>
+                        <a-comment>
+                            <template #avatar>
+                                <!--弹出信息弹框-->
+                                <popup-user></popup-user>
+                            </template>
 
-              <template #author>
-                title
-              </template>
+                            <template #author>
+                                title
+                            </template>
 
-              <template #content>
-                <n-space>
+                            <template #content>
+                                <n-space>
                                 <span>
                                     <icon-heart-fill/>
                                     {{ 83 }}
                                 </span>
-                  <span>
+                                    <span>
                                 <icon-star-fill/>
                                     {{ 3 }}
                                 </span>
-                  <span>
+                                    <span>
                                     <icon-message/>
                                     {{ 3 }}
                                 </span>
-                  <span>
+                                    <span>
                                     <icon-eye></icon-eye>
                                     {{ 5 }}
                                 </span>
-                </n-space>
-              </template>
-            </a-comment>
-          </template>
+                                </n-space>
+                            </template>
+                        </a-comment>
+                    </template>
 
-          <!--更多操作-->
-          <template #header-extra>
-            <n-button circle>
-              <template #icon>
-                <icon-more-vertical />
-              </template>
-            </n-button>
-          </template>
+                    <!--更多操作-->
+                    <template #header-extra>
+                        <n-button circle>
+                            <template #icon>
+                                <icon-more-vertical/>
+                            </template>
+                        </n-button>
+                    </template>
 
-          <n-space vertical>
-            <!--图片区-->
-            <n-space>
-              <a-image width="200" height="100"></a-image>
-              <a-image width="200" height="100"></a-image>
-              <a-image width="200" height="100"></a-image>
+                    <n-space vertical>
+                        <!--图片区-->
+                        <n-space>
+                            <a-image width="200" height="100"></a-image>
+                            <a-image width="200" height="100"></a-image>
+                            <a-image width="200" height="100"></a-image>
+                        </n-space>
+
+                        <!--文字部分-->
+                        <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
+                    </n-space>
+                </n-card>
             </n-space>
+        </div>
 
-            <!--文字部分-->
-            <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
-          </n-space>
-        </n-card>
-      </n-space>
-    </div>
+        <!--右边组件-->
 
-    <!--右边组件-->
+        <!--签到-->
+        <index-right-sidebar></index-right-sidebar>
 
-    <!--签到-->
-    <checkin></checkin>
-
-  </n-space>
+    </n-space>
 </template>
 
 
@@ -92,24 +92,24 @@
 // import {Message} from '@arco-design/web-vue';
 
 export default {
-  setup() {
+    setup() {
 
-    // 官方布局示例侧边栏参数
+        // 官方布局示例侧边栏参数
 
-    // const collapsed = ref(false);
-    // const onCollapse = (val: boolean, type: string) => {
-    //     const content = type === 'responsive' ? '触发响应式收缩' : '点击触发收缩';
-    //     Message.info({
-    //         content,
-    //         duration: 2000,
-    //     });
-    //     collapsed.value = val;
-    // }
-    // return {
-    //     collapsed,
-    //     onCollapse,
-    // };
-  },
+        // const collapsed = ref(false);
+        // const onCollapse = (val: boolean, type: string) => {
+        //     const content = type === 'responsive' ? '触发响应式收缩' : '点击触发收缩';
+        //     Message.info({
+        //         content,
+        //         duration: 2000,
+        //     });
+        //     collapsed.value = val;
+        // }
+        // return {
+        //     collapsed,
+        //     onCollapse,
+        // };
+    },
 }
 </script>
 
