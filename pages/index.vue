@@ -17,7 +17,7 @@
                     </template>
 
                     <template #content>
-                        <n-time></n-time>
+                        <n-time :time="0"/>
                     </template>
                 </a-comment>
             </template>
@@ -35,9 +35,14 @@
                 title {{ q }}
             </n-h3>
 
-            <a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 2]" readonly/>
 
             <n-space vertical>
+                <!--标签-->
+                <a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 'tag2', 'tag3']" readonly/>
+                <!--<n-space>-->
+                <!--    <n-tag round checkable v-for="i in 20">tag {{ i }}</n-tag>-->
+                <!--</n-space>-->
+
                 <!--文字部分-->
                 <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
 

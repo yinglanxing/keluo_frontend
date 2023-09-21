@@ -3,7 +3,32 @@
 
         <!--用户组件-->
         <n-card>
-            user info
+
+            <template #header>
+                <popup-login></popup-login>
+            </template>
+
+            <template #header-extra>
+                <n-button block quaternary>
+                    ￥: {{ 0 }}
+                </n-button>
+            </template>
+
+            <!--v-show 姓名或登录邀请-->
+            <n-h3>
+                请登录
+            </n-h3>
+
+            <n-divider></n-divider>
+
+            <n-space justify="center">
+
+                <n-tag>文章总数:69</n-tag>
+                <n-tag>关注人数:12</n-tag>
+                <n-tag>回复统计:200</n-tag>
+
+            </n-space>
+
         </n-card>
 
         <!--todo 签到组件-->
@@ -14,9 +39,6 @@
                         <icon-calendar/>
                     </template>
                     {{ "签到" }}
-                </n-button>
-                <n-button block quaternary>
-                    ￥: {{ 0 }}
                 </n-button>
             </n-space>
 
