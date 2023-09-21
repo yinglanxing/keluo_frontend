@@ -16,8 +16,8 @@
 
                     <!--内容-->
                     <a-grid-item :span="{xs:22, sm:22, xl:18}">
-                        <!-- 顶部nav-->
-                        <default-nav></default-nav>
+
+
 
                         <a-grid :cols="24" :colGap="16" :rowGap="16">
 
@@ -26,9 +26,10 @@
                                 <default-left-sidebar></default-left-sidebar>
                             </a-grid-item>
 
-
                             <!--页面内容-->
                             <a-grid-item :span="14">
+                              <!-- 顶部nav-->
+                              <default-nav></default-nav>
                                 <slot/>
                             </a-grid-item>
 
