@@ -1,56 +1,34 @@
 <template>
-    <!--签到组件-->
-    <a-card>
+  <n-space vertical>
+ <!--todo 可以使用一个日期组件-->
+    <!--todo 签到组件-->
+    <n-card>
+      <n-space vertical>
+        <n-button block>
+          <template #icon>
+            <icon-calendar/>
+          </template>
+          {{ "签到" }}
+        </n-button>
+        <n-button block quaternary>
+          ￥: {{ 0 }}
+        </n-button>
+      </n-space>
 
-        <!--todo 签到货币-->
-        <n-space>
-            <n-button type="text">
-                ￥: {{ 0 }}
-            </n-button>
+    </n-card>
 
-            <n-button>
-                <template #icon>
-                    <icon-calendar/>
-                </template>
-                {{ "签到" }}
-            </n-button>
-        </n-space>
+    <n-divider style="margin: 6px">积分排行</n-divider>
 
-        <a-divider></a-divider>
+    <n-space vertical>
+      <a-card v-for="x in 10">
+        <a-avatar :style="{ marginRight: '8px', backgroundColor: '#165DFF' }" :size="28">
+          {{ x }}
+        </a-avatar>
+        <a-typography-text>Username</a-typography-text>
+      </a-card>
+    </n-space>
 
-        <!--todo 积分排行-->
-        <template #actions>
-            <n-h4>
-                {{ "今日排行" }}
-            </n-h4>
-
-            <a-card>
-                <a-avatar
-                    :style="{ marginRight: '8px', backgroundColor: '#165DFF' }"
-                    :size="28"
-                >
-                    A
-                </a-avatar>
-                <a-typography-text>Username</a-typography-text>
-            </a-card>
-
-        </template>
-
-    </a-card>
-
-    <!--详细积分排行-->
-    <a-card>
-        <a-card>
-            <a-avatar
-                :style="{ marginRight: '8px', backgroundColor: '#165DFF' }"
-                :size="28"
-            >
-                A
-            </a-avatar>
-            <a-typography-text>Username</a-typography-text>
-        </a-card>
-
-    </a-card>
+  </n-space>
 </template>
 
 <script lang="ts">
