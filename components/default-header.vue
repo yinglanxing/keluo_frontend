@@ -54,7 +54,7 @@
                 <n-space>
 
                     <!--搜索框-->
-                    <n-input size="large" round>
+                    <n-input size="large" round style="top : auto ">
                         <template #prefix>
                             <icon-search></icon-search>
                         </template>
@@ -62,9 +62,10 @@
 
 
                     <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
-                    <n-button-group>
+                    <!--咋看咋歪，向下移动3个像素吧-->
+                    <n-button-group style="top : 3px">
                         <!--左边按钮-->
-                        <n-button secondary round size="large" type="info">
+                        <n-button   size="medium" type="info">
                             <template #icon>
                                 <icon-edit/>
                             </template>
@@ -75,16 +76,14 @@
                         <n-popover placement="bottom-end">
 
                             <template #trigger>
-                                <n-button secondary circle size="large" type="info">
+                                <n-button  size="medium" type="info">
                                     <template #icon>
                                         <!--<icon-down-circle/>-->
                                         <icon-caret-down/>
                                     </template>
                                 </n-button>
                             </template>
-
                             <!--推荐使用无边框组件包裹-->
-
                             <a-doption>
                                 写文章
                             </a-doption>
