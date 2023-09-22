@@ -114,7 +114,14 @@ export default {
             // 切换主题
             change_theme() {
                 let flag = theme.value == "light"
-                theme.value = flag ? "dark" : "light"
+                if (flag) {
+                    document.body.setAttribute('arco-theme', 'dark')
+                    theme.value = "dark"
+                } else {
+                    document.body.removeAttribute('arco-theme')
+                    theme.value = "light"
+                }
+
             },
         }
     },

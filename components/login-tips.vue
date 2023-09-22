@@ -1,27 +1,32 @@
 <template>
 
-    <a-grid :cols="{ xs: 1, lg: 2, xxl: 3 }" :colGap="24" :rowGap="24">
+    <a-grid :cols="{ xs: 1, lg: 2 }" :colGap="24" :rowGap="24">
         <a-grid-item :span="3">
-            登录开启更多功能
+            登录开启更多功能：
         </a-grid-item>
 
         <a-grid-item>
-            <icon-check-circle-fill/>
-            发布你的文章
+            <icon-bookmark/>
+            更懂你的优质内容
         </a-grid-item>
 
         <a-grid-item>
-            <icon-check-circle-fill/>
-            关注更多频道
+            <icon-user-group/>
+            更专业的大咖答主
         </a-grid-item>
 
         <a-grid-item>
-            <icon-check-circle-fill/>
-            敬请期待
+            <icon-message/>
+            更深度的互动交流
+        </a-grid-item>
+
+        <a-grid-item>
+            <icon-pen-fill/>
+            更高效的创作环境
         </a-grid-item>
 
         <a-grid-item :span="3">
-            <n-button secondary type="info" block> 登录</n-button>
+            <n-button @click="alert_login_plane_func" secondary type="info" block>登录</n-button>
         </a-grid-item>
 
         <a-grid-item :span="3">

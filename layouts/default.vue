@@ -18,7 +18,6 @@
                     <a-grid-item :span="{xs:22, sm:22, xl:18}">
 
 
-
                         <a-grid :cols="24" :colGap="16" :rowGap="16">
 
                             <!--页面左侧边栏-->
@@ -28,8 +27,10 @@
 
                             <!--页面内容-->
                             <a-grid-item :span="14">
-                              <!-- 顶部nav-->
-                              <default-nav></default-nav>
+                                <!-- 顶部nav-->
+                                <div style="margin-bottom: 12px">
+                                    <default-nav></default-nav>
+                                </div>
                                 <slot/>
                             </a-grid-item>
 
