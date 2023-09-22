@@ -39,8 +39,10 @@
             <n-space vertical>
                 <!--标签-->
                 <!--<a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 'tag2', 'tag3']" readonly/>-->
-                <n-ellipsis :tooltip="false">
-                    <n-tag style="margin-left: 6px;" v-for="i in 15">tag {{ i }}</n-tag>
+                <n-ellipsis :tooltip="false" style="height: 30px">
+                    <n-space>
+                        <n-tag style="margin-left: 6px;" v-for="i in 15">tag {{ i }}</n-tag>
+                    </n-space>
                 </n-ellipsis>
 
                 <!--文字部分-->

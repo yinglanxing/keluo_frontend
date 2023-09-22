@@ -42,7 +42,10 @@ export default defineNuxtConfig({
         // ui 组件
         "arco-design-nuxt-module",
         // 状态管理
-        "@pinia/nuxt",
+        // "@pinia/nuxt",
+
+        // ssr渲染
+        // "@css-render/vue3-ssr",
     ],
 
     vite: {
@@ -58,7 +61,6 @@ export default defineNuxtConfig({
             })
         ],
 
-        // 暂未学习用途
         optimizeDeps: {
             include:
                 process.env.NODE_ENV === "development" ? ["naive-ui"] : []
@@ -73,10 +75,18 @@ export default defineNuxtConfig({
         }
     ],
 
-    build: {
-        transpile:
-            process.env.NODE_ENV === 'production'
-                ? ['naive-ui', '@css-render/vue3-ssr',] : []
-    }
+    // 自动引入
+    imports: {
+        dirs: [
+            // 扫描整个目录
+            'composables/**'
+        ]
+    },
 
+    build: {
+        transpile: process.env.NODE_ENV === 'production' ? ['naive-ui', '@css-render/vue3-ssr',] : []
+    },
+
+    // i18n 搁置
+    // '@nuxtjs/i18n' 国际化组件导入导致项目无法运行
 })

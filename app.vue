@@ -7,11 +7,11 @@
 </template>
 
 <script lang="ts">
-//todo 后续丢进全局状态中
 export default {
-    data() {
+    setup() {
+        const layout = GLOBAL_LAYOUT()
         return {
-            layout: "default",
+            layout,
         }
     },
 }
