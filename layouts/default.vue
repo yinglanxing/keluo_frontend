@@ -49,6 +49,11 @@
 
             </n-layout>
 
+            <!--登录器-->
+            <n-modal :on-after-leave="reset_login" v-model:show="show_login_plain">
+                <login-and-signup></login-and-signup>
+            </n-modal>
+
             <!--页尾-->
             <default-footer></default-footer>
 
@@ -58,6 +63,21 @@
 
 <script lang="ts">
 export default {
+    setup() {
+        const show_login_plain = show_login()
+        const show_signup_plain = show_signup()
+        return {
+            show_login_plain,
+            alert_plane_func() {
+                // 弹出登录框
+                show_login_plain.value = true
+            },
+            reset_login() {
+                // 重置到第一页
+                show_signup_plain.value = false
+            },
+        }
+    },
     data() {
         return {}
     }

@@ -26,12 +26,12 @@
         </a-grid-item>
 
         <a-grid-item :span="3">
-            <n-button @click="alert_login_plane_func" secondary type="info" block>登录</n-button>
+            <n-button @click="alert_plane_func" secondary type="info" block>登录</n-button>
         </a-grid-item>
 
         <a-grid-item :span="3">
             没有账号？
-            <a-link @click="alert_login_plane_func">
+            <a-link @click="alert_plane_signup_func">
                 前往注册
             </a-link>
         </a-grid-item>
@@ -40,11 +40,22 @@
 
 <script lang="ts">
 export default {
-    methods: {
-        // todo 组件弹窗
-        alert_login_plane_func() {
+    setup() {
+        const show_login_plain = show_login()
+        const show_signup_plain = show_signup()
+        return {
+            show_login_plain,
+            alert_plane_func() {
+                // 弹出登录框
+                show_login_plain.value = true
+            },
+            alert_plane_signup_func() {
+                // 弹出登录框
+                show_login_plain.value = true
+                show_signup_plain.value = true
+            },
         }
-    }
+    },
 }
 </script>
 

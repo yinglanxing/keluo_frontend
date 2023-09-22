@@ -23,7 +23,7 @@
 
     <a-grid-item :span="3">
       没有账号？
-      <a-link @click="alert_plane_func">
+        <a-link @click="alert_plane_signup_func">
         前往注册
       </a-link>
     </a-grid-item>
@@ -31,11 +31,24 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
-
-export default defineComponent({
-  name: "user-profile-card"
-})
+export default {
+    setup() {
+        const show_login_plain = show_login()
+        const show_signup_plain = show_signup()
+        return {
+            show_login_plain,
+            alert_plane_func() {
+                // 弹出登录框
+                show_login_plain.value = true
+            },
+            alert_plane_signup_func() {
+                // 弹出登录框
+                show_login_plain.value = true
+                show_signup_plain.value = true
+            },
+        }
+    },
+}
 </script>
 
 <style scoped>

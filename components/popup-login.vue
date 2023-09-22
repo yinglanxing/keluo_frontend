@@ -22,24 +22,30 @@
     <!--<popup-self></popup-self>-->
 
     <!--登录器-->
-    <n-modal v-model:show="plane_show">
-        <login-and-signup></login-and-signup>
-    </n-modal>
+    <!--<n-modal v-model:show="plane_show">-->
+    <!--    <login-and-signup></login-and-signup>-->
+    <!--</n-modal>-->
 
 </template>
 
 <script lang="ts">
 export default {
+    setup() {
+        const show_login_plain = show_login()
+        return {
+            show_login_plain,
+            alert_plane_func() {
+                // 弹出登录框
+                show_login_plain.value = true
+            },
+        }
+    },
     data() {
         return {
             plane_show: false,
         }
     },
     methods: {
-        // 弹出登录框
-        alert_plane_func() {
-            this.plane_show = true
-        }
     }
 }
 </script>
