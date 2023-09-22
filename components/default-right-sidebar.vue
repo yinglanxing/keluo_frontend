@@ -15,7 +15,7 @@
 
             <!--v-show 姓名或登录邀请-->
             <n-h3>
-                请登录
+              <user-profile-card></user-profile-card>
             </n-h3>
 
             <n-divider></n-divider>
@@ -32,17 +32,17 @@
 
         <!--todo 签到组件-->
         <n-card>
-            <n-space vertical>
-                <n-button block>
-                    <template #icon>
-                        <icon-calendar/>
-                    </template>
-                    {{ "签到" }}
-                </n-button>
-            </n-space>
+<!--            <n-space vertical>-->
+<!--                <n-button block>-->
+<!--                    <template #icon>-->
+<!--                        <icon-calendar/>-->
+<!--                    </template>-->
+<!--                    {{ "签到" }}-->
+<!--                </n-button>-->
+<!--            </n-space>-->
 
             <!--日历组件-->
-            <!--<sign-calendar></sign-calendar>-->
+<!--            <sign-calendar></sign-calendar>-->
 
         </n-card>
 
