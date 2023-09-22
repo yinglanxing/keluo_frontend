@@ -1,13 +1,15 @@
 <template>
     <!--弹窗登录-->
 
-    <a-popover @click="alert_plane_func" :show-arrow="false">
+    <!--todo 全局登录状态-->
+    <a-popover :show-arrow="false">
         <!--头像-->
-        <!--Todo 全局登录状态-->
         <n-space>
-            <a-avatar>
-                <icon-user/>
-            </a-avatar>
+            <n-button @click="alert_plane_func" size="large" circle>
+                <template #icon>
+                    <icon-user/>
+                </template>
+            </n-button>
         </n-space>
         <!--内容-->
         <!-- Todo 该grid卡片后续将挪动到首页上显示，单独封装成一个组件-->
@@ -49,7 +51,6 @@
     <!--<popup-self></popup-self>-->
 
     <!--登录器-->
-
     <n-modal v-model:show="plane_show">
         <login-and-signup></login-and-signup>
     </n-modal>

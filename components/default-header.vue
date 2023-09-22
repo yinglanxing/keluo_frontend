@@ -60,12 +60,20 @@
                         </template>
                     </n-input>
 
+                    <!--用户登录-->
+                    <popup-login></popup-login>
+
+                    <!--<a-button type="primary">-->
+                    <!--    {{ "创作中心" }}-->
+                    <!--</a-button>-->
 
                     <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
                     <!--咋看咋歪，向下移动3个像素吧-->
-                    <n-button-group style="top : 3px">
+                    <n-button-group size="large">
+                        <!--<n-button-group  style="top : 3px">-->
                         <!--左边按钮-->
-                        <n-button   size="medium" type="info">
+                        <n-button color="#1e80ff">
+                            <!--<n-button   size="medium" type="info">-->
                             <template #icon>
                                 <icon-edit/>
                             </template>
@@ -76,10 +84,10 @@
                         <n-popover placement="bottom-end">
 
                             <template #trigger>
-                                <n-button  size="medium" type="info">
+                                <n-button color="#1e80ff" style="width:8px">
+                                    <!--<n-button  size="medium" type="info">-->
                                     <template #icon>
-                                        <!--<icon-down-circle/>-->
-                                        <icon-caret-down/>
+                                        <icon-caret-down style="font-size: 14px"/>
                                     </template>
                                 </n-button>
                             </template>

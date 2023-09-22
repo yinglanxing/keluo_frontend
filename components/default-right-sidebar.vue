@@ -5,7 +5,6 @@
         <n-card>
 
             <template #header>
-                <popup-login></popup-login>
             </template>
 
             <template #header-extra>

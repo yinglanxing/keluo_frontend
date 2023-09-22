@@ -2,7 +2,7 @@
     <!--主布局-->
     <!--todo 明天创建一下话题，文章等组件文件结构 --2023920-->
     <n-space vertical>
-        <n-card v-for="q in 5">
+        <n-card v-for="q in 10">
 
             <!--信息-->
             <template #header>
@@ -38,10 +38,10 @@
 
             <n-space vertical>
                 <!--标签-->
-                <a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 'tag2', 'tag3']" readonly/>
-                <!--<n-space>-->
-                <!--    <n-tag round checkable v-for="i in 20">tag {{ i }}</n-tag>-->
-                <!--</n-space>-->
+                <!--<a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 'tag2', 'tag3']" readonly/>-->
+                <n-ellipsis :tooltip="false">
+                    <n-tag style="margin-left: 6px;" v-for="i in 15">tag {{ i }}</n-tag>
+                </n-ellipsis>
 
                 <!--文字部分-->
                 <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
