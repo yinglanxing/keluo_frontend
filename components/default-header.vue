@@ -1,6 +1,7 @@
 <template>
     <!--头部-->
-    <a-layout-header style="width: 100vw">
+    <a-layout-header>
+        <!--<a-affix :offset-top="0">-->
         <!--左边菜单导航-->
         <a-menu mode="horizontal" :default-selected-keys="['1']">
             <!--项目logo-->
@@ -35,60 +36,63 @@
             <!--TODO 在元素之间均匀分配空间，并在首尾两端留有一半的空间-->
 
             <!--右边菜单-->
-            <a-space align="end">
+            <div style="float: right">
+                <!--<div>-->
+                <a-space>
 
-                <!--搜索框-->
-                <a-input size="large" round style="top : auto ">
-                    <template #prefix>
-                        <icon-search></icon-search>
-                    </template>
-                </a-input>
-
-                <!--用户登录-->
-                <popup-login></popup-login>
-
-                <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
-                <a-button-group size="large">
-                    <!--左边按钮-->
-                    <a-button color="#1e80ff">
-                        <template #icon>
-                            <icon-edit/>
+                    <!--搜索框-->
+                    <a-input size="large" round style="top : auto ">
+                        <template #prefix>
+                            <icon-search></icon-search>
                         </template>
-                        {{ "创作中心" }}
-                    </a-button>
+                    </a-input>
 
-                    <!--右边下拉按钮-->
-                    <a-popover placement="bottom-end">
-                        <a-button color="#1e80ff">
-                            <icon-caret-down/>
+                    <!--用户登录-->
+                    <user-self></user-self>
+
+                    <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
+                    <a-button-group size="large">
+                        <!--左边按钮-->
+                        <a-button type="primary">
+                            <template #icon>
+                                <icon-edit/>
+                            </template>
+                            {{ "创作中心" }}
                         </a-button>
-                        <!--<a-button color="#1e80ff" style="width:14px">-->
-                        <!--    <icon-caret-down style="font-size: 14px"/>-->
-                        <!--</a-button>-->
 
-                        <template #content>
-                            <a-doption>
-                                写文章
-                            </a-doption>
-                            <a-doption>
-                                发表话题
-                            </a-doption>
-                            <a-doption>
-                                提问
-                            </a-doption>
+                        <!--右边下拉按钮-->
+                        <a-popover v-model:popup-visible="drop_down" trigger="click" placement="bottom-end">
+                            <a-button type="primary">
+                                <template #icon>
+                                    <icon-caret-down :style="drop_down? 'transform: rotate(180deg)':''"/>
+                                </template>
+                            </a-button>
+
+                            <template #content>
+                                <a-doption>
+                                    写文章
+                                </a-doption>
+                                <a-doption>
+                                    发表话题
+                                </a-doption>
+                                <a-doption>
+                                    提问
+                                </a-doption>
+                            </template>
+                        </a-popover>
+                    </a-button-group>
+
+                    <!--主题切换-->
+                    <a-button size="large" @click="change_theme()" :shape="'circle'">
+                        <template #icon>
+                            <icon-sun v-show="theme == 'light'"/>
+                            <icon-moon v-show="theme != 'light'"/>
                         </template>
-                    </a-popover>
-                </a-button-group>
-
-                <!--主题切换-->
-                <a-button secondary size="large" @click="change_theme()" circle>
-                    <template #icon>
-                        <icon-sun v-show="theme == 'light'"/>
-                        <icon-moon v-show="theme != 'light'"/>
-                    </template>
-                </a-button>
-            </a-space>
+                    </a-button>
+                </a-space>
+            </div>
         </a-menu>
+        <!--</a-affix>-->
     </a-layout-header>
 </template>
 
@@ -114,7 +118,10 @@ export default {
             },
         }
     },
+    data() {
+        return {
+            drop_down: false,
+        }
+    }
 }
 </script>
-<style>
-</style>

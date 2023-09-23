@@ -18,7 +18,7 @@
     </a-grid-item>
 
     <a-grid-item :span="3">
-        <a-button @click="alert_plane_func"> 登录</a-button>
+        <a-button long :type="'primary'" @click="alert_plane_func"> 登录</a-button>
     </a-grid-item>
 
     <a-grid-item :span="3">

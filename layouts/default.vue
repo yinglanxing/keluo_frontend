@@ -5,8 +5,8 @@
         <!--页首-->
         <default-header></default-header>
 
-        <!--embedded 增加背景对于header、卡片等组件的对比度-->
-        <a-layout embedded content-style="padding: 24px">
+        <!--背景色 layout-->
+        <a-layout style="padding-top: 24px;background-color: var(--color-neutral-2);">
 
             <a-grid :cols="24" :colGap="16" :rowGap="16">
                 <!--空白边-->
@@ -49,7 +49,7 @@
         </a-layout>
 
         <!--登录器-->
-        <a-modal :on-after-leave="reset_login" v-model:show="show_login_plain">
+        <a-modal :footer="false" :hide-title="true" @close="reset_login" v-model:visible="show_login_plain">
             <login-and-signup></login-and-signup>
         </a-modal>
 
@@ -72,6 +72,7 @@ export default {
             },
             reset_login() {
                 // 重置到第一页
+                console.log("close")
                 show_signup_plain.value = false
             },
         }

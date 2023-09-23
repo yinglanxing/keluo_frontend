@@ -5,7 +5,7 @@
         <a-card>
 
             <template #title>
-                <popup-login></popup-login>
+                <user-self></user-self>
             </template>
 
             <template #extra>

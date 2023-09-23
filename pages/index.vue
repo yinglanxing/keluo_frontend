@@ -5,10 +5,14 @@
         <a-card v-for="q in 10">
             <a-card-meta>
                 <template #title>
-                    <a-comment>
+                    <a-comment align="right">
                         <template #avatar>
                             <!--弹出信息弹框-->
                             <popup-user></popup-user>
+                        </template>
+
+                        <template #datetime>
+                            time:00:00:00
                         </template>
 
                         <template #author>
@@ -16,8 +20,7 @@
                         </template>
 
                         <template #content>
-                            time:{{ Date.now() }}
-                            <!--<n-time :time="0"/>-->
+
                         </template>
                     </a-comment>
                 </template>
@@ -27,26 +30,28 @@
                     <a-typography>
                         <!--标题-->
                         <a-typography-title :heading="5">
-                            title {{ q }}
+                            <nuxt-link :to="'/article/' + q">
+                                title {{ q }}
+                            </nuxt-link>
                         </a-typography-title>
 
                         <!--标签-->
                         <!--<a-typography-paragraph>-->
                         <!--    <a-tag style="margin: 0 0 6px 6px;" v-for="i in 15">tag {{ i }}</a-tag>-->
                         <!--</a-typography-paragraph>-->
-                        <a-input-tag style="margin-bottom: 6px" :default-value="['tag1']" readonly/>
+                        <a-input-tag style="margin-bottom: 6px" :default-value="Array(20).fill('#tags')" readonly/>
 
                         <!--文字部分-->
                         <!--<a-typography-paragraph>-->
                         <!--</a-typography-paragraph>-->
                     </a-typography>
 
-                    <a-space direction="vertical">
+                    <a-space direction="vertical" fill>
                         <!--文字占位-->
                         <a-skeleton-line :rows="2"></a-skeleton-line>
 
                         <!--图片区-->
-                        <a-space>
+                        <a-space wrap>
                             <a-image width="200" height="100"></a-image>
                             <a-image width="200" height="100"></a-image>
                             <a-image width="200" height="100"></a-image>

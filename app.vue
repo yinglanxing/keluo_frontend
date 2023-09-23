@@ -2,11 +2,15 @@
 
     <nuxt-layout :name="layout">
 
-        <!--页面进度条-->
-        <NuxtLoadingIndicator/>
+        <a-layout-content>
 
-        <!--页面内容-->
-        <nuxt-page/>
+            <!--页面进度条-->
+            <NuxtLoadingIndicator/>
+
+            <!--页面内容-->
+            <nuxt-page/>
+        </a-layout-content>
+
 
     </nuxt-layout>
 

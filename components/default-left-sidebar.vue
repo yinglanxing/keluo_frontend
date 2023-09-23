@@ -1,14 +1,16 @@
 <template>
-    <a-space direction="vertical">
+    <a-affix :offset-top="5">
+        <a-space direction="vertical">
 
-        <!--热门tag-->
-        <a-card>
-            <a-space wrap>
-                <a-tag v-for="i in 20">tag {{ i }}</a-tag>
-            </a-space>
-        </a-card>
+            <!--热门tag-->
+            <a-card>
+                <a-space wrap>
+                    <a-tag v-for="i in 20">#tags {{ i }}</a-tag>
+                </a-space>
+            </a-card>
 
-    </a-space>
+        </a-space>
+    </a-affix>
 </template>
 
 <script lang="ts">

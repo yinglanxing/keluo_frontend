@@ -26,7 +26,7 @@
         </a-grid-item>
 
         <a-grid-item :span="3">
-            <n-button @click="alert_plane_func" secondary type="info" block>登录</n-button>
+            <a-button @click="alert_plane_func" :type="'primary'" long>登录</a-button>
         </a-grid-item>
 
         <a-grid-item :span="3">

@@ -9,10 +9,8 @@
         </a-avatar>
         <!--内容-->
         <template #content>
-            <n-card>
-                <!--详细用户信息-->
-                详细用户信息
-            </n-card>
+            <!--详细用户信息-->
+            详细用户信息
         </template>
     </a-popover>
 
