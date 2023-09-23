@@ -1,29 +1,24 @@
 <template>
 
-    <n-config-provider :theme="theme == 'dark' ? darkTheme: null">
-        <nuxt-layout :name="layout">
-            <nuxt-page/>
-        </nuxt-layout>
-    </n-config-provider>
+    <nuxt-layout :name="layout">
+
+        <!--页面进度条-->
+        <NuxtLoadingIndicator/>
+
+        <!--页面内容-->
+        <nuxt-page/>
+
+    </nuxt-layout>
 
 </template>
 
 <script lang="ts">
-import {darkTheme} from "naive-ui";
 
 export default {
     setup() {
         const layout = GLOBAL_LAYOUT()
-        const theme = GLOBAL_THEME()
         return {
             layout,
-            theme,
-        }
-    },
-    data() {
-        return {
-            // 主题
-            darkTheme,
         }
     }
 }

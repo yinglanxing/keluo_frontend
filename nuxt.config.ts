@@ -1,9 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-// 组件自动按需引用
-import Components from "unplugin-vue-components/vite";
-import {NaiveUiResolver} from "unplugin-vue-components/resolvers";
-
 export default defineNuxtConfig({
 
     devtools: {enabled: true},
@@ -48,25 +44,6 @@ export default defineNuxtConfig({
         // "@css-render/vue3-ssr",
     ],
 
-    vite: {
-        plugins: [
-            // ui组件
-            Components({
-                resolvers: [
-                    // naive-ui 自动加载
-                    NaiveUiResolver(),
-                    // arco 在模块中已存在不需要自动引入
-                    // ArcoResolver(),
-                ]
-            })
-        ],
-
-        optimizeDeps: {
-            include:
-                process.env.NODE_ENV === "development" ? ["naive-ui"] : []
-        }
-    },
-
     // 注册自动引入组件
     components: [
         {
@@ -84,7 +61,7 @@ export default defineNuxtConfig({
     },
 
     build: {
-        transpile: process.env.NODE_ENV === 'production' ? ['naive-ui', '@css-render/vue3-ssr',] : []
+        // transpile: process.env.NODE_ENV === 'production' ? ['@css-render/vue3-ssr',] : []
     },
 
     // i18n 搁置

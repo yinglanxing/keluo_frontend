@@ -7,28 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    NAvatar: typeof import('naive-ui')['NAvatar']
-    NButton: typeof import('naive-ui')['NButton']
-    NButtonGroup: typeof import('naive-ui')['NButtonGroup']
-    NCard: typeof import('naive-ui')['NCard']
-    NConfigProvider: typeof import('naive-ui')['NConfigProvider']
-    NDivider: typeof import('naive-ui')['NDivider']
-    NEllipsis: typeof import('naive-ui')['NEllipsis']
-    NForm: typeof import('naive-ui')['NForm']
-    NFormItem: typeof import('naive-ui')['NFormItem']
-    NH3: typeof import('naive-ui')['NH3']
-    NIcon: typeof import('naive-ui')['NIcon']
-    NImage: typeof import('naive-ui')['NImage']
-    NInput: typeof import('naive-ui')['NInput']
-    NLayout: typeof import('naive-ui')['NLayout']
-    NModal: typeof import('naive-ui')['NModal']
-    NPopover: typeof import('naive-ui')['NPopover']
-    NSkeleton: typeof import('naive-ui')['NSkeleton']
-    NSpace: typeof import('naive-ui')['NSpace']
-    NTabPane: typeof import('naive-ui')['NTabPane']
-    NTabs: typeof import('naive-ui')['NTabs']
-    NTag: typeof import('naive-ui')['NTag']
-    NTime: typeof import('naive-ui')['NTime']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
   }

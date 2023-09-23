@@ -1,88 +1,100 @@
 <template>
     <!--主布局-->
     <!--todo 明天创建一下话题，文章等组件文件结构 --2023920-->
-    <n-space vertical>
-        <n-card v-for="q in 10">
+    <a-space direction="vertical" fill>
+        <a-card v-for="q in 10">
+            <a-card-meta>
+                <template #title>
+                    <a-comment>
+                        <template #avatar>
+                            <!--弹出信息弹框-->
+                            <popup-user></popup-user>
+                        </template>
 
-            <!--信息-->
-            <template #header>
-                <a-comment>
-                    <template #avatar>
-                        <!--弹出信息弹框-->
-                        <popup-user></popup-user>
-                    </template>
+                        <template #author>
+                            user name
+                        </template>
 
-                    <template #author>
-                        user name
-                    </template>
+                        <template #content>
+                            time:{{ Date.now() }}
+                            <!--<n-time :time="0"/>-->
+                        </template>
+                    </a-comment>
+                </template>
 
-                    <template #content>
-                        <n-time :time="0"/>
-                    </template>
-                </a-comment>
-            </template>
+                <template #description>
 
-            <!--更多操作-->
-            <template #header-extra>
-                <n-button circle>
-                    <template #icon>
-                        <icon-more-vertical/>
-                    </template>
-                </n-button>
-            </template>
+                    <a-typography>
+                        <!--标题-->
+                        <a-typography-title :heading="5">
+                            title {{ q }}
+                        </a-typography-title>
 
-            <n-h3>
-                title {{ q }}
-            </n-h3>
+                        <!--标签-->
+                        <!--<a-typography-paragraph>-->
+                        <!--    <a-tag style="margin: 0 0 6px 6px;" v-for="i in 15">tag {{ i }}</a-tag>-->
+                        <!--</a-typography-paragraph>-->
+                        <a-input-tag style="margin-bottom: 6px" :default-value="['tag1']" readonly/>
 
+                        <!--文字部分-->
+                        <!--<a-typography-paragraph>-->
+                        <!--</a-typography-paragraph>-->
+                    </a-typography>
 
-            <n-space vertical>
-                <!--标签-->
-                <!--<a-input-tag style="margin-bottom: 6px" :default-value="['tag1', 'tag2', 'tag3']" readonly/>-->
-                <n-ellipsis :tooltip="false" style="height: 30px">
-                    <n-space>
-                        <n-tag style="margin-left: 6px;" v-for="i in 15">tag {{ i }}</n-tag>
-                    </n-space>
-                </n-ellipsis>
+                    <a-space direction="vertical">
+                        <!--文字占位-->
+                        <a-skeleton-line :rows="2"></a-skeleton-line>
 
-                <!--文字部分-->
-                <n-skeleton text :repeat="2" :rows="2"></n-skeleton>
+                        <!--图片区-->
+                        <a-space>
+                            <a-image width="200" height="100"></a-image>
+                            <a-image width="200" height="100"></a-image>
+                            <a-image width="200" height="100"></a-image>
+                        </a-space>
+                    </a-space>
 
-                <!--图片区-->
-                <n-space>
-                    <a-image width="200" height="100"></a-image>
-                    <a-image width="200" height="100"></a-image>
-                    <a-image width="200" height="100"></a-image>
-                </n-space>
-            </n-space>
+                </template>
+            </a-card-meta>
 
             <!--底部图标-->
-            <!--<template #action>-->
-            <template #footer>
-                <n-space justify="end">
-                        <span>
-                            <icon-heart-fill/>
-                            {{ 83 }}
-                        </span>
-                    <span>
-                            <icon-star-fill/>
-                            {{ 3 }}
-                        </span>
-                    <span>
-                            <icon-message/>
-                            {{ 3 }}
-                        </span>
-                    <span>
-                            <icon-eye></icon-eye>
-                            {{ 5 }}
-                        </span>
-                </n-space>
+            <template #actions>
+
+                <!--更多操作-->
+                <!--<a-space align="">-->
+                <!--    <a-button>-->
+                <!--        <icon-more-vertical/>-->
+                <!--    </a-button>-->
+                <!--</a-space>-->
+
+                <a-space>
+                    <!--<a-space align="end">-->
+                    <a-link>
+                        <icon-heart-fill/>
+                        {{ 83 }}
+                    </a-link>
+
+                    <a-link>
+                        <icon-star-fill/>
+                        {{ 3 }}
+                    </a-link>
+
+                    <a-link>
+                        <icon-message/>
+                        {{ 3 }}
+                    </a-link>
+
+                    <a-link>
+                        <icon-eye></icon-eye>
+                        {{ 5 }}
+                    </a-link>
+                </a-space>
+
             </template>
-        </n-card>
+        </a-card>
 
         <!--翻页器-->
         <a-pagination :total="100" show-jumper/>
-    </n-space>
+    </a-space>
 
 </template>
 

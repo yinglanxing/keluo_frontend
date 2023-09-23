@@ -108,27 +108,12 @@
 <script lang="ts">
 export default {
     data() {
-        return {
-            // 主题 flag
-            theme_style: false,
-        }
     },
     methods: {
-        // 切换主题
-        change_theme() {
-            // 切换 flag
-            this.theme_style = !this.theme_style
-        },
         // TODO 点击跳转路由
         chang_route(_key: string) {
             // Message.info({content: `select ${key}`, showIcon: true});
         }
     },
-    // 监听
-    watch: {
-        // TODO 切换主题flag时改动组件的配色
-        theme_style() {
-        },
-    }
 }
 </script>

@@ -1,63 +1,53 @@
 <template>
-    <n-space vertical>
+    <a-space direction="vertical">
 
         <!--用户组件-->
-        <n-card>
+        <a-card>
 
-            <template #header>
+            <template #title>
+                <popup-login></popup-login>
             </template>
 
-            <template #header-extra>
-                <n-button block quaternary>
+            <template #extra>
+                <a-button>
                     ￥: {{ 0 }}
-                </n-button>
+                </a-button>
             </template>
 
             <!--v-show 姓名或登录邀请-->
-            <n-h3>
-              <user-profile-card></user-profile-card>
-            </n-h3>
+            <a-typography>
+                <user-profile-card></user-profile-card>
+            </a-typography>
 
-            <n-divider></n-divider>
+            <a-divider></a-divider>
 
-            <n-space justify="center">
+            <a-space align="center">
 
-                <n-tag>文章总数:69</n-tag>
-                <n-tag>关注人数:12</n-tag>
-                <n-tag>回复统计:200</n-tag>
+                <a-tag>文章总数:69</a-tag>
+                <a-tag>关注人数:12</a-tag>
+                <a-tag>回复统计:200</a-tag>
 
-            </n-space>
+            </a-space>
 
-        </n-card>
+        </a-card>
 
-        <!--todo 签到组件-->
-        <n-card>
-<!--            <n-space vertical>-->
-<!--                <n-button block>-->
-<!--                    <template #icon>-->
-<!--                        <icon-calendar/>-->
-<!--                    </template>-->
-<!--                    {{ "签到" }}-->
-<!--                </n-button>-->
-<!--            </n-space>-->
+        <a-card>
+            <!--todo 日历组件-->
+            <!--<sign-calendar></sign-calendar>-->
+        </a-card>
 
-            <!--日历组件-->
-<!--            <sign-calendar></sign-calendar>-->
+        <a-divider>积分排行</a-divider>
 
-        </n-card>
-
-        <n-divider style="margin: 0">积分排行</n-divider>
-
-        <n-space vertical>
+        <a-space fill direction="vertical">
             <a-card v-for="x in 10">
                 <a-avatar :style="{ marginRight: '8px', backgroundColor: '#165DFF' }" :size="28">
                     {{ x }}
                 </a-avatar>
                 <a-typography-text>Username</a-typography-text>
             </a-card>
-        </n-space>
+        </a-space>
 
-    </n-space>
+    </a-space>
 </template>
 
 <script lang="ts">

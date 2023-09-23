@@ -4,13 +4,9 @@
     <!--todo 全局登录状态-->
     <a-popover :show-arrow="false">
         <!--头像-->
-        <n-space>
-            <n-button @click="alert_plane_func" size="large" circle>
-                <template #icon>
-                    <icon-user/>
-                </template>
-            </n-button>
-        </n-space>
+        <a-avatar @click="alert_plane_func">
+            <icon-user/>
+        </a-avatar>
         <!--内容-->
         <!-- Todo 该grid卡片后续将挪动到首页上显示，单独封装成一个组件-->
         <template #content>
@@ -45,8 +41,7 @@ export default {
             plane_show: false,
         }
     },
-    methods: {
-    }
+    methods: {}
 }
 </script>
 

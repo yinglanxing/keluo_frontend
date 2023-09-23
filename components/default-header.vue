@@ -1,81 +1,72 @@
 <template>
     <!--头部-->
-    <!-- 设置导航栏宽度为自动-->
-    <a-layout-header :style="{width: 'auto'}">
-        <!--TODO-->
-        <a-menu :default-selected-keys="['1']">
-            <!--在元素之间均匀分配空间，并在首尾两端留有一半的空间-->
-            <n-space justify="space-around">
+    <a-layout-header style="width: 100vw">
+        <!--左边菜单导航-->
+        <a-menu mode="horizontal" :default-selected-keys="['1']">
+            <!--项目logo-->
+            <a-link>
+                <a-image :preview="false" src="/favicon.ico"></a-image>
+            </a-link>
 
-                <!--使用左边菜单当导航栏-->
-                <n-space>
+            <a-menu-item key="1">
+                <nuxt-link>首页</nuxt-link>
+            </a-menu-item>
 
-                    <!--项目logo-->
-                    <a-link>
-                        <a-image src="/favicon.ico"></a-image>
-                    </a-link>
+            <a-menu-item>
+                <nuxt-link>话题</nuxt-link>
+            </a-menu-item>
 
-                    <a-menu-item key="1">
-                        <nuxt-link>首页</nuxt-link>
-                    </a-menu-item>
+            <a-menu-item>
+                <nuxt-link>文章</nuxt-link>
+            </a-menu-item>
 
-                    <a-menu-item>
-                        <nuxt-link>话题</nuxt-link>
-                    </a-menu-item>
+            <a-menu-item>
+                <nuxt-link>问答</nuxt-link>
+            </a-menu-item>
 
-                    <a-menu-item>
-                        <nuxt-link>文章</nuxt-link>
-                    </a-menu-item>
+            <a-menu-item>
+                <nuxt-link>硬件商城</nuxt-link>
+            </a-menu-item>
 
-                    <a-menu-item>
-                        <nuxt-link>问答</nuxt-link>
-                    </a-menu-item>
+            <a-menu-item>
+                <nuxt-link>文档</nuxt-link>
+                <!--<nuxt-link>{{ $t("文档") }}</nuxt-link>-->
+            </a-menu-item>
+            <!--TODO 在元素之间均匀分配空间，并在首尾两端留有一半的空间-->
 
-                    <a-menu-item>
-                        <nuxt-link>硬件商城</nuxt-link>
-                    </a-menu-item>
+            <!--右边菜单-->
+            <a-space align="end">
 
-                    <a-menu-item>
-                        <nuxt-link>{{ "文档" }}</nuxt-link>
-                        <!--<nuxt-link>{{ $t("文档") }}</nuxt-link>-->
-                    </a-menu-item>
+                <!--搜索框-->
+                <a-input size="large" round style="top : auto ">
+                    <template #prefix>
+                        <icon-search></icon-search>
+                    </template>
+                </a-input>
 
-                </n-space>
+                <!--用户登录-->
+                <popup-login></popup-login>
 
-                <!--右边菜单-->
-                <n-space>
-
-                    <!--搜索框-->
-                    <n-input size="large" round style="top : auto ">
-                        <template #prefix>
-                            <icon-search></icon-search>
+                <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
+                <a-button-group size="large">
+                    <!--左边按钮-->
+                    <a-button color="#1e80ff">
+                        <template #icon>
+                            <icon-edit/>
                         </template>
-                    </n-input>
+                        {{ "创作中心" }}
+                    </a-button>
 
-                    <!--用户登录-->
-                    <popup-login></popup-login>
+                    <!--右边下拉按钮-->
+                    <a-popover placement="bottom-end">
+                        <a-button color="#1e80ff">
+                            <icon-caret-down/>
+                        </a-button>
+                        <!--<a-button color="#1e80ff" style="width:14px">-->
+                        <!--    <icon-caret-down style="font-size: 14px"/>-->
+                        <!--</a-button>-->
 
-                    <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
-                    <n-button-group size="large">
-                        <!--左边按钮-->
-                        <n-button color="#1e80ff">
-                            <template #icon>
-                                <icon-edit/>
-                            </template>
-                            {{ "创作中心" }}
-                        </n-button>
-
-                        <!--右边下拉按钮-->
-                        <n-popover placement="bottom-end">
-
-                            <template #trigger>
-                                <n-button color="#1e80ff" style="width:8px">
-                                    <template #icon>
-                                        <icon-caret-down style="font-size: 14px"/>
-                                    </template>
-                                </n-button>
-                            </template>
-                            <!--推荐使用无边框组件包裹-->
+                        <template #content>
                             <a-doption>
                                 写文章
                             </a-doption>
@@ -85,19 +76,18 @@
                             <a-doption>
                                 提问
                             </a-doption>
-                        </n-popover>
-                    </n-button-group>
-
-                    <!--主题切换-->
-                    <n-button secondary size="large" @click="change_theme()" circle>
-                        <template #icon>
-                            <icon-sun v-show="theme == 'light'"/>
-                            <icon-moon v-show="theme != 'light'"/>
                         </template>
-                    </n-button>
-                </n-space>
-            </n-space>
+                    </a-popover>
+                </a-button-group>
 
+                <!--主题切换-->
+                <a-button secondary size="large" @click="change_theme()" circle>
+                    <template #icon>
+                        <icon-sun v-show="theme == 'light'"/>
+                        <icon-moon v-show="theme != 'light'"/>
+                    </template>
+                </a-button>
+            </a-space>
         </a-menu>
     </a-layout-header>
 </template>
@@ -108,7 +98,6 @@ export default {
     setup() {
         // 获取主题
         const theme = GLOBAL_THEME()
-
         return {
             theme,
             // 切换主题

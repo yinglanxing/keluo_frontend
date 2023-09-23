@@ -1,14 +1,14 @@
 <template>
-    <n-space vertical>
+    <a-space direction="vertical">
 
         <!--热门tag-->
-        <n-card>
-            <n-space>
-                <n-tag round checkable v-for="i in 20">tag {{ i }}</n-tag>
-            </n-space>
-        </n-card>
+        <a-card>
+            <a-space wrap>
+                <a-tag v-for="i in 20">tag {{ i }}</a-tag>
+            </a-space>
+        </a-card>
 
-    </n-space>
+    </a-space>
 </template>
 
 <script lang="ts">
