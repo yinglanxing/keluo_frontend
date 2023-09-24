@@ -29,17 +29,18 @@
 
                     <a-typography>
                         <!--标题-->
-                        <a-typography-title :heading="5">
-                            <nuxt-link :to="'/article/' + q">
+                        <nuxt-link :to="'/article/' + q" style="color: var(--color-neutral-1);">
+                            <a-typography-title :heading="5">
                                 title {{ q }}
-                            </nuxt-link>
-                        </a-typography-title>
+                            </a-typography-title>
+                        </nuxt-link>
 
                         <!--标签-->
                         <!--<a-typography-paragraph>-->
                         <!--    <a-tag style="margin: 0 0 6px 6px;" v-for="i in 15">tag {{ i }}</a-tag>-->
                         <!--</a-typography-paragraph>-->
-                        <a-input-tag style="margin-bottom: 6px" :default-value="Array(20).fill('#tags')" readonly/>
+                        <a-input-tag :max-tag-count="5" style="margin-bottom: 6px"
+                                     :default-value="Array(10).fill('#tags')" readonly/>
 
                         <!--文字部分-->
                         <!--<a-typography-paragraph>-->
@@ -64,36 +65,44 @@
             <!--底部图标-->
             <template #actions>
 
-                <!--更多操作-->
-                <!--<a-space align="">-->
+                <!--更多操作-->.
+                <!--<a-space fill :align="'start'">-->
                 <!--    <a-button>-->
-                <!--        <icon-more-vertical/>-->
+                <!--        <template #icon>-->
+                <!--            <icon-more-vertical/>-->
+                <!--        </template>-->
                 <!--    </a-button>-->
                 <!--</a-space>-->
 
-                <a-space>
-                    <!--<a-space align="end">-->
-                    <a-link>
+                <a-button :shape="'round'">
+                    <template #icon>
+                        <!--<icon-heart/>-->
                         <icon-heart-fill/>
-                        {{ 83 }}
-                    </a-link>
+                    </template>
+                    {{ 3 }}
+                </a-button>
 
-                    <a-link>
+                <a-button :shape="'round'">
+                    <template #icon>
+                        <!--<icon-star/>-->
                         <icon-star-fill/>
-                        {{ 3 }}
-                    </a-link>
+                    </template>
+                    {{ 3 }}
+                </a-button>
 
-                    <a-link>
+                <a-button :shape="'round'">
+                    <template #icon>
                         <icon-message/>
-                        {{ 3 }}
-                    </a-link>
+                    </template>
+                    {{ 3 }}
+                </a-button>
 
-                    <a-link>
-                        <icon-eye></icon-eye>
-                        {{ 5 }}
-                    </a-link>
-                </a-space>
-
+                <a-button :shape="'round'">
+                    <template #icon>
+                        <icon-eye/>
+                    </template>
+                    {{ 5 }}
+                </a-button>
             </template>
         </a-card>
 

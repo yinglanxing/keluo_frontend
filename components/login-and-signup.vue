@@ -1,8 +1,8 @@
 <template>
 
-    <a-tabs size="large" :active-key="show_signup_plain ? 'signup':'login'">
+    <a-tabs animation size="large" v-model:active-key="show_plain">
         <!--登录页面-->
-        <a-tab-pane key="login" title="登录">
+        <a-tab-pane :key="1" title="登录">
 
             <a-form :model="login_from">
 
@@ -27,7 +27,7 @@
         </a-tab-pane>
 
         <!--注册页面-->
-        <a-tab-pane key="signup" title="注册">
+        <a-tab-pane :key="2" title="注册">
 
             <a-form :model="signup_from">
 
@@ -85,14 +85,15 @@
 export default {
     setup() {
         // 是否进入注册页面状态
-        const show_signup_plain = show_signup()
+        const show_plain = show_login()
         return {
-            show_signup_plain,
+            show_plain,
         }
     },
     data() {
         // todo
         return {
+            // plain_page: "",
             login_from: {
                 account: '',
                 password: '',

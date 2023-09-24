@@ -5,7 +5,9 @@
         <a-card>
 
             <template #title>
-                <user-self></user-self>
+                <a-avatar>
+                    <icon-user/>
+                </a-avatar>
             </template>
 
             <template #extra>
@@ -34,6 +36,7 @@
         <a-card>
             <!--todo 日历组件-->
             <!--<sign-calendar></sign-calendar>-->
+            <a-button long>签到</a-button>
         </a-card>
 
         <a-divider>积分排行</a-divider>

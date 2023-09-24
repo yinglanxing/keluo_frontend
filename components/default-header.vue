@@ -1,7 +1,6 @@
 <template>
     <!--头部-->
     <a-layout-header>
-        <!--<a-affix :offset-top="0">-->
         <!--左边菜单导航-->
         <a-menu mode="horizontal" :default-selected-keys="['1']">
             <!--项目logo-->
@@ -38,7 +37,7 @@
             <!--右边菜单-->
             <div style="float: right">
                 <!--<div>-->
-                <a-space>
+                <a-space size="large">
 
                     <!--搜索框-->
                     <a-input size="large" round style="top : auto ">

@@ -1,5 +1,4 @@
-export const show_login = () => useState("login_plain", () => false)
-export const show_signup = () => useState("signup_plain", () => false)
+export const show_login = () => useState("login_plain", () => 0)
 export const user_state = () => useState("user_state", () => ({
     current: null,
     userToken: null,

@@ -26,12 +26,12 @@
         </a-grid-item>
 
         <a-grid-item :span="3">
-            <a-button @click="alert_plane_func" :type="'primary'" long>登录</a-button>
+            <a-button @click="alert_plane(1)" :type="'primary'" long>登录</a-button>
         </a-grid-item>
 
         <a-grid-item :span="3">
             没有账号？
-            <a-link @click="alert_plane_signup_func">
+            <a-link @click="alert_plane(2)">
                 前往注册
             </a-link>
         </a-grid-item>
@@ -42,17 +42,11 @@
 export default {
     setup() {
         const show_login_plain = show_login()
-        const show_signup_plain = show_signup()
         return {
             show_login_plain,
-            alert_plane_func() {
+            alert_plane(num: number = 0) {
                 // 弹出登录框
-                show_login_plain.value = true
-            },
-            alert_plane_signup_func() {
-                // 弹出登录框
-                show_login_plain.value = true
-                show_signup_plain.value = true
+                show_login_plain.value = num
             },
         }
     },

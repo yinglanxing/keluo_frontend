@@ -4,7 +4,7 @@
     <!--todo 全局登录状态-->
     <a-popover :show-arrow="false">
         <!--头像-->
-        <a-avatar @click="alert_plane_func">
+        <a-avatar @click="alert_plane(1)">
             <icon-user/>
         </a-avatar>
         <!--内容-->
@@ -30,9 +30,9 @@ export default {
         const show_login_plain = show_login()
         return {
             show_login_plain,
-            alert_plane_func() {
+            alert_plane(num: number = 0) {
                 // 弹出登录框
-                show_login_plain.value = true
+                show_login_plain.value = num
             },
         }
     },

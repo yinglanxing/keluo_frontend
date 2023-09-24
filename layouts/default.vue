@@ -27,9 +27,7 @@
                         <!--页面内容-->
                         <a-grid-item :span="14">
                             <!-- 顶部nav-->
-                            <div style="margin-bottom: 12px">
-                                <default-nav></default-nav>
-                            </div>
+                            <default-nav></default-nav>
                             <slot/>
                         </a-grid-item>
 
@@ -49,7 +47,8 @@
         </a-layout>
 
         <!--登录器-->
-        <a-modal :footer="false" :hide-title="true" @close="reset_login" v-model:visible="show_login_plain">
+        <a-modal :footer="false" :hide-title="true" @cancel="alert_plane(-1)" @close="alert_plane(0)"
+                 :visible="show_login_plain>0">
             <login-and-signup></login-and-signup>
         </a-modal>
 
@@ -63,17 +62,12 @@
 export default {
     setup() {
         const show_login_plain = show_login()
-        const show_signup_plain = show_signup()
         return {
             show_login_plain,
-            alert_plane_func() {
+            alert_plane(num: number = 0) {
                 // 弹出登录框
-                show_login_plain.value = true
-            },
-            reset_login() {
-                // 重置到第一页
-                console.log("close")
-                show_signup_plain.value = false
+                console.log(num)
+                show_login_plain.value = num
             },
         }
     },

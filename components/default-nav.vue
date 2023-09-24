@@ -1,63 +1,6 @@
 <template>
     <!--细分菜单-->
-    <!--todo 后台传参动态渲染-->
-
-    <!--<a-menu mode="horizontal" :default-selected-keys="['1']">-->
-    <!--    <a-menu-item key="1">-->
-    <!--        <template #icon>-->
-    <!--            <icon-fire/>-->
-    <!--        </template>-->
-    <!--        {{ "热门" }}-->
-    <!--    </a-menu-item>-->
-
-    <!--    <a-menu-item key="2">-->
-    <!--        <template #icon>-->
-    <!--            <icon-brush/>-->
-    <!--        </template>-->
-    <!--        {{ "最新" }}-->
-    <!--    </a-menu-item>-->
-
-    <!--    <a-menu-item key="3">-->
-    <!--        <template #icon>-->
-    <!--            <icon-heart-fill/>-->
-    <!--        </template>-->
-    <!--        {{ "关注" }}-->
-    <!--    </a-menu-item>-->
-
-    <!--    <a-menu-item key="4">-->
-    <!--        <template #icon>-->
-    <!--            <icon-message/>-->
-    <!--        </template>-->
-    <!--        {{ "交流" }}-->
-    <!--    </a-menu-item>-->
-
-    <!--    <a-menu-item key="5">-->
-    <!--        <template #icon>-->
-    <!--            <icon-question/>-->
-    <!--        </template>-->
-    <!--        {{ "提问" }}-->
-    <!--    </a-menu-item>-->
-
-    <!--    <a-menu-item key="6">-->
-    <!--        <template #icon>-->
-    <!--            <icon-copyright :rotate="90"/>-->
-    <!--        </template>-->
-    <!--        {{ "开源" }}-->
-    <!--    </a-menu-item>-->
-
-    <!--    <a-menu-item key="7">-->
-    <!--        <template #icon>-->
-    <!--            <icon-thumb-up-fill/>-->
-    <!--        </template>-->
-    <!--        {{ "反馈" }}-->
-    <!--    </a-menu-item>-->
-
-    <!--</a-menu>-->
-
-    <a-menu mode="horizontal" :default-selected-keys="['1']" style="
-        display: flex;
-        margin-right: 100px;
-       ">
+    <a-menu mode="horizontal" @change="chang_route" :default-selected-keys="['1']" style="margin-bottom: 12px;">
         <a-menu-item key="1" style="align-items: center">
             <template #icon>
                 <icon-fire/>
@@ -85,14 +28,6 @@
             </template>
             {{ "提问" }}
         </a-menu-item>
-
-        <!--todo 开源热榜封装成卡片-->
-        <!--<a-menu-item key="5">-->
-        <!--    <template #icon>-->
-        <!--        <icon-github/>-->
-        <!--    </template>-->
-        <!--    {{ "开源热榜" }}-->
-        <!--</a-menu-item>-->
     </a-menu>
 
 
@@ -106,6 +41,7 @@ export default {
     methods: {
         // todo 点击跳转路由
         chang_route(_key: string) {
+            console.log(_key, arguments);
             // Message.info({content: `select ${key}`, showIcon: true});
         }
     },

@@ -60,9 +60,9 @@ export default defineNuxtConfig({
         ]
     },
 
-    build: {
-        // transpile: process.env.NODE_ENV === 'production' ? ['@css-render/vue3-ssr',] : []
-    },
+    // build: {
+    //     transpile: process.env.NODE_ENV === 'production' ? ['@css-render/vue3-ssr',] : []
+    // },
 
     // i18n 搁置
     // '@nuxtjs/i18n' 国际化组件导入导致项目无法运行
