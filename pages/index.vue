@@ -37,15 +37,18 @@
 
                         <!--标签-->
                         <!--<a-typography-paragraph>-->
-                        <!--    <a-tag style="margin: 0 0 6px 6px;" v-for="i in 15">tag {{ i }}</a-tag>-->
                         <!--</a-typography-paragraph>-->
-                        <a-input-tag :max-tag-count="5" style="margin-bottom: 6px"
-                                     :default-value="Array(10).fill('#tags')" readonly/>
+                        <!--<a-input-tag :max-tag-count="5" style="margin-bottom: 6px"-->
+                        <!--             :default-value="Array(10).fill('#tags')" readonly/>-->
 
                         <!--文字部分-->
                         <!--<a-typography-paragraph>-->
                         <!--</a-typography-paragraph>-->
                     </a-typography>
+
+                    <a-overflow-list>
+                        <a-tag style="margin: 12px 0" v-for="i in 15">tag {{ i }}</a-tag>
+                    </a-overflow-list>
 
                     <a-space direction="vertical" fill>
                         <!--文字占位-->
@@ -120,6 +123,8 @@
 // import {defineComponent, ref} from 'vue';
 // import {Message} from '@arco-design/web-vue';
 
+import {definePageMeta} from "#imports";
+
 export default {
     setup() {
         // 官方布局示例侧边栏参数
@@ -136,7 +141,27 @@ export default {
         // return {
         //     collapsed,
         //     onCollapse,
-        // };
+        // };{
+
+        definePageMeta({
+            validate(route) {
+                return true
+            },
+        })
+
+        const layout = GLOBAL_LAYOUT()
+        layout.value = "default"
+
+        return {
+            layout,
+            change_layout() {
+                layout.value = "default"
+            },
+        }
+    },
+    beforeRouteEnter() {
+        // console.log()
+        // this.default_layout()
     },
 }
 </script>

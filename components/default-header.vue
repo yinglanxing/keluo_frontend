@@ -35,61 +35,59 @@
             <!--TODO 在元素之间均匀分配空间，并在首尾两端留有一半的空间-->
 
             <!--右边菜单-->
-            <div style="float: right">
-                <!--<div>-->
-                <a-space size="large">
+            <a-space size="large" style="float: right">
 
-                    <!--搜索框-->
-                    <a-input size="large" round style="top : auto ">
-                        <template #prefix>
-                            <icon-search></icon-search>
+                <!--搜索框-->
+                <a-input size="large" round style="top : auto ">
+                    <template #prefix>
+                        <icon-search></icon-search>
+                    </template>
+                </a-input>
+
+                <!--用户登录-->
+                <user-self></user-self>
+
+                <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
+                <a-button-group size="large">
+                    <!--左边按钮-->
+                    <a-button type="primary">
+                        <template #icon>
+                            <icon-edit/>
                         </template>
-                    </a-input>
+                        {{ "创作中心" }}
+                    </a-button>
 
-                    <!--用户登录-->
-                    <user-self></user-self>
-
-                    <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
-                    <a-button-group size="large">
-                        <!--左边按钮-->
+                    <!--右边下拉按钮-->
+                    <a-popover v-model:popup-visible="drop_down" trigger="click" placement="bottom-end">
                         <a-button type="primary">
                             <template #icon>
-                                <icon-edit/>
+                                <icon-caret-down :style="drop_down? 'transform: rotate(180deg)':''"/>
                             </template>
-                            {{ "创作中心" }}
                         </a-button>
 
-                        <!--右边下拉按钮-->
-                        <a-popover v-model:popup-visible="drop_down" trigger="click" placement="bottom-end">
-                            <a-button type="primary">
-                                <template #icon>
-                                    <icon-caret-down :style="drop_down? 'transform: rotate(180deg)':''"/>
-                                </template>
-                            </a-button>
-
-                            <template #content>
-                                <a-doption>
-                                    写文章
-                                </a-doption>
-                                <a-doption>
-                                    发表话题
-                                </a-doption>
-                                <a-doption>
-                                    提问
-                                </a-doption>
-                            </template>
-                        </a-popover>
-                    </a-button-group>
-
-                    <!--主题切换-->
-                    <a-button size="large" @click="change_theme()" :shape="'circle'">
-                        <template #icon>
-                            <icon-sun v-show="theme == 'light'"/>
-                            <icon-moon v-show="theme != 'light'"/>
+                        <template #content>
+                            <a-doption>
+                                写文章
+                            </a-doption>
+                            <a-doption>
+                                发表话题
+                            </a-doption>
+                            <a-doption>
+                                提问
+                            </a-doption>
                         </template>
-                    </a-button>
-                </a-space>
-            </div>
+                    </a-popover>
+                </a-button-group>
+
+                <!--主题切换-->
+                <a-button size="large" @click="change_theme()" :shape="'circle'">
+                    <template #icon>
+                        <icon-sun v-show="theme == 'light'"/>
+                        <icon-moon v-show="theme != 'light'"/>
+                    </template>
+                </a-button>
+            </a-space>
+
         </a-menu>
         <!--</a-affix>-->
     </a-layout-header>

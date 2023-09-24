@@ -43,18 +43,19 @@
                 <a-typography v-for="idx in 7" style="overflow: hidden">
                     <!--<a-tag>-->
                     {{ idx }}
-                    <icon-arrow-rise :size="20" style="color: red" v-if="idx % 2 "/>
+                    <icon-arrow-rise :size="20" style="color: red" v-if="idx % 4 "/>
                     <icon-arrow-fall :size="20" style="color: #f90" v-else/>
                     <!--</a-tag>-->
                     title {{ idx }} project
-                    <div style="float: right">
+                    <a-typography-text style="float: right">
                         <!--<a-divider :direction="'vertical'"></a-divider>-->
                         <icon-star/>
                         <!--todo 小于1k显示具体关注数-->
-                        {{ Math.ceil(Math.random() * 100) }} K
-                        <a-tag color="#f00" style="border-radius: 5px" v-if="idx % 2==1">热</a-tag>
-                        <a-tag color="#09f" style="border-radius: 5px" v-else>新</a-tag>
-                    </div>
+                        <!--{{ Math.ceil(Math.random() * 100) }} K-->
+                        {{ 100 - idx * 8 }} K
+                        <a-tag color="#f00" style="border-radius: 15px" v-if="idx % 3">热</a-tag>
+                        <a-tag color="#09f" style="border-radius: 15px" v-else>新</a-tag>
+                    </a-typography-text>
                 </a-typography>
 
                 <a-button long>完整榜单</a-button>
@@ -65,8 +66,9 @@
         <a-card>
             <a-space wrap>
                 <a-tag checkable v-for="i in 75">
-                    <a-col v-if="i % 3 == 0">{{ Math.random() }}</a-col>
-                    <a-col v-else>#tags {{ i }}</a-col>
+                    {{ i }}
+                    <!--<a-typography-text v-if="i % 3 == 0">{{ Math.random() }}</a-typography-text>-->
+                    <!--<a-typography-text v-else>#tags {{ i }}</a-typography-text>-->
                 </a-tag>
             </a-space>
         </a-card>
@@ -76,9 +78,12 @@
 </template>
 
 <script lang="ts">
-
+export default {
+    data() {
+        return {}
+    },
+}
 </script>
 
 <style scoped>
-
 </style>

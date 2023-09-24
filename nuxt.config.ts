@@ -38,7 +38,7 @@ export default defineNuxtConfig({
         // ui 组件
         "arco-design-nuxt-module",
         // 状态管理
-        // "@pinia/nuxt",
+        "@pinia/nuxt",
 
         // ssr渲染
         // "@css-render/vue3-ssr",

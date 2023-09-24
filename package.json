@@ -10,7 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.51.2",
+    "@arco-design/web-vue": "^2.52.0",
     "@css-render/vue3-ssr": "^0.15.12",
     "@nuxt/devtools": "latest",
     "@pinia/nuxt": "^0.4.11",
