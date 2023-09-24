@@ -65,7 +65,7 @@
         <!--热门tag-->
         <a-card>
             <a-space wrap>
-                <a-tag checkable v-for="i in 75">
+                <a-tag v-for="i in 75" @click="">
                     {{ i }}
                     <!--<a-typography-text v-if="i % 3 == 0">{{ Math.random() }}</a-typography-text>-->
                     <!--<a-typography-text v-else>#tags {{ i }}</a-typography-text>-->

@@ -9,18 +9,12 @@
         <div></div>
     </div>
 
-    <nuxt-layout :name="layout">
+    <nuxt-layout>
+        <!--页面进度条-->
+        <NuxtLoadingIndicator/>
 
-        <a-layout-content>
-
-            <!--页面进度条-->
-            <NuxtLoadingIndicator/>
-
-            <!--页面内容-->
-            <nuxt-page/>
-        </a-layout-content>
-
-
+        <!--页面内容-->
+        <nuxt-page/>
     </nuxt-layout>
 
 </template>
@@ -29,27 +23,8 @@
 
 export default {
     setup() {
-        const layout = GLOBAL_LAYOUT()
-        return {
-            layout,
-            chang_layout(str: string = "default") {
-                layout.value = str || "default"
-                // console.log("log layout", str)
-            }
-        }
     },
-
-    watch: {
-        // $route(a1, a2, a3) {
-        //     // console.log("lic", a1)
-        //     // console.log("lic", a2)
-        //     // console.log("lic", a3)
-        //     console.log(a1.name)
-        //     console.log(arguments)
-        //     this.chang_layout(a1.name)
-        //
-        // }
-    }
+    watch: {}
 }
 </script>
 
@@ -77,7 +52,7 @@ body {
 .max-cover > div {
     background-color: #279fcf;
     width: 4px;
-    height: 35px;
+    height: 40px;
     border-radius: 2px;
     margin: 2px;
     animation-fill-mode: both;

@@ -1,6 +1,6 @@
 <template>
     <!--个人信息弹框-->
-    <a-popover title="Title">
+    <a-trigger :mouse-enter-delay="1000" :popup-translate="[0, 10]">
         <!--头像-->
         <!--todo 全局登录状态-->
         <a-avatar>
@@ -10,7 +10,7 @@
         <template #content>
 
         </template>
-    </a-popover>
+    </a-trigger>
 </template>
 <script lang="ts">
 export default {

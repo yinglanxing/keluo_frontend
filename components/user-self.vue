@@ -2,7 +2,7 @@
     <!--弹窗登录-->
 
     <!--todo 全局登录状态-->
-    <a-popover :show-arrow="false">
+    <a-trigger :mouse-enter-delay="1000" :popup-translate="[0, 10]">
         <!--头像-->
         <a-avatar @click="alert_plane(1)">
             <icon-user/>
@@ -12,7 +12,7 @@
         <template #content>
             <login-tips></login-tips>
         </template>
-    </a-popover>
+    </a-trigger>
 
     <!--登录后显示自己-->
     <!--<popup-self></popup-self>-->
@@ -28,6 +28,7 @@
 export default {
     setup() {
         const show_login_plain = show_login()
+        show_nav_user
         return {
             show_login_plain,
             alert_plane(num: number = 0) {

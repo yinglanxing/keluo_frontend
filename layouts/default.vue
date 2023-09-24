@@ -17,26 +17,28 @@
                 <a-grid-item :span="{xs:22, sm:22, xl:18}">
 
 
-                    <a-grid :cols="24" :colGap="16" :rowGap="16">
+                    <!--页面内容-->
+                    <slot/>
+                    <!--<a-grid :cols="24" :colGap="16" :rowGap="16">-->
 
-                        <!--页面左侧边栏-->
-                        <a-grid-item :span="5">
-                            <default-left-sidebar></default-left-sidebar>
-                        </a-grid-item>
+                    <!--    &lt;!&ndash;页面左侧边栏&ndash;&gt;-->
+                    <!--    <a-grid-item :span="5">-->
+                    <!--        <default-left-sidebar></default-left-sidebar>-->
+                    <!--    </a-grid-item>-->
 
-                        <!--页面内容-->
-                        <a-grid-item :span="14">
-                            <!-- 顶部nav-->
-                            <default-nav></default-nav>
-                            <slot/>
-                        </a-grid-item>
+                    <!--    &lt;!&ndash;页面内容&ndash;&gt;-->
+                    <!--    <a-grid-item :span="14">-->
+                    <!--        &lt;!&ndash; 顶部nav&ndash;&gt;-->
+                    <!--        <default-nav></default-nav>-->
+                    <!--        <slot/>-->
+                    <!--    </a-grid-item>-->
 
 
-                        <!--页面右侧边栏-->
-                        <a-grid-item :span="5">
-                            <default-right-sidebar></default-right-sidebar>
-                        </a-grid-item>
-                    </a-grid>
+                    <!--    &lt;!&ndash;页面右侧边栏&ndash;&gt;-->
+                    <!--    <a-grid-item :span="5">-->
+                    <!--        <default-right-sidebar></default-right-sidebar>-->
+                    <!--    </a-grid-item>-->
+                    <!--</a-grid>-->
 
                 </a-grid-item>
 
