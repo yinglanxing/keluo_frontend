@@ -28,7 +28,6 @@
 export default {
     setup() {
         const show_login_plain = show_login()
-        show_nav_user
         return {
             show_login_plain,
             alert_plane(num: number = 0) {

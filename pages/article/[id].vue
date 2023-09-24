@@ -31,10 +31,6 @@
                             00:00
                         </template>
 
-                        <a-overflow-list>
-                            <a-tag style="margin: 12px 0" v-for="i in 15">tag {{ i }}</a-tag>
-                        </a-overflow-list>
-
                         <a-typography>
                             <a-typography-text v-for="y in 20">
                                 text <br>
@@ -48,6 +44,11 @@
                             </a-typography-text>
                         </a-typography>
                     </a-page-header>
+
+                    <a-overflow-list>
+                        <div>tags:</div>
+                        <a-tag style="margin: 12px 0" v-for="i in 15">tag {{ i }}</a-tag>
+                    </a-overflow-list>
                 </a-card>
 
                 <!--评论区-->
@@ -159,7 +160,9 @@
                 <a-card>
                     <a-row>
                         <a-col :span="24">
-                            <popup-user></popup-user>
+                            <a-avatar>
+                                <icon-user></icon-user>
+                            </a-avatar>
                             <a-divider :direction="'vertical'"></a-divider>
                             suer name
                         </a-col>
@@ -239,7 +242,6 @@
 export default {
     data() {
         return {
-            show_nav_user: false
         }
     },
     methods: {},
