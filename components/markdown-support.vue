@@ -1,5 +1,5 @@
 <template>
-    <!--markdown vditor 组件-->
+    <!--markdown 组件-->
     <div id="vditor"></div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     },
     data() {
         // 声明类型
-        let editor: Object | object | String | undefined;
+        let editor: Vditor | String | undefined;
         return {
             tags: [],
             editor,
@@ -36,13 +36,20 @@ export default {
         // https://b3log.org/vditor/demo/vue.html 官方写法
 
         if (this.read) {
-            // 只读
-            // todo
-            // console.log(this.content)
+            // 只读模式
+            let dom = document.querySelector('#vditor') as HTMLDivElement | null;
+            if (dom) {
+                // 写入 markdown
+                Vditor.preview(dom, this.content)
+            }
         } else {
             // 编辑器
             this.editor = new Vditor('vditor', {
                 minHeight: 360,
+
+                preview: {
+                    actions: []
+                },
 
                 value: this.content,
 
@@ -53,11 +60,9 @@ export default {
                     // 第二组
                     'list', 'br', 'ordered-list', 'check', 'outdent', 'indent', '|',
                     // 第三组
-                    'quote', 'code', 'inline-code', 'insert-after', 'insert-before', '|',
+                    'quote', 'code', 'inline-code', 'insert-after', 'insert-before', 'table', '|',
                     // 第四组
-                    'table', 'edit-mode', 'both', '|',
-                    // 第四组
-                    'undo', 'redo', 'fullscreen', 'outline',
+                    'outline', 'edit-mode', 'preview', 'undo', 'redo', 'fullscreen',
                 ],
 
                 comment: {
@@ -67,8 +72,8 @@ export default {
                 toolbarConfig: {
                     pin: true,
                 },
-                // 计数器
                 counter: {
+                    // 计数器
                     enable: true,
                 },
                 cache: {
@@ -76,20 +81,14 @@ export default {
                     enable: false,
                 },
                 after: () => {
-                    // this.editor.setValue('hello, Vditor + Vue!')
                 },
             })
-
         }
     },
-    watch: {
-        // editor() {
-        //     console.log("change")
-        // }
-    }
+    // todo 颜色主题
+    watch: {}
 }
 </script>
 
 <style scoped>
-
 </style>

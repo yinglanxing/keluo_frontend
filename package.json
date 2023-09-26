@@ -10,20 +10,20 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.52.0",
-    "@css-render/vue3-ssr": "^0.15.12",
-    "@nuxt/devtools": "latest",
-    "@pinia/nuxt": "^0.4.11",
-    "arco-design-nuxt-module": "^0.0.15",
-    "auto-animation": "^0.4.0",
-    "axios": "^1.5.0",
-    "nuxt": "^3.7.3",
-    "typescript": "^5.2.2",
-    "vditor": "^3.9.5",
-    "vite": "^4.4.9",
-    "vue": "^3.3.4"
+    "@nuxt/devtools": "latest"
   },
   "dependencies": {
+    "@arco-design/web-vue": "^2.52.0",
+    "@css-render/vue3-ssr": "^0.15.12",
+    "@formkit/auto-animate": "^0.8.0",
+    "arco-design-nuxt-module": "^0.0.15",
+    "@pinia/nuxt": "^0.4.11",
+    "axios": "^1.5.0",
+    "nuxt": "^3.7.4",
+    "typescript": "^5.2.2",
+    "vditor": "^3.9.6",
+    "vite": "^4.4.9",
+    "vue": "^3.3.4",
     "vuex": "^4.1.0"
   }
 }
