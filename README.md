@@ -67,11 +67,9 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 
 ---------------------------
 
-# About Frontend
+# frontend
 
-## frontend
-
-### prepare
+## prepare
 
 - 目录结构
   
@@ -83,14 +81,7 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
   
   nuxt3 对引用方式的改进使目录结构有些许变化。
 
-### config
-
-- backend env
-
-| | |
-|-|-|
-| | |
-
+## config
 - frontend env
 
 | | |

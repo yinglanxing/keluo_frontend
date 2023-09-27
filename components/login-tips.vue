@@ -2,37 +2,37 @@
     <a-card>
         <a-grid :cols="{ xs: 1, lg: 2 }" :colGap="24" :rowGap="24">
             <a-grid-item :span="3">
-                登录开启更多功能：
+                {{ $t("login_tips.title") }}：
             </a-grid-item>
 
             <a-grid-item>
                 <icon-bookmark/>
-                更懂你的优质内容
+                {{ $t("login_tips.p1") }}
             </a-grid-item>
 
             <a-grid-item>
                 <icon-user-group/>
-                更专业的大咖答主
+                {{ $t("login_tips.p2") }}
             </a-grid-item>
 
             <a-grid-item>
                 <icon-message/>
-                更深度的互动交流
+                {{ $t("login_tips.p3") }}
             </a-grid-item>
 
             <a-grid-item>
                 <icon-pen-fill/>
-                更高效的创作环境
+                {{ $t("login_tips.p4") }}
             </a-grid-item>
 
             <a-grid-item :span="3">
-                <a-button @click="alert_plane(1)" :type="'primary'" long>登录</a-button>
+                <a-button @click="alert_plane(1)" :type="'primary'" long>{{ $t("login") }}</a-button>
             </a-grid-item>
 
             <a-grid-item :span="3">
-                没有账号？
+                {{ $t('login_tips.req_account') }}
                 <a-link @click="alert_plane(2)">
-                    前往注册
+                    {{ $t("signup") }}
                 </a-link>
             </a-grid-item>
         </a-grid>

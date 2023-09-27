@@ -5,28 +5,28 @@
             <template #icon>
                 <icon-fire/>
             </template>
-            {{ "热门" }}
+            {{ $t("menu.nav.hot") }}
         </a-menu-item>
 
         <a-menu-item key="2">
             <template #icon>
                 <icon-brush/>
             </template>
-            {{ "最新" }}
+            {{ $t("menu.nav.new") }}
         </a-menu-item>
 
         <a-menu-item key="3">
             <template #icon>
                 <icon-heart-fill/>
             </template>
-            {{ "关注" }}
+            {{ $t("menu.nav.follow") }}
         </a-menu-item>
 
         <a-menu-item key="4">
             <template #icon>
                 <icon-question/>
             </template>
-            {{ "提问" }}
+            {{ $t("menu.nav.question") }}
         </a-menu-item>
     </a-menu>
 

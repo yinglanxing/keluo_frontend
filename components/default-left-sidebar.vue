@@ -8,7 +8,7 @@
             <a-card-meta>
                 <template #title>
                     <icon-github/>
-                    {{ "开源热榜" }}
+                    {{ $t("sidebar.github_hot") }}
                 </template>
             </a-card-meta>
 

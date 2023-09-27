@@ -16,7 +16,7 @@ export default defineNuxtConfig({
         // html 头部
         head: {
             // 编码格式与布局
-            charset: "f-16",
+            charset: "utf-8",
             viewport: "width=500, initial-scale=1",
             // 标题模版 页面标题 + 主标题
             titleTemplate(title: string | undefined): string {
@@ -40,6 +40,9 @@ export default defineNuxtConfig({
         // 状态管理
         "@pinia/nuxt",
 
+        // 国际化
+        '@nuxtjs/i18n',
+
         // ssr渲染
         // "@css-render/vue3-ssr",
     ],
@@ -60,10 +63,18 @@ export default defineNuxtConfig({
         ]
     },
 
+    // 国际化
+    i18n: {
+        // 默认配置 可略
+        vueI18n: './i18n.config.ts'
+    }
+    // https://github.com/nuxt-modules/i18n/issues/2394#issuecomment-1712751292
+    // [intlify] the message that is resolve with key 'xxx' is not supported for jit compilation
+    // 需要 shell 执行
+    // pnpm i -D @nuxtjs/i18n@npm:@nuxtjs/i18n-edge
+
+
     // build: {
     //     transpile: process.env.NODE_ENV === 'production' ? ['@css-render/vue3-ssr',] : []
     // },
-
-    // i18n 搁置
-    // '@nuxtjs/i18n' 国际化组件导入导致项目无法运行
 })

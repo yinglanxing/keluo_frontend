@@ -25,9 +25,9 @@
 
             <a-space align="center">
 
-                <a-tag>文章总数:69</a-tag>
-                <a-tag>关注人数:12</a-tag>
-                <a-tag>回复统计:200</a-tag>
+                <a-tag>{{ $t("sidebar.article_count") }}:69</a-tag>
+                <a-tag>{{ $t("sidebar.fans") }}:12</a-tag>
+                <a-tag>{{ $t("sidebar.reply") }}:200</a-tag>
 
             </a-space>
 
@@ -36,10 +36,10 @@
         <a-card>
             <!--todo 日历组件-->
             <!--<sign-calendar></sign-calendar>-->
-            <a-button long>签到</a-button>
+            <a-button long>{{ $t("checkin") }}</a-button>
         </a-card>
 
-        <a-divider>积分排行</a-divider>
+        <a-divider>{{ $t("sidebar.points_rank") }}</a-divider>
 
         <a-space fill direction="vertical">
             <a-card v-for="x in 10">

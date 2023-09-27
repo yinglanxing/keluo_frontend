@@ -24,55 +24,55 @@
 
                 <!--用户状态统计-->
                 <a-card>
-                    <template #title>个人成就</template>
+                    <template #title>{{ $t("self.achievements") }}</template>
                     <a-grid :cols="{ sm: 1, lg: 2, xl: 4,}">
-                        <a-grid-item>积分:0</a-grid-item>
-                        <a-grid-item>话题:0</a-grid-item>
-                        <a-grid-item>评论:0</a-grid-item>
-                        <a-grid-item>注册:0</a-grid-item>
+                        <a-grid-item>{{ $t("self.points") }}:0</a-grid-item>
+                        <a-grid-item>{{ $t("self.talks") }}:0</a-grid-item>
+                        <a-grid-item>{{ $t("self.comment") }}:0</a-grid-item>
+                        <a-grid-item>{{ $t("self.signup_rank") }}:0</a-grid-item>
                     </a-grid>
                 </a-card>
 
 
                 <!--用户资料管理-->
                 <a-card>
-                    <template #title>账号管理</template>
+                    <template #title>{{ $t("self.edit") }}</template>
                     <a-space fill :direction="'vertical'">
                         <!--用户信息-->
                         <a-list :bordered="false">
                             <a-list-item>
                                 <template #extra>name</template>
-                                名称
+                                {{ $t("self.name") }}
                             </a-list-item>
                             <a-list-item>
                                 <template #extra></template>
-                                签名
+                                {{ $t("self.motto") }}
                             </a-list-item>
                             <a-list-item>
                                 <template #extra>https://xxxxxxxxxx</template>
-                                主页
+                                {{ $t("self.index") }}
                             </a-list-item>
                         </a-list>
 
                         <!--用户本人操作-->
-                        <a-button :size="'large'" long>修改信息</a-button>
-                        <a-button :size="'large'" long>账号安全</a-button>
+                        <a-button :size="'large'" long>{{ $t("self.change_info") }}</a-button>
+                        <a-button :size="'large'" long>{{ $t("self.safe") }}</a-button>
                         <!--管理员模式-->
-                        <a-button :size="'large'" long>封禁七天</a-button>
-                        <a-button :size="'large'" long>永久封禁</a-button>
+                        <a-button :size="'large'" long>{{ $t("self.ban_7") }}</a-button>
+                        <a-button :size="'large'" long>{{ $t("self.ban_ever") }}</a-button>
                     </a-space>
                 </a-card>
 
                 <!--关注列表-->
                 <a-card>
-                    <template #title>关注</template>
+                    <template #title>{{ $t("self.follow") }}</template>
                     <a-space fill :direction="'vertical'">
                     </a-space>
                 </a-card>
 
                 <!--粉丝列表-->
                 <a-card>
-                    <template #title>粉丝</template>
+                    <template #title>{{ $t("self.fans") }}</template>
                     <a-space fill :direction="'vertical'">
                     </a-space>
                 </a-card>

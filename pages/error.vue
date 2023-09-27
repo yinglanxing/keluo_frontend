@@ -3,30 +3,28 @@
 
         <a-space fill :direction="'vertical'">
             <a-typography-title>
-                服务器出错了:
+                {{ $t("error_page.title") }}
+                <!--{{ props.status }}-->
             </a-typography-title>
 
-            <!--{{ error.detail }}-->
-            <!--{{ props.status }}-->
 
-            <a-result
-                status="403"
-                subtitle="Access to this resource on the server is denied."
-            >
-                <template #subtitle>
-
+            <a-result status="404">
+                <template #default>
+                    <!--{{ error.detail }}-->
                     <a-alert type="error">
-                        This is an error alert.
+                        发生错误了，请检查操作方式。
                     </a-alert>
                 </template>
-                <!--<template #extra>-->
-                <!--    <a-space>-->
-                <!--        <a-button type="primary">Back</a-button>-->
-                <!--    </a-space>-->
-                <!--</template>-->
+                <template #subtitle>
+                    <!--{{ props.status }}-->
+                </template>
+                <template #extra>
+                    <a-button :size="'large'" :type="'primary'" :status="'warning'" long @click="get_back">
+                        {{ $t("btn.back") }}
+                    </a-button>
+                </template>
             </a-result>
 
-            <a-button :size="'large'" :type="'primary'" :status="'warning'" long @click="get_back">返回上一页</a-button>
         </a-space>
 
     </a-card>
@@ -35,12 +33,12 @@
 <script lang="ts">
 export default {
     setup() {
-        const get_back = () => {
+        const turn_back = () => {
             useRouter().back()
         }
 
         return {
-            get_back,
+            get_back: turn_back,
         }
     }
 }
