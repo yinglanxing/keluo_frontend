@@ -21,6 +21,12 @@ export default {
             type: Boolean,
             default: false
         },
+        // 只读渲染结束时执行
+        callback: {
+            type: Function,
+            default: () => {
+            }
+        },
     },
     setup() {
         // 绑定状态
@@ -33,7 +39,6 @@ export default {
         // 声明类型
         let editor: Vditor | undefined;
         return {
-            tags: [],
             editor,
         }
     },
@@ -45,7 +50,7 @@ export default {
             let dom = document.querySelector('#vditor') as HTMLDivElement | null;
             if (dom) {
                 // 写入 markdown
-                Vditor.preview(dom, this.content)
+                Vditor.preview(dom, this.content, {after: this.callback})
             }
         } else {
             // 编辑器

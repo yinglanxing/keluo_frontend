@@ -31,81 +31,18 @@
                             00:00
                         </template>
 
+                        <markdown-support :callback="render_call_back" :read="true" :content="value"></markdown-support>
+
+                        <a-divider></a-divider>
+
                         <a-overflow-list>
                             <a-tag style="margin: 12px 0" v-for="i in 15">tag {{ i }}</a-tag>
                         </a-overflow-list>
-
-                        <a-typography>
-                            <a-typography-text v-for="y in 20">
-                                text <br>
-                                text <br>
-                                text <br>
-                                text <br>
-                                text <br>
-                                text <br>
-                                text <br>
-                                text <br>
-                            </a-typography-text>
-                        </a-typography>
                     </a-page-header>
                 </a-card>
 
                 <!--评论区-->
-                <a-card>
-                    <a-card-meta>
-                        <template #title>评论</template>
-                    </a-card-meta>
-
-                    <a-comment>
-                        <template #avatar>
-                            <popup-self></popup-self>
-                        </template>
-                        <template #author>user name</template>
-                        <a-textarea></a-textarea>
-                    </a-comment>
-
-
-                    <a-comment
-                        author="Socrates"
-                        avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/3ee5f13fb09879ecb5185e440cef6eb9.png~tplv-uwbnlip3yd-webp.webp"
-                        content="Comment body content."
-                        datetime="1 hour"
-                    >
-                        <template #actions>
-                            <span class="action"> <IconMessage/> Reply </span>
-                        </template>
-                        <a-comment
-                            author="Balzac"
-                            avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/9eeb1800d9b78349b24682c3518ac4a3.png~tplv-uwbnlip3yd-webp.webp"
-                            content="Comment body content."
-                            datetime="1 hour"
-                        >
-                            <template #actions>
-                                <span class="action"> <IconMessage/> Reply </span>
-                            </template>
-                            <a-comment
-                                author="Austen"
-                                avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/8361eeb82904210b4f55fab888fe8416.png~tplv-uwbnlip3yd-webp.webp"
-                                content="Reply content"
-                                datetime="1 hour"
-                            >
-                                <template #actions>
-                                    <span class="action"> <IconMessage/> Reply </span>
-                                </template>
-                            </a-comment>
-                            <a-comment
-                                author="Plato"
-                                avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/3ee5f13fb09879ecb5185e440cef6eb9.png~tplv-uwbnlip3yd-webp.webp"
-                                content="Reply content"
-                                datetime="1 hour"
-                            >
-                                <template #actions>
-                                    <span class="action"> <IconMessage/> Reply </span>
-                                </template>
-                            </a-comment>
-                        </a-comment>
-                    </a-comment>
-                </a-card>
+                <comment></comment>
 
                 <!--其他文章-->
                 <a-card>
@@ -188,26 +125,12 @@
                 <a-affix :offsetTop="20">
 
                     <a-space fill :direction="'vertical'">
-                        <!--界面进度-->
                         <a-card>
                             <template #title>
-                                目录
+                                {{ $t("side.md_dir") }}
                             </template>
-                            <template #extra>
-                                收起
-                                <icon-up/>
-                            </template>
-                            <a-anchor>
-                                <a-anchor-link href="#basic">Basic</a-anchor-link>
-                                <a-anchor-link href="#line-less">LineLess Mode</a-anchor-link>
-                                <a-anchor-link href="#affix">
-                                    Affix
-                                    <template #sublist>
-                                        <a-anchor-link href="#boundary">Scroll Boundary</a-anchor-link>
-                                        <a-anchor-link href="#hash">Hash mode</a-anchor-link>
-                                    </template>
-                                </a-anchor-link>
-                            </a-anchor>
+                            <!--markdown 目录-->
+                            <markdown-dir v-show="show_md_dir" :ready="render_ready"></markdown-dir>
                         </a-card>
 
                         <!--推荐-->
@@ -239,10 +162,19 @@
 export default {
     data() {
         return {
-            show_nav_user: false
+            render_ready: false,
+            show_nav_user: false,
+            value: ""
         }
     },
-    methods: {},
+    methods: {
+        // 页面渲染结束
+        render_call_back() {
+            // 通知渲染目录
+            this.render_ready = true
+            // 切换目录状态
+        },
+    },
     beforeRouteEnter() {
     },
 }

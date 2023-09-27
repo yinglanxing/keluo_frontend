@@ -49,7 +49,7 @@
                 <!--发布按钮 鼠标靠近时展开一个下拉菜单-->
                 <a-button-group size="large">
                     <!--左边按钮-->
-                    <a-button type="primary">
+                    <a-button type="primary" @click="writer_page">
                         <template #icon>
                             <icon-edit/>
                         </template>
@@ -117,6 +117,11 @@ export default {
     data() {
         return {
             drop_down: false,
+        }
+    },
+    methods: {
+        writer_page() {
+            useRouter().push("/writer")
         }
     }
 }

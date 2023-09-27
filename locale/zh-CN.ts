@@ -59,8 +59,7 @@ export default {
     // "side.": "",
     // "side.": "",
     // "side.": "",
-    // "side.": "",
-    // "side.": "",
+    "side.md_dir": "目录",
 
     // 错误页面
     "error_page.title": "服务器出错了",
