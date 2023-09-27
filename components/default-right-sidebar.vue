@@ -25,9 +25,9 @@
 
             <a-space align="center">
 
-                <a-tag>{{ $t("sidebar.article_count") }}:69</a-tag>
-                <a-tag>{{ $t("sidebar.fans") }}:12</a-tag>
-                <a-tag>{{ $t("sidebar.reply") }}:200</a-tag>
+                <a-tag>{{ $t("side.a_count") }}:69</a-tag>
+                <a-tag>{{ $t("side.f_count") }}:12</a-tag>
+                <a-tag>{{ $t("side.r_count") }}:200</a-tag>
 
             </a-space>
 
@@ -39,7 +39,7 @@
             <a-button long>{{ $t("checkin") }}</a-button>
         </a-card>
 
-        <a-divider>{{ $t("sidebar.points_rank") }}</a-divider>
+        <a-divider>{{ $t("side.p_rank") }}</a-divider>
 
         <a-space fill direction="vertical">
             <a-card v-for="x in 10">

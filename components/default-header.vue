@@ -97,18 +97,18 @@
 export default {
     setup() {
         // 获取主题
-        const theme = GLOBAL_THEME()
+        const state = STATE()
         return {
-            theme,
+            theme: state.theme,
             // 切换主题
             change_theme() {
-                let flag = theme.value == "light"
+                let flag = state.theme == "light"
                 if (flag) {
                     document.body.setAttribute('arco-theme', 'dark')
-                    theme.value = "dark"
+                    state.theme = "dark"
                 } else {
                     document.body.removeAttribute('arco-theme')
-                    theme.value = "light"
+                    state.theme = "light"
                 }
 
             },

@@ -5,28 +5,28 @@
             <template #icon>
                 <icon-fire/>
             </template>
-            {{ $t("menu.nav.hot") }}
+            {{ $t("nav.hot") }}
         </a-menu-item>
 
         <a-menu-item key="2">
             <template #icon>
                 <icon-brush/>
             </template>
-            {{ $t("menu.nav.new") }}
+            {{ $t("nav.new") }}
         </a-menu-item>
 
         <a-menu-item key="3">
             <template #icon>
                 <icon-heart-fill/>
             </template>
-            {{ $t("menu.nav.follow") }}
+            {{ $t("nav.follow") }}
         </a-menu-item>
 
         <a-menu-item key="4">
             <template #icon>
                 <icon-question/>
             </template>
-            {{ $t("menu.nav.question") }}
+            {{ $t("nav.question") }}
         </a-menu-item>
     </a-menu>
 

@@ -23,10 +23,15 @@ export default {
         },
     },
     setup() {
+        // 绑定状态
+        const state = STATE()
+        return {
+            state,
+        }
     },
     data() {
         // 声明类型
-        let editor: Vditor | String | undefined;
+        let editor: Vditor | undefined;
         return {
             tags: [],
             editor,
@@ -47,6 +52,7 @@ export default {
             this.editor = new Vditor('vditor', {
                 minHeight: 360,
 
+                // 预览模式顶部选项
                 preview: {
                     actions: []
                 },
@@ -65,10 +71,6 @@ export default {
                     'outline', 'edit-mode', 'preview', 'undo', 'redo', 'fullscreen',
                 ],
 
-                comment: {
-                    enable: true
-                },
-
                 toolbarConfig: {
                     pin: true,
                 },
@@ -85,8 +87,17 @@ export default {
             })
         }
     },
-    // todo 颜色主题
-    watch: {}
+    watch: {
+        // 主题切换
+        "state.theme"() {
+            // 判断含有 object 且主题为暗色
+            if (this.editor && this.state.theme == "dark") {
+                this.editor.setTheme("dark")
+            } else {
+                this.editor?.setTheme("classic")
+            }
+        }
+    }
 }
 </script>
 

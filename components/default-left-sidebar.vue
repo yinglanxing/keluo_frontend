@@ -8,7 +8,7 @@
             <a-card-meta>
                 <template #title>
                     <icon-github/>
-                    {{ $t("sidebar.github_hot") }}
+                    {{ $t("side.git_hot") }}
                 </template>
             </a-card-meta>
 
@@ -58,7 +58,7 @@
                     </a-typography-text>
                 </a-typography>
 
-                <a-button long>完整榜单</a-button>
+                <a-button long>{{ $t("side.full_rank") }}</a-button>
             </a-space>
         </a-card>
 

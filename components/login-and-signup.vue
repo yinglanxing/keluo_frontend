@@ -1,64 +1,43 @@
 <template>
-
-    <a-tabs animation size="large" v-model:active-key="show_plain">
+    <a-tabs size="large" v-model:active-key="show">
         <!--登录页面-->
-        <a-tab-pane :key="1" title="登录">
-
-            <a-form :model="login_from">
-
-                <a-form-item :label="$t('form.name')">
-                    <a-input v-model="login_from.account"/>
-                </a-form-item>
-
-                <a-form-item :label="$t('form.pass')">
-                    <a-input-password v-model="login_from.password" type="password"/>
-                </a-form-item>
-
-                <a-form-item :label="$t('form.verify_code')">
-                    <a-input v-model="login_from.verify"/>
-                    <a-divider direction="vertical"></a-divider>
-                    <a-image width="150px" height="50px"></a-image>
-                </a-form-item>
-
-                <a-button :type="'secondary'" status="success" long>登录</a-button>
-
-            </a-form>
-
+        <a-tab-pane :key="1" :title="$t('login')">
         </a-tab-pane>
 
         <!--注册页面-->
-        <a-tab-pane :key="2" title="注册">
-
-            <a-form :model="signup_from">
-
-                <a-form-item :label="$t('form.name')">
-                    <a-input v-model="signup_from.name"/>
-                </a-form-item>
-
-                <a-form-item :label="$t('form.email')">
-                    <a-input v-model="signup_from.email"/>
-                </a-form-item>
-
-                <a-form-item :label="$t('form.pass')">
-                    <a-input-password type="password" v-model="signup_from.password"/>
-                </a-form-item>
-
-                <a-form-item :label="$t('form.re_pass')">
-                    <a-input-password type="password" v-model="signup_from.re_password"/>
-                </a-form-item>
-
-                <a-form-item :label="$t('form.verify_code')">
-                    <a-input v-model="signup_from.verify"/>
-                    <a-divider direction="vertical"></a-divider>
-                    <a-image width="150px" height="50px"></a-image>
-                </a-form-item>
-
-                <a-button :type="'secondary'" status="warning" long>{{ $t("signup") }}</a-button>
-
-            </a-form>
-
+        <a-tab-pane :key="2" :title="$t('signup')">
         </a-tab-pane>
     </a-tabs>
+
+    <a-form v-auto-animate :model="from">
+
+        <a-form-item :label="$t('form.name')">
+            <a-input v-model="from.account"/>
+        </a-form-item>
+
+        <a-form-item v-if="show>1" :label="$t('form.email')">
+            <a-input v-model="from.email"/>
+        </a-form-item>
+
+        <a-form-item :label="$t('form.pass')">
+            <a-input-password v-model="from.password" type="password"/>
+        </a-form-item>
+
+        <a-form-item v-if="show>1" :label="$t('form.r_pass')">
+            <a-input-password type="password" v-model="from.re_pwd"/>
+        </a-form-item>
+
+        <a-form-item :label="$t('form.v_code')">
+            <a-input v-model="from.verify"/>
+            <a-divider direction="vertical"></a-divider>
+            <a-image width="150px" height="50px"></a-image>
+        </a-form-item>
+
+        <a-button v-if="show < 2" :type="'secondary'" status="success" long>{{ $t("login") }}</a-button>
+        <a-button v-else :type="'secondary'" status="warning" long>{{ $t("signup") }}</a-button>
+
+    </a-form>
+
 
     <!--卡片底部-->
     <a-divider>{{ $t("login_tips.other_account") }}</a-divider>
@@ -85,26 +64,21 @@
 export default {
     setup() {
         // 是否进入注册页面状态
-        const show_plain = show_login()
+        const show = show_login()
         return {
-            show_plain,
+            show,
         }
     },
     data() {
         // todo
         return {
             // plain_page: "",
-            login_from: {
+            from: {
                 account: '',
-                password: '',
-                verify: '',
-            },
-            signup_from: {
-                name: '',
                 email: '',
                 password: '',
-                re_password: '',
                 verify: '',
+                re_pwd: '',
             },
         }
     },

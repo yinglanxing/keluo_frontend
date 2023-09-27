@@ -43,6 +43,9 @@ export default defineNuxtConfig({
         // 国际化
         '@nuxtjs/i18n',
 
+        // 自动过度动画
+        '@formkit/auto-animate/nuxt'
+
         // ssr渲染
         // "@css-render/vue3-ssr",
     ],

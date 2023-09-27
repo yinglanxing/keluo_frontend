@@ -20,7 +20,7 @@
                 </template>
                 <template #extra>
                     <a-button :size="'large'" :type="'primary'" :status="'warning'" long @click="get_back">
-                        {{ $t("btn.back") }}
+                        {{ $t("back") }}
                     </a-button>
                 </template>
             </a-result>
