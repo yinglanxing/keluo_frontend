@@ -70,7 +70,7 @@
 <script lang="ts">
 
 export default {
-    props: {},
+    // props: {},
 }
 </script>
 

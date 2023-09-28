@@ -1,8 +1,6 @@
 // 用户状态
 
 import {defineStore} from "pinia";
-import {list} from "postcss";
-import {integer} from "vscode-languageserver-types";
 
 export const USER_STATE = defineStore('user_state', {
     state(): SelfInfo {
@@ -31,19 +29,7 @@ interface SelfInfo {
     user_token: string | null
 }
 
-// 用户信息
-interface UserInfo {
-    // id
-    id: number
-    // 名称
-    name: string
-    // 座右铭
-    motto: number
-    // 管理员身份
-    admin: boolean
-
-}
-
+// 用户页面信息
 // 文章信息
 interface ArticleInfo {
     // id
