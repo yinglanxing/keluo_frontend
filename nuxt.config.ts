@@ -37,6 +37,8 @@ export default defineNuxtConfig({
     modules: [
         // ui 组件
         "arco-design-nuxt-module",
+        "nuxt-quasar-ui",
+
         // 状态管理
         "@pinia/nuxt",
 

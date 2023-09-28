@@ -50,9 +50,10 @@
 
         <!--登录器-->
         <a-modal :footer="false" :hide-title="true" @cancel="alert_plane(-1)" @close="alert_plane(0)"
-                 :visible="show_login_plain>0">
+                 :visible="state.login_plain > 0">
             <login-and-signup></login-and-signup>
         </a-modal>
+        <!--{{ state }}-->
 
         <!--页尾-->
         <default-footer></default-footer>
@@ -61,16 +62,16 @@
 </template>
 
 <script lang="ts">
+
+import {USER_STATE} from "~/composables/user";
+
 export default {
     setup() {
-        const show_login_plain = show_login()
+        // 切换登录框
+        const user_state = USER_STATE()
         return {
-            show_login_plain,
-            alert_plane(num: number = 0) {
-                // 弹出登录框
-                // console.log(num)
-                show_login_plain.value = num
-            },
+            state: user_state,
+            alert_plane: user_state.alert_plain,
         }
     },
     data() {

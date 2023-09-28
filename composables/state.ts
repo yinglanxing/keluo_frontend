@@ -3,7 +3,7 @@
 import {defineStore} from "pinia";
 
 export const STATE = defineStore('state', {
-    state() {
+    state(): GlobalState {
         return {
             lang: "zh",
             theme: "light",
@@ -15,3 +15,8 @@ export const STATE = defineStore('state', {
         }
     }
 })
+
+interface GlobalState {
+    lang: string
+    theme: "light" | "dark"
+}

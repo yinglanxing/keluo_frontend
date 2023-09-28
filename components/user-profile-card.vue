@@ -31,15 +31,14 @@
 </template>
 
 <script lang="ts">
+import {USER_STATE} from "~/composables/user";
+
 export default {
     setup() {
-        const show_login_plain = show_login()
+        // 切换登录框
+        const user_state = USER_STATE()
         return {
-            show_login_plain,
-            alert_plane(num: number = 0) {
-                // 弹出登录框
-                show_login_plain.value = num
-            },
+            alert_plane: user_state.alert_plain,
         }
     },
 }
