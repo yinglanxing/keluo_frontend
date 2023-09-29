@@ -9,13 +9,13 @@ export const USER_STATE = defineStore('user_state', {
             // 用户身份
             userToken: null,
             // 当前用户
-            current_user: {},
+            currentUser: {},
         }
     },
     getters: {
         isLogin(state): boolean {
             // 判断已登录
-            return Boolean(this.current_user.id)
+            return Boolean(this.currentUser.id)
         }
     },
     actions: {
@@ -30,5 +30,5 @@ export const USER_STATE = defineStore('user_state', {
 interface SelfInfo {
     loginPlain: number
     userToken: string | null
-    current_user: UserInfo | Object
+    currentUser: UserInfo | Object
 }

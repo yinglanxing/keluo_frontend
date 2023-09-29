@@ -33,8 +33,8 @@
             <a-image width="150px" height="50px"></a-image>
         </a-form-item>
 
-        <a-button v-if="state.loginPlain < 2" :type="'secondary'" status="success" long>{{ $t("login") }}</a-button>
-        <a-button v-else :type="'secondary'" status="warning" long>{{ $t("signup") }}</a-button>
+        <q-btn v-if="state.loginPlain < 2" color="primary" class="full-width">{{ $t("login") }}</q-btn>
+        <q-btn v-else color="primary" class="full-width">{{ $t("signup") }}</q-btn>
 
     </a-form>
 
@@ -43,19 +43,15 @@
     <a-divider>{{ $t("login_tips.other_account") }}</a-divider>
 
     <a-space fill>
-        <a-button>
-            <template #icon>
-                <icon-github/>
-            </template>
+        <q-btn color="black">
+            <icon-github/>
             Github
-        </a-button>
+        </q-btn>
 
-        <a-button>
-            <template #icon>
-                <icon-qq/>
-            </template>
+        <q-btn color="primary">
+            <icon-qq/>
             QQ
-        </a-button>
+        </q-btn>
     </a-space>
 
 </template>

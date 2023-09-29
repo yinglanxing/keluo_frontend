@@ -33,8 +33,6 @@
         <a-grid-item :span="18">
             <!--顶部nva-->
             <default-nav></default-nav>
-            <!--内容-->
-            <a-divider></a-divider>
             <article-list></article-list>
         </a-grid-item>
     </a-grid>

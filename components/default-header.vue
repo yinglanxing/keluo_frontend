@@ -98,6 +98,7 @@ export default {
     setup() {
         // 获取主题
         const state = STATE()
+        const quasar = useQuasar()
         return {
             theme: state.theme,
             // 切换主题
@@ -110,7 +111,7 @@ export default {
                     document.body.removeAttribute('arco-theme')
                     state.theme = "light"
                 }
-
+                quasar.dark.set(flag)
             },
         }
     },
@@ -120,8 +121,8 @@ export default {
         }
     },
     methods: {
-        writer_page() {
-            useRouter().push("/writer")
+        theme() {
+            $q.dark.set(!this.theme)
         }
     }
 }

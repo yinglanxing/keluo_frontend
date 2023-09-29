@@ -11,9 +11,9 @@
             </template>
 
             <template #extra>
-                <a-button>
+                <q-btn>
                     ￥: {{ 0 }}
-                </a-button>
+                </q-btn>
             </template>
 
             <!--v-show 姓名或登录邀请-->
@@ -36,7 +36,7 @@
         <a-card>
             <!--todo 日历组件-->
             <!--<sign-calendar></sign-calendar>-->
-            <a-button long>{{ $t("checkin") }}</a-button>
+            <q-btn long>{{ $t("checkin") }}</q-btn>
         </a-card>
 
         <a-divider>{{ $t("side.p_rank") }}</a-divider>

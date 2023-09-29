@@ -5,63 +5,67 @@
     <!--<a-list :bordered="true">-->
 
     <!--<a-list-item>-->
-    <div class="row q-gutter-sm">
-        <q-intersection
-            v-for="q in pageItem"
-            transition="scale"
-            style="width: 100%;margin: 20px"
-        >
-            <q-card class="q-pa-lg">
+    <q-card class="q-my-lg q-pa-lg" v-for="item in pageItem">
+        <q-card-section>
+            {{ item.createTime }}
+        </q-card-section>
 
-                <template #extra>{{ q.createTime }}</template>
+        <a-space direction="vertical" fill>
+            <!--标题-->
+            <nuxt-link :to="'/article/' + item" style="color: var(--color-neutral-1);">
+                <a-typography-title :heading="5">
+                    {{ item.title }}
+                </a-typography-title>
+            </nuxt-link>
 
-                <a-space direction="vertical" fill>
-                    <!--标题-->
-                    <nuxt-link :to="'/article/' + q" style="color: var(--color-neutral-1);">
-                        <a-typography-title :heading="5">
-                            {{ q.title }}
-                        </a-typography-title>
-                    </nuxt-link>
+            <div>
+                {{ item.content }}
+                {{ item.summary }}
+            </div>
+            <!--文字占位-->
+            <!--<a-skeleton-line :rows="2"></a-skeleton-line>-->
+            <!--图片区-->
+            <a-space wrap>
+                <a-image width="200" height="100" v-for="img in item.imageList"></a-image>
+            </a-space>
+        </a-space>
 
-                    <div>
-                        {{ q.content }}
-                        {{ q.summary }}
-                    </div>
-                    <!--文字占位-->
-                    <!--<a-skeleton-line :rows="2"></a-skeleton-line>-->
-                    <!--图片区-->
-                    <a-space wrap>
-                        <a-image width="200" height="100" v-for="img in q.imageList"></a-image>
-                    </a-space>
-                </a-space>
+        <q-card-actions align="right">
+            <!--<a-button :shape="'round'">-->
+            <!--    <template #icon>-->
+            <!--        <icon-heart-fill v-if="item.liked"/>-->
+            <!--        <icon-heart/>-->
+            <!--    </template>-->
+            <!--    {{ item.likeCount }}-->
+            <!--</a-button>-->
 
-                <a-space>
+            <!--<a-button :shape="'round'">-->
+            <!--    <template #icon>-->
+            <!--        <icon-message/>-->
+            <!--    </template>-->
+            <!--    {{ item.commentCount }}-->
+            <!--</a-button>-->
 
-                    <a-button :shape="'round'">
-                        <template #icon>
-                            <icon-heart-fill v-if="q.liked"/>
-                            <icon-heart/>
-                        </template>
-                        {{ q.likeCount }}
-                    </a-button>
+            <q-btn icon="visibility" round>
+                <q-badge rounded floating>
+                    {{ item.viewCount }}
+                </q-badge>
+            </q-btn>
 
-                    <a-button :shape="'round'">
-                        <template #icon>
-                            <icon-message/>
-                        </template>
-                        {{ q.commentCount }}
-                    </a-button>
+            <q-btn icon="visibility" rounded>
+                <!--<q-badge rounded floating>-->
+                <!--</q-badge>-->
+                {{ item.viewCount }}
+            </q-btn>
 
-                    <a-button :shape="'round'">
-                        <template #icon>
-                            <icon-eye/>
-                        </template>
-                        {{ q.viewCount }}
-                    </a-button>
-                </a-space>
-            </q-card>
-        </q-intersection>
-    </div>
+            <!--<a-button :shape="'round'">-->
+            <!--    <template #icon>-->
+            <!--        <icon-eye/>-->
+            <!--    </template>-->
+            <!--    {{ item.viewCount }}-->
+            <!--</a-button>-->
+        </q-card-actions>
+    </q-card>
     <!--</a-list-item>-->
 
     <!--<template #footer>-->
@@ -91,8 +95,8 @@ export default {
     mounted() {
         // 刷新数据
         axios.get(this.url).then((req) => {
-            this.dataList = req.data.data.results
             console.log(req.data.data.results)
+            this.dataList = req.data.data.results
             this.cutPageItems()
             // 是否已取完数据
             // this.lock = this.dataList.length < 20

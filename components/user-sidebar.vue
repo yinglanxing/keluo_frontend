@@ -77,7 +77,7 @@ export default {
     data(vm) {
         let self = USER_STATE()
         return {
-            admin: self.current_user,
+            admin: self.currentUser,
 
         }
     },

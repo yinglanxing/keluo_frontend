@@ -52,6 +52,12 @@ export default defineNuxtConfig({
         // "@css-render/vue3-ssr",
     ],
 
+    quasar: {
+        extras: [
+            'material-icons',
+        ],
+    },
+
     // 注册自动引入组件
     components: [
         {
