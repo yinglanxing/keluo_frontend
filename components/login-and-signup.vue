@@ -1,5 +1,5 @@
 <template>
-    <a-tabs size="large" v-model:active-key="state.login_plain">
+    <a-tabs size="large" v-model:active-key="state.loginPlain">
         <!--登录页面-->
         <a-tab-pane :key="1" :title="$t('login')">
         </a-tab-pane>
@@ -15,7 +15,7 @@
             <a-input v-model="from.account"/>
         </a-form-item>
 
-        <a-form-item v-if="state.login_plain>1" :label="$t('form.email')">
+        <a-form-item v-if="state.loginPlain>1" :label="$t('form.email')">
             <a-input v-model="from.email"/>
         </a-form-item>
 
@@ -23,7 +23,7 @@
             <a-input-password v-model="from.password" type="password"/>
         </a-form-item>
 
-        <a-form-item v-if="state.login_plain>1" :label="$t('form.r_pass')">
+        <a-form-item v-if="state.loginPlain>1" :label="$t('form.r_pass')">
             <a-input-password type="password" v-model="from.re_pwd"/>
         </a-form-item>
 
@@ -33,7 +33,7 @@
             <a-image width="150px" height="50px"></a-image>
         </a-form-item>
 
-        <a-button v-if="state.login_plain < 2" :type="'secondary'" status="success" long>{{ $t("login") }}</a-button>
+        <a-button v-if="state.loginPlain < 2" :type="'secondary'" status="success" long>{{ $t("login") }}</a-button>
         <a-button v-else :type="'secondary'" status="warning" long>{{ $t("signup") }}</a-button>
 
     </a-form>

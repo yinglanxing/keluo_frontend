@@ -16,17 +16,9 @@
 
     <!--登录后显示自己-->
     <!--<popup-self></popup-self>-->
-
-    <!--登录器-->
-    <!--<n-modal v-model:show="plane_show">-->
-    <!--    <login-and-signup></login-and-signup>-->
-    <!--</n-modal>-->
-
 </template>
 
 <script lang="ts">
-import {USER_STATE} from "~/composables/user";
-
 export default {
     setup() {
         // 切换登录框
@@ -40,7 +32,6 @@ export default {
             plane_show: false,
         }
     },
-    methods: {}
 }
 </script>
 

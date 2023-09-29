@@ -7,17 +7,12 @@
             <q-parallax
                 src="https://cdn.quasar.dev/img/parallax1.jpg"
                 style="height: 30vh"
-            />
+            >
+            </q-parallax>
             <!--头像-->
-            <div class="absolute-bottom q-pa-md">
-                <!--<q-avatar v-if="user.data?.avatar">-->
-                <!--    <a-image :preview="false" :src="user.data?.avatar"></a-image>-->
-                <!--</q-avatar>-->
-                <!--<q-avatar v-else>-->
-                <!--    {{ user.data?.name }}-->
-                <!--</q-avatar>-->
+            <div class="absolute-bottom q-pa-lg">
                 <a-avatar>
-                    {{ user.data?.name || user.data?.nickname }}
+                    <icon-user/>
                 </a-avatar>
             </div>
         </q-card>
@@ -26,110 +21,22 @@
     <a-grid :cols="24" :colGap="16" :rowGap="16">
         <!--左侧操作栏-->
         <a-grid-item :span="6">
-            <a-space fill :direction="'vertical'">
-
-                <!--用户状态统计-->
-                <a-card>
-                    <template #title>{{ $t("self.achievements") }}</template>
-                    <a-grid :cols="{ sm: 1, lg: 2}" :row-gap="20">
-                        <!--积分-->
-                        <a-grid-item>{{ $t("self.points") }}:{{ user.data?.score || 0 }}</a-grid-item>
-                        <!--话题-->
-                        <a-grid-item>{{ $t("self.talks") }}:{{ user.data?.topicCount || 0 }}</a-grid-item>
-                        <!--评论-->
-                        <a-grid-item>{{ $t("self.comment") }}:{{ user.data?.commentCount || 0 }}</a-grid-item>
-                        <!--注册-->
-                        <a-grid-item>{{ $t("self.signup_rank") }}:{{ user.data?.id || 0 }}</a-grid-item>
-                    </a-grid>
-                </a-card>
-
-
-                <!--用户资料管理-->
-                <a-card>
-                    <template #title>{{ $t("self.edit") }}</template>
-                    <a-space fill :direction="'vertical'">
-                        <!--用户信息-->
-                        <a-list :bordered="false">
-                            <!---->
-                            <a-list-item>
-                                <template #extra>{{ user.data?.nickname }}</template>
-                                {{ $t("self.name") }}
-                            </a-list-item>
-                            <a-list-item>
-                                <template #extra>{{ user.data?.description }}</template>
-                                {{ $t("self.motto") }}
-                            </a-list-item>
-                            <a-list-item>
-                                <template #extra>{{ user.data?.homePage }}</template>
-                                {{ $t("self.index") }}
-                            </a-list-item>
-                        </a-list>
-
-                        <!--用户操作-->
-                        <a-button :size="'large'" long>{{ $t("self.change_info") }}</a-button>
-                        <a-button :size="'large'" long>{{ $t("self.safe") }}</a-button>
-                    </a-space>
-                </a-card>
-
-                <!--关注列表-->
-                <a-card>
-                    <template #title>{{ $t("self.follow") }}</template>
-                    <a-space fill :direction="'vertical'">
-                    </a-space>
-                </a-card>
-
-                <!--粉丝列表-->
-                <a-card>
-                    <template #title>{{ $t("self.fans") }}</template>
-                    <a-space fill :direction="'vertical'">
-                    </a-space>
-                </a-card>
-
-            </a-space>
+            <!--<user-sidebar :user=""></user-sidebar>-->
         </a-grid-item>
 
 
         <!--管理作品-->
-        <a-grid-item :span="18">
-            <a-space fill :direction="'vertical'">
-                <!--顶部nva-->
-                <!--<default-nav></default-nav>-->
-
-                <!--内容-->
-
-                <a-card style="width:100%;margin-bottom: 18px;" :bordered="false">
-
-                    <default-nav></default-nav>
-
-                    <article-list></article-list>
-
-                </a-card>
-
-            </a-space>
+        <a-grid-item :span="18" style="min-height: 100vh">
+            <a-divider>封装组件</a-divider>
         </a-grid-item>
+
     </a-grid>
 
 </template>
 
 <script lang="ts">
+
 export default {
-    data() {
-
-        $fetch("/api/user/1").then((req) => {
-            this.changes(req)
-
-            // console.log("done", req)
-        })
-
-        return {
-            user: {},
-        }
-    },
-    methods: {
-        changes(take: UserInfo) {
-            this.user = take
-        }
-    }
     // props: {
     //     user: {
     //         type: Object,
@@ -201,6 +108,3 @@ export default {
     // },
 }
 </script>
-
-<style scoped>
-</style>

@@ -50,7 +50,7 @@
 
         <!--登录器-->
         <a-modal :footer="false" :hide-title="true" @cancel="alert_plane(-1)" @close="alert_plane(0)"
-                 :visible="state.login_plain > 0">
+                 :visible="state.loginPlain > 0">
             <login-and-signup></login-and-signup>
         </a-modal>
         <!--{{ state }}-->

@@ -71,7 +71,7 @@ export default {
     "self.talks": "话题",
     "self.comment": "评论",
     "self.signup_rank": "注册排名",
-    "self.edit": "账号管理",
+    "self.info": "账号信息",
     "self.name": "名称",
     "self.motto": "签名",
     "self.index": "主页",
