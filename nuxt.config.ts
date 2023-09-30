@@ -13,12 +13,16 @@ export default defineNuxtConfig({
     },
 
     app: {
+        // 页面过度
+        // pageTransition: {name: 'page', mode: 'out-in'},
+
         // html 头部
         head: {
             // 编码格式与布局
             charset: "utf-8",
             viewport: "width=500, initial-scale=1",
             // 标题模版 页面标题 + 主标题
+            title: "-科洛-",
             titleTemplate(title: string | undefined): string {
                 return title ? title + " -科洛-" : "-科洛-"
             },
@@ -37,26 +41,17 @@ export default defineNuxtConfig({
     modules: [
         // ui 组件
         "arco-design-nuxt-module",
-        "nuxt-quasar-ui",
+        // "nuxt-quasar-ui",
+        "@unocss/nuxt",
 
         // 状态管理
         "@pinia/nuxt",
 
         // 国际化
         '@nuxtjs/i18n',
-
-        // 自动过度动画
-        '@formkit/auto-animate/nuxt'
-
         // ssr渲染
         // "@css-render/vue3-ssr",
     ],
-
-    quasar: {
-        extras: [
-            'material-icons',
-        ],
-    },
 
     // 注册自动引入组件
     components: [

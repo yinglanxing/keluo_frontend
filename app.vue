@@ -1,8 +1,8 @@
 <template>
 
     <!--预加载遮挡-->
-    <div id="onload_plain_id" class="max-cover-box text-center">
-        <q-spinner-facebook color="light-blue" size="10vw"/>
+    <div id="onload_plain_id" class="max-cover-box">
+        <icon-loading/>
     </div>
 
     <nuxt-layout>
@@ -29,7 +29,7 @@ body {
     overflow: hidden;
 }
 
-/*新版动画*/
+/*动画*/
 
 .max-cover-box {
     top: 0;
@@ -39,6 +39,7 @@ body {
     position: fixed;
     background: #fff;
     line-height: 100vh;
+    text-align: center;
     z-index: 1000000000;
 }
 

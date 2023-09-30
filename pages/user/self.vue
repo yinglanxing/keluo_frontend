@@ -2,21 +2,19 @@
 
     <!--用户页面-->
     <!--顶部卡片-->
-    <div class="q-my-lg">
-        <q-card>
-            <q-parallax
-                src="https://cdn.quasar.dev/img/parallax1.jpg"
-                style="height: 30vh"
-            >
-            </q-parallax>
-            <!--头像-->
-            <div class="absolute-bottom q-pa-lg">
-                <a-avatar>
-                    <icon-user/>
-                </a-avatar>
-            </div>
-        </q-card>
-    </div>
+    <a-image
+        :preview="false"
+        src=""
+        title='A user’s avatar'
+        description='Present by Arco Design'
+        style="width: 100%;height: 30vh;margin-bottom: 18px;overflow: hidden"
+    >
+        <template #extra>
+            <a-comment>
+                <a-avatar></a-avatar>
+            </a-comment>
+        </template>
+    </a-image>
 
     <a-grid :cols="24" :colGap="16" :rowGap="16">
         <!--左侧操作栏-->
@@ -25,9 +23,8 @@
         </a-grid-item>
 
 
-        <!--管理作品-->
+        <!--右侧内容-->
         <a-grid-item :span="18" style="min-height: 100vh">
-            <a-divider>封装组件</a-divider>
         </a-grid-item>
 
     </a-grid>

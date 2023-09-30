@@ -9,7 +9,7 @@
         </a-tab-pane>
     </a-tabs>
 
-    <a-form v-auto-animate :model="from">
+    <a-form :model="from">
 
         <a-form-item :label="$t('form.name')">
             <a-input v-model="from.account"/>
@@ -33,8 +33,8 @@
             <a-image width="150px" height="50px"></a-image>
         </a-form-item>
 
-        <q-btn v-if="state.loginPlain < 2" color="primary" class="full-width">{{ $t("login") }}</q-btn>
-        <q-btn v-else color="primary" class="full-width">{{ $t("signup") }}</q-btn>
+        <a-button v-if="state.loginPlain < 2" :type="'secondary'" status="success" long>{{ $t("login") }}</a-button>
+        <a-button v-else :type="'secondary'" status="warning" long>{{ $t("signup") }}</a-button>
 
     </a-form>
 
@@ -43,15 +43,19 @@
     <a-divider>{{ $t("login_tips.other_account") }}</a-divider>
 
     <a-space fill>
-        <q-btn color="black">
-            <icon-github/>
+        <a-button>
+            <template #icon>
+                <icon-github/>
+            </template>
             Github
-        </q-btn>
+        </a-button>
 
-        <q-btn color="primary">
-            <icon-qq/>
+        <a-button>
+            <template #icon>
+                <icon-qq/>
+            </template>
             QQ
-        </q-btn>
+        </a-button>
     </a-space>
 
 </template>

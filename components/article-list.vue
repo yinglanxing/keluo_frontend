@@ -1,79 +1,55 @@
 <template>
 
     <!--文章列表-->
+    <a-card class="q-pa-lg" v-for="q in pageItem">
 
-    <!--<a-list :bordered="true">-->
+        <!--标题-->
+        <template #title>
+            {{ q.title }}
+        </template>
 
-    <!--<a-list-item>-->
-    <q-card class="q-my-lg q-pa-lg" v-for="item in pageItem">
-        <q-card-section>
-            {{ item.createTime }}
-        </q-card-section>
+        <!--时间-->
+        <template #extra>{{ q.createTime }}</template>
 
         <a-space direction="vertical" fill>
-            <!--标题-->
-            <nuxt-link :to="'/article/' + item" style="color: var(--color-neutral-1);">
-                <a-typography-title :heading="5">
-                    {{ item.title }}
-                </a-typography-title>
-            </nuxt-link>
-
+            <!--简述内容-->
             <div>
-                {{ item.content }}
-                {{ item.summary }}
+                {{ q.content }}
+                {{ q.summary }}
             </div>
-            <!--文字占位-->
-            <!--<a-skeleton-line :rows="2"></a-skeleton-line>-->
             <!--图片区-->
             <a-space wrap>
-                <a-image width="200" height="100" v-for="img in item.imageList"></a-image>
+                <a-image width="200" height="100" v-for="img in q.imageList"></a-image>
             </a-space>
         </a-space>
 
-        <q-card-actions align="right">
-            <!--<a-button :shape="'round'">-->
-            <!--    <template #icon>-->
-            <!--        <icon-heart-fill v-if="item.liked"/>-->
-            <!--        <icon-heart/>-->
-            <!--    </template>-->
-            <!--    {{ item.likeCount }}-->
-            <!--</a-button>-->
+        <a-space>
+            <!--底部按钮-->
+            <a-button :shape="'round'">
+                <template #icon>
+                    <icon-heart-fill v-if="q.liked"/>
+                    <icon-heart/>
+                </template>
+                {{ q.likeCount }}
+            </a-button>
 
-            <!--<a-button :shape="'round'">-->
-            <!--    <template #icon>-->
-            <!--        <icon-message/>-->
-            <!--    </template>-->
-            <!--    {{ item.commentCount }}-->
-            <!--</a-button>-->
+            <a-button :shape="'round'">
+                <template #icon>
+                    <icon-message/>
+                </template>
+                {{ q.commentCount }}
+            </a-button>
 
-            <q-btn icon="visibility" round>
-                <q-badge rounded floating>
-                    {{ item.viewCount }}
-                </q-badge>
-            </q-btn>
-
-            <q-btn icon="visibility" rounded>
-                <!--<q-badge rounded floating>-->
-                <!--</q-badge>-->
-                {{ item.viewCount }}
-            </q-btn>
-
-            <!--<a-button :shape="'round'">-->
-            <!--    <template #icon>-->
-            <!--        <icon-eye/>-->
-            <!--    </template>-->
-            <!--    {{ item.viewCount }}-->
-            <!--</a-button>-->
-        </q-card-actions>
-    </q-card>
-    <!--</a-list-item>-->
-
-    <!--<template #footer>-->
+            <a-button :shape="'round'">
+                <template #icon>
+                    <icon-eye/>
+                </template>
+                {{ q.viewCount }}
+            </a-button>
+        </a-space>
+    </a-card>
     <!--翻页器-->
     <a-pagination v-model:current="pageNum" :total="dataList.length" show-jumper/>
-    <!--</template>-->
-    <!--</a-list>-->
-
 
 </template>
 

@@ -4,8 +4,8 @@
   "data": {
     "id": 1,
     "nickname": "大喵喵酱",
-    "avatar": "https://file.mlog.club/images/2022/11/18/3a3d82949618e6a43a6d7fa8f508f200.jfif",
-    "smallAvatar": "https://file.mlog.club/images/2022/11/18/3a3d82949618e6a43a6d7fa8f508f200.jfif!avatar",
+    "avatar": "/card-bg.jpg",
+    "smallAvatar": "/card-bg.jpg",
     "gender": "",
     "birthday": null,
     "topicCount": 672,
@@ -18,8 +18,8 @@
     "forbidden": false,
     "followed": false,
     "username": "mlog",
-    "backgroundImage": "https://file.mlog.club/images/2020/10/13/6e7933f5c9b2fe515210a17ea1762105.jpg",
-    "smallBackgroundImage": "https://file.mlog.club/images/2020/10/13/6e7933f5c9b2fe515210a17ea1762105.jpg!768_auto",
+    "backgroundImage": "/card-bg.jpg",
+    "smallBackgroundImage": "/card-bg.jpg",
     "homePage": "https://mlog.club/user/1",
     "status": 0
   },
