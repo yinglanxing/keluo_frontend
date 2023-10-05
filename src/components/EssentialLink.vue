@@ -1,15 +1,17 @@
 <template>
+    <!--菜单链接-->
+    <!--tag="a"-->
+    <!--:href="link"-->
+    <!--target="_blank"-->
   <q-item
     clickable
-    tag="a"
-    target="_blank"
-    :href="link"
+    :href="'/#'+link"
   >
     <q-item-section
       v-if="icon"
       avatar
     >
-      <q-icon :name="icon" />
+        <q-icon :name="icon"/>
     </q-item-section>
 
     <q-item-section>
@@ -20,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 export default defineComponent({
   name: 'EssentialLink',

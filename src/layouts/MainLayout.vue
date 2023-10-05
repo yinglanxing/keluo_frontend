@@ -1,117 +1,81 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+    <!--主布局-->
+    <q-layout view="lHh Lpr lFf">
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+        <!--顶部页首-->
+        <header-components></header-components>
 
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
+        <!--页面内容-->
+        <q-page-container>
+            <div class="row q-mt-lg-lg q-mt-md-md q-mt-sm">
+                <!--左侧空白-->
+                <div class="col-0 col-lg-1"></div>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
+                <!--内容-->
+                <div class="col-12 col-lg-10">
+                    <router-view/>
+                </div>
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
+                <!--右侧空白-->
+                <div class="col-0 col-lg-1"></div>
+            </div>
+        </q-page-container>
 
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+        <!--设置弹窗-->
+        <!--todo-->
+
+        <!--登录器弹窗-->
+        <q-dialog v-model="showLoginDialog" @hide="state.alert_plain(-1)">
+            <login-and-signup></login-and-signup>
+        </q-dialog>
+
+        <!--页尾-->
+        <footer-components></footer-components>
+    </q-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
+import {defineComponent} from 'vue';
+// 状态
+import {useUser} from 'stores/useUser';
+// 组件
+import header from 'components/Header.vue';
+import footer from 'components/Footer.vue';
+import LoginAndSignup from 'components/LoginAndSignup.vue';
 
 export default defineComponent({
-  name: 'MainLayout',
+    name: 'MainLayout',
 
-  components: {
-    EssentialLink
-  },
+    // 引用组件
+    components: {
+        HeaderComponents: header,
+        FooterComponents: footer,
+        LoginAndSignup,
+    },
 
-  data() {
-    return {
-      leftDrawerOpen: false,
-      essentialLinks: linksList
+    setup() {
+        // 切换登录框
+        const state = useUser()
+        return {
+            state,
+        }
+    },
+
+    data() {
+        return {
+            // 弹窗状态
+            showLoginDialog: false,
+            showSettingDialog: false,
+        }
+    },
+
+    methods: {},
+
+    watch: {
+        // 监听用户需求，弹出登录弹窗
+        'state.loginPlain'() {
+            this.showLoginDialog = this.state.loginPlain > 0
+        }
     }
-  },
-
-  methods: {
-    toggleLeftDrawer () {
-      this.leftDrawerOpen = !this.leftDrawerOpen
-    }
-  }
 });
 </script>
