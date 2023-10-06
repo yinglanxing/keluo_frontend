@@ -7,11 +7,14 @@
             <!--标题-->
             <q-input v-model="title" clearable filled label="title"></q-input>
 
-            <!--tags组件 new-value-mode 唯一值-->
-            <q-select v-model="tags" filled hide-dropdown-icon input-debounce="0" label="tag" multiple
-                      new-value-mode="add-unique"
-                      use-chips
-                      use-input/>
+            <!--tags组件 new-value-mode=唯一值-->
+            <q-select
+                v-model="tags"
+                filled hide-dropdown-icon
+                input-debounce="0"
+                label="tag" multiple
+                new-value-mode="add-unique" use-chips use-input
+            />
 
             <!--内容-->
             <q-editor v-model="content"></q-editor>
@@ -20,12 +23,20 @@
             <!--悬浮按钮列表-->
             <q-page-sticky :offset="fabPos" position="bottom-right">
                 <!--绑定拖拽-->
-                <q-fab v-touch-pan.prevent.mouse="moveFab" :disable="draggingFab" color="info" direction="up"
-                       external-label
-                       icon="edit">
-                    <q-fab-action :disable="draggingFab" :label="$t('send')" color="primary" external-label
-                                  icon="send"
-                                  label-position="left">
+                <q-fab
+                    v-touch-pan.prevent.mouse="moveFab"
+                    :disable="draggingFab"
+                    color="info"
+                    external-label icon="edit"
+                >
+                    <!--发送按钮-->
+                    <q-fab-action
+                        :disable="draggingFab"
+                        :label="$t('send')"
+                        color="primary"
+                        external-label icon="send"
+                        label-position="left"
+                    >
                     </q-fab-action>
                 </q-fab>
             </q-page-sticky>

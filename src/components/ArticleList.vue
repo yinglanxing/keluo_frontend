@@ -2,48 +2,47 @@
     <!--文章列表-->
     <div class="q-gutter-y-lg">
 
-        <q-card v-for="item in pageItem" :key="item.articleId" class="full-width">
-            <!--头部-->
-            <q-card-section class="row">
-                <!--悬浮按钮-->
-                <!--fab-->
-                <!--<q-btn-->
-                <!--    fab-mini-->
-                <!--    icon="place"-->
-                <!--    color="primary"-->
-                <!--    class="absolute"-->
-                <!--    style="top: 0; right: 12px; transform: translateY(-50%);"-->
-                <!--&gt;-->
-                <!--</q-btn>-->
+        <q-card v-for="item in pageItem" :key="item.articleId">
 
-                <div>
-                    <!--标题-->
-                    <router-link
-                        :to="'/article/'+item.articleId"
-                        class="q-btn full-width ellipsis-2-lines"
-                        style="height: 72px"
-                    >
-                        <div class="text-h5 ellipsis-2-lines">
-                            {{ item.title }}
-                        </div>
-                    </router-link>
-                    <!--时间-->
-                    <div class="text-grey text-caption q-pt-md row no-wrap items-center">
-                        <q-icon name="schedule"/>
-                        {{ date.formatDate(item.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
-                    </div>
-                </div>
+            <!--头部-->
+            <q-card-section>
+                <!--标题-->
+                <router-link
+                    :to="'/article/'+item.articleId"
+                    class="q-btn ellipsis-2-lines text-left"
+                >
+                    <q-item-label class="ell_title text-h6 ellipsis">
+                        {{ item.title }}
+                    </q-item-label>
+                </router-link>
+
+                <q-item class="q-pb-md">
+                    <q-item-section avatar>
+                        <q-avatar class="absolute">
+                            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar2.jpg">
+                        </q-avatar>
+                    </q-item-section>
+
+                    <q-item-section>
+                        <q-item-label>{{ item.user.nickname }}</q-item-label>
+                        <q-item-label caption>
+                            <!--时间-->
+                            <div class="text-grey row no-wrap">
+                                <q-icon name="schedule"/>
+                                {{ date.formatDate(item.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
+                            </div>
+                        </q-item-label>
+                    </q-item-section>
+                </q-item>
                 <!--评分-->
                 <!--<q-rating v-model="stars" :max="5" size="32px"/>-->
-            </q-card-section>
-
-
-            <q-card-section class="q-pt-none">
                 <!--文章内容，超过两行省略-->
-                <div class="text-subtitle1 ellipsis-2-lines">
-                    {{ item.content }}
+                <div class="text-subtitle1 ellipsis-2-lines" style="height: 3.2em">
                     {{ item.summary }}
                 </div>
+            </q-card-section>
+
+            <q-card-section class="q-pt-none">
                 <!--数据统计-->
                 <div class="text-caption text-grey">
                     <!--浏览-->
@@ -197,4 +196,12 @@ export default defineComponent({
 //.example-item
 //    height: 240px
 //    width: 100%
+
+// 解决 flex 带来的 nowrap 无法确定组件宽度问题
+.ell_title
+    max-width: 80vw
+
+@media screen and (max-width: 680px)
+    .ell_title
+        max-width: 70vw
 </style>

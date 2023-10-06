@@ -21,12 +21,14 @@
 
         <!--栅格布局-->
         <div class="row">
+            <!--用户侧边栏-->
             <div class="col-3">
                 <user-sidebar :user="user"></user-sidebar>
             </div>
+            <!--用户内容-->
             <div class="col-9">
                 <!--<default-nav></default-nav>-->
-                <article-list></article-list>
+                <article-list :url="articleUrl"></article-list>
             </div>
         </div>
 
@@ -56,32 +58,20 @@ export default defineComponent({
         // 获取自己
         const self = useUser()
         // 默认用户属性值
-        const user: UserInfo = {
-            id: 0,
-            score: 0,
-            commentCount: 0,
-            fansCount: 0,
-            topicCount: 0,
-            followCount: 0,
-            createTime: 0,
-            forbidden: false,
-            followed: false,
-            nickname: 'name',
-            homePage: '',
-            description: '',
-            username: '',
-            status: 0,
-        }
+        const user: UserInfo = {} as UserInfo
         return {
             user,
             self,
+            articleUrl: '',
         }
     },
 
     mounted() {
         // 获取用户信息
-        axios.get('/api/user/' + this.$route.params['id']).then((req) => {
-            this.user = req.data.data
+        axios.get('https://mlog.club/api/user/' + this.$route.params['id']).then((req) => {
+            this.user = req.data.data;
+            // 定位到用户的文章列表
+            this.articleUrl = 'https://mlog.club/api/article/user/articles?userId=' + this.user.id
         }).catch(() => {
             // 无法获取信息，返回上一页
             this.$router.back()

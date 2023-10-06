@@ -5,7 +5,7 @@
         <q-card-section class="row">
             <!--名字-->
             <div class="text-h5">
-                {{ user.nickname }} name
+                {{ user.nickname }}
             </div>
 
             <q-space></q-space>
@@ -19,7 +19,7 @@
 
             <!--motto / 格言 / 个性-->
             <div class="col-12">
-                {{ user.description }} motto......
+                {{ user.description }}
             </div>
         </q-card-section>
 
@@ -48,7 +48,7 @@
 
         <!--操作按钮-->
         <!--<q-card-actions v-if="user?.id != self.id">-->
-        <q-card-actions>
+        <q-card-actions v-if="showActions">
             <q-btn class="col">关注</q-btn>
             <q-btn class="col">私信</q-btn>
         </q-card-actions>
@@ -69,6 +69,11 @@ export default defineComponent({
     props: {
         // 获取传入用户
         user: {} as PropType<UserInfo>,
+        // 操作栏可见
+        showActions: {
+            type: Boolean,
+            default: false,
+        },
     },
 
     setup() {

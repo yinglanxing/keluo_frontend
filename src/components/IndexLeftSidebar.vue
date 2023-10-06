@@ -2,91 +2,45 @@
     <div class="q-gutter-lg">
 
         <q-card>
-
+            <!--开源热榜-->
             <q-card-section>
-                <q-icon name="whatshot"></q-icon>
+                <q-icon name="whatshot"/>
                 {{ $t("side.git_hot") }}
             </q-card-section>
 
-
-            <div class="q-pa-md">
+            <!--列表内容-->
+            <!--<div class="q-pa-md">-->
+            <div>
                 <q-list separator>
-                    <q-item>
+                    <q-item v-for="x in 5" :key="x" v-ripple clickable>
                         <q-item-section>
-                            <q-item-label>Single line item</q-item-label>
-                            <q-item-label caption lines="2">Secondary line text. Lorem ipsum dolor sit amet, consectetur
-                                adipiscit elit.
+                            <!--标题-->
+                            <q-item-label>
+                                {{ x + $t("side.git_hot") }}
+                            </q-item-label>
+
+                            <!--内容-->
+                            <q-item-label caption class="ellipsis-2-lines" style="height: 2.5em">
+                                {{ $t("side.git_hot") }}
+                                {{ $t("side.git_hot") }}
+                                {{ $t("side.git_hot") }}
+                                {{ $t("side.git_hot") }}
+                                {{ $t("side.git_hot") }}
+                                {{ $t("side.git_hot") }}
+                                {{ $t("side.git_hot") }} {{ x }}
                             </q-item-label>
                         </q-item-section>
 
-                        <q-item-section side top>
-                            <q-item-label caption>5 min ago</q-item-label>
-                            <q-icon color="yellow" name="star"/>
-                        </q-item-section>
-                    </q-item>
-
-                    <q-separator inset spaced/>
-
-                    <q-item>
-                        <q-item-section>
-                            <q-item-label>Single line item</q-item-label>
-                            <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit
-                                elit.
-                            </q-item-label>
-                        </q-item-section>
-
-                        <q-item-section side top>
-                            <q-item-label caption>Voted!</q-item-label>
-                        </q-item-section>
-                    </q-item>
-
-                    <q-separator inset spaced/>
-
-                    <q-item>
-                        <q-item-section>
-                            <q-item-label>Single line item</q-item-label>
-                            <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit
-                                elit.
-                            </q-item-label>
-                        </q-item-section>
-
-                        <q-item-section side top>
-                            <q-badge color="teal" label="10k"/>
-                        </q-item-section>
-                    </q-item>
-
-                    <q-separator inset spaced/>
-
-                    <q-item>
-                        <q-item-section>
-                            <q-item-label>Single line item</q-item-label>
-                            <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit
-                                elit.
-                            </q-item-label>
-                        </q-item-section>
-
-                        <q-item-section side top>
-                            <q-item-label caption>2 min ago</q-item-label>
-                            <div class="text-orange">
-                                <q-icon name="star"/>
-                                <q-icon name="star"/>
-                                <q-icon name="star"/>
+                        <!--小标签-->
+                        <q-item-section class="q-gutter-sm" side top>
+                            <!--数字tag, 小于1k 显示原数值-->
+                            <div class="text-caption">
+                                {{ 100 - x * 6 }} K
                             </div>
-                        </q-item-section>
-                    </q-item>
-
-                    <q-separator inset spaced/>
-
-                    <q-item>
-                        <q-item-section>
-                            <q-item-label>Single line item</q-item-label>
-                            <q-item-label caption>Secondary line text. Lorem ipsum dolor sit amet, consectetur adipiscit
-                                elit.
-                            </q-item-label>
-                        </q-item-section>
-
-                        <q-item-section side top>
-                            <q-item-label caption>meta</q-item-label>
+                            <!--热tag-->
+                            <q-badge v-if="x % 5 != 0" color="red">hot</q-badge>
+                            <!--新tag-->
+                            <q-badge v-else color="blue">new</q-badge>
                         </q-item-section>
                     </q-item>
                 </q-list>
@@ -94,8 +48,14 @@
         </q-card>
 
         <!--热门tag-->
-        <q-card class="q-pa-md">
-            <q-chip v-for="i in 75" :key="i">{{ i }}</q-chip>
+        <q-card>
+            <div class="q-pa-md q-gutter-sm">
+                <q-chip v-for="i in 75" :key="i" color="blue-1">
+                    <div class="ellipsis">
+                        {{ i }}tag
+                    </div>
+                </q-chip>
+            </div>
         </q-card>
 
     </div>
