@@ -25,7 +25,7 @@
         <!--todo-->
 
         <!--登录器弹窗-->
-        <q-dialog v-model="showLoginDialog" @hide="state.alert_plain(-1)">
+        <q-dialog v-model="showLoginDialog" @hide="self.alert_plain(-1)">
             <login-and-signup></login-and-signup>
         </q-dialog>
 
@@ -54,10 +54,10 @@ export default defineComponent({
     },
 
     setup() {
-        // 切换登录框
-        const state = useUser()
+        // 状态管理
+        const self = useUser()
         return {
-            state,
+            self,
         }
     },
 
@@ -73,9 +73,15 @@ export default defineComponent({
 
     watch: {
         // 监听用户需求，弹出登录弹窗
-        'state.loginPlain'() {
-            this.showLoginDialog = this.state.loginPlain > 0
-        }
+        'self.loginPlain'() {
+            this.showLoginDialog = this.self.loginPlain > 0
+        },
+        // 用户登录状态变动，关闭登录弹窗
+        'self.isLogin'() {
+            if (this.self.isLogin) {
+                this.self.alert_plain(0)
+            }
+        },
     }
 });
 </script>

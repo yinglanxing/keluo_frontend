@@ -95,4 +95,6 @@ export default {
     'self.safe': '账号安全',
     'self.ban_7': '封禁七天',
     'self.ban_ever': '永久封禁',
+    'self.fans': '粉丝',
+    'self.follow': '关注',
 };

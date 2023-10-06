@@ -17,12 +17,16 @@
                 </router-link>
 
                 <q-item class="q-pb-md">
+                    <!--头像-->
                     <q-item-section avatar>
-                        <q-avatar class="absolute">
-                            <img alt="avatar" src="https://cdn.quasar.dev/img/avatar2.jpg">
+                        <q-avatar>
+                            <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
+                            <!--<q-icon v-else name="person"/>-->
+                            <q-icon name="person"/>
                         </q-avatar>
                     </q-item-section>
 
+                    <!--名称与发布时间-->
                     <q-item-section>
                         <q-item-label>{{ item.user.nickname }}</q-item-label>
                         <q-item-label caption>
@@ -34,8 +38,10 @@
                         </q-item-label>
                     </q-item-section>
                 </q-item>
+
                 <!--评分-->
                 <!--<q-rating v-model="stars" :max="5" size="32px"/>-->
+
                 <!--文章内容，超过两行省略-->
                 <div class="text-subtitle1 ellipsis-2-lines" style="height: 3.2em">
                     {{ item.summary }}
@@ -137,8 +143,8 @@ export default defineComponent({
     },
     methods: {
         getData(url: string) {
-            if (!this.lock) {
-                // 获取新数据
+            // 获取新数据
+            if (!this.lock && url) {
                 axios.get(url).then((req) => {
                     // 装载数据
                     this.dataList.push(...req.data.data.results)

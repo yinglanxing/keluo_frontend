@@ -19,8 +19,9 @@
 
     <div class="q-ma-lg">
 
+
         <!--栅格布局-->
-        <div class="row">
+        <div class="row q-col-gutter-lg">
             <!--用户侧边栏-->
             <div class="col-3">
                 <user-sidebar :user="user"></user-sidebar>

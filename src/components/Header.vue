@@ -6,10 +6,11 @@
             <!--菜单展开按钮-->
             <q-btn aria-label="menu" dense flat icon="menu" round @click="toggleLeftDrawer"/>
 
-            <q-tabs shrink>
-                <q-tab label="Tab 1" name="tab1"/>
-                <q-tab label="Tab 2" name="tab2"/>
-                <q-tab label="Tab 3" name="tab3"/>
+            <q-tabs v-model="$route.path" shrink>
+                <q-tab
+                    v-for="item in essentialLinks" :key="item"
+                    :label="item.title" :name="item.link"
+                />
             </q-tabs>
 
             <!--项目logo-->
@@ -49,7 +50,7 @@
             <!--</q-input>-->
 
             <!--设置按钮-->
-            <q-btn color="" icon="settings" round @click="toggleMainTheme"></q-btn>
+            <q-btn color="grey-9" icon="settings" round @click="toggleMainTheme"></q-btn>
         </q-toolbar>
     </q-header>
 
@@ -71,7 +72,6 @@
 import {defineComponent} from 'vue';
 // 状态
 import {useState} from 'stores/useState';
-import {useQuasar} from 'quasar';
 // 组件使用
 import EssentialLink from 'components/EssentialLink.vue';
 import PopupSelf from 'components/PopupSelf.vue';
@@ -81,7 +81,7 @@ const linksList = [
         title: '首页',
         caption: 'index',
         icon: 'home',
-        link: '/'
+        link: ''
     },
     {
         title: '话题',
@@ -128,14 +128,13 @@ export default defineComponent({
     setup() {
         // 状态管理
         let state = useState()
-        let quasar = useQuasar()
         return {
             state,
-            quasar,
         }
     },
 
     data() {
+        this.$route.path
         return {
             // 左侧边栏状态
             leftDrawerOpen: false,
@@ -145,6 +144,8 @@ export default defineComponent({
 
             // 查询内容
             queryText: '',
+
+            path: '/',
         }
     },
 
@@ -162,16 +163,6 @@ export default defineComponent({
             }
         }
     },
-
-    watch: {
-        // 监听主题变动
-        'state.theme'() {
-            this.quasar.dark.set(
-                this.state.theme == 'dark'
-            )
-        }
-    }
-
 
 });
 </script>

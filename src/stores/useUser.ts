@@ -12,14 +12,14 @@ export const useUser = defineStore('user_state', {
             loginPlain: 0,
             // 用户身份
             userToken: null,
-            // 当前用户
+            // 当前用户信息
             info: {} as UserInfo,
         }
     },
     getters: {
         isLogin(state: SelfInfo): boolean {
             // 判断已登录
-            return Boolean(state.info.id)
+            return Boolean(state.userToken)
         }
     },
     actions: {

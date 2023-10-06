@@ -93,7 +93,10 @@
         <div class="col-3">
             <div class="q-ma-md q-gutter-md">
                 <!--页面作者的信息-->
-                <user-card v-intersection="onIntersection" :user="author"></user-card>
+                <user-card
+                    v-intersection="onIntersection" :user="author"
+                    show-actions
+                ></user-card>
 
                 <!--markdown 目录-->
                 <q-card>

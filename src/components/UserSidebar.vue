@@ -1,81 +1,95 @@
 <template>
     <!--用户侧边栏页-->
+    <div class="q-gutter-y-lg">
 
-    <!--用户资料管理-->
-    <q-card class="q-my-lg">
-        <q-card-section class="row">
+        <!--用户资料管理-->
+        <q-card>
+            <q-card-section class="row">
             <span>
                 {{ $t("self.info") }}
             </span>
-            <q-space></q-space>
-            <q-avatar v-if="user?.avatar">
-                <q-img :src="user.avatar"></q-img>
-            </q-avatar>
-            <q-avatar v-else color="info" icon="person"></q-avatar>
-        </q-card-section>
+                <q-space></q-space>
+                <!--用户头像-->
 
-        <!--用户信息-->
-        <q-card-section>
-            <q-list>
-                <q-item>
-                    {{ $t("self.name") }}
-                    <q-space></q-space>
-                    {{ user.nickname }}
-                </q-item>
-                <q-item>
-                    {{ $t("self.motto") }}
-                    <q-space></q-space>
-                    {{ user.description }}
-                </q-item>
-                <q-item>
-                    {{ $t("self.index") }}
-                    <q-space></q-space>
-                    {{ user.homePage }}
-                </q-item>
-            </q-list>
-        </q-card-section>
+                <!--头像-->
+                <q-avatar>
+                    <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
+                    <!--<q-icon v-else name="person"/>-->
+                    <q-icon name="person"/>
+                </q-avatar>
+            </q-card-section>
 
-        <q-card-actions class="col">
-            <!--用户操作-->
-            <q-btn class="col">{{ $t("self.change_info") }}</q-btn>
-            <q-btn class="col">{{ $t("self.safe") }}</q-btn>
-        </q-card-actions>
+            <!--用户信息-->
+            <q-card-section>
+                <q-list>
+                    <q-item>
+                        {{ $t("self.name") }}
+                        <q-space></q-space>
+                        {{ user.nickname }}
+                    </q-item>
+                    <q-item>
+                        {{ $t("self.motto") }}
+                        <q-space></q-space>
+                        {{ user.description }}
+                    </q-item>
+                    <q-item>
+                        {{ $t("self.index") }}
+                        <q-space></q-space>
+                        {{ user.homePage }}
+                    </q-item>
+                </q-list>
+            </q-card-section>
 
-        <q-card-actions v-if="self" class="col">
-            <!--管理员模式-->
-            <q-btn class="col">{{ $t("self.ban_7") }}</q-btn>
-            <q-btn class="col">{{ $t("self.ban_ever") }}</q-btn>
-        </q-card-actions>
-    </q-card>
+            <q-card-actions class="col">
+                <!--用户操作-->
+                <q-btn class="col">{{ $t("self.change_info") }}</q-btn>
+                <q-btn class="col">{{ $t("self.safe") }}</q-btn>
+            </q-card-actions>
 
-    <!--用户状态统计-->
-    <q-card class="q-my-lg">
-        <q-card-section>
-            {{ $t("self.achievements") }}
-        </q-card-section>
+            <q-card-actions v-if="self.userToken" class="col">
+                <!--管理员模式-->
+                <q-btn class="col">{{ $t("self.ban_7") }}</q-btn>
+                <q-btn class="col">{{ $t("self.ban_ever") }}</q-btn>
+            </q-card-actions>
+        </q-card>
 
-        <div class="row q-col-gutter-lg q-pa-lg">
-            <!--积分-->
-            <div class="col-6 text-center">{{ $t("self.points") }}:{{ user.score }}</div>
-            <!--统计文章-->
-            <div class="col-6 text-center">{{ $t("side.a_count") }}:{{ user.topicCount }}</div>
-            <!--统计回复-->
-            <div class="col-6 text-center">{{ $t("side.r_count") }}:{{ user.commentCount }}</div>
-            <!--注册-->
-            <div class="col-6 text-center">{{ $t("self.signup_rank") }}:{{ user.id }}</div>
-        </div>
-    </q-card>
+        <!--用户状态统计-->
+        <q-card>
+            <q-card-section>
+                {{ $t("self.achievements") }}
+            </q-card-section>
 
-    <!--关注列表-->
-    <q-card class="q-my-lg">
-        <q-card-section>{{ $t("self.follow") }}</q-card-section>
-    </q-card>
+            <div class="row q-col-gutter-lg q-pa-lg">
+                <!--积分-->
+                <div class="col-6 text-center">
+                    {{ $t("self.points") }}:{{ user.score }}
+                </div>
+                <!--统计文章-->
+                <div class="col-6 text-center">
+                    {{ $t("self.a_count") }}:{{ user.topicCount }}
+                </div>
+                <!--统计回复-->
+                <div class="col-6 text-center">
+                    {{ $t("self.r_count") }}:{{ user.commentCount }}
+                </div>
+                <!--注册-->
+                <div class="col-6 text-center">
+                    {{ $t("self.signup_rank") }}:{{ user.id }}
+                </div>
+            </div>
+        </q-card>
 
-    <!--粉丝列表-->
-    <q-card class="q-my-lg">
-        <q-card-section>{{ $t("self.fans") }}</q-card-section>
-    </q-card>
+        <!--关注列表-->
+        <q-card>
+            <q-card-section>{{ $t("self.follow") }}</q-card-section>
+        </q-card>
 
+        <!--粉丝列表-->
+        <q-card>
+            <q-card-section>{{ $t("self.fans") }}</q-card-section>
+        </q-card>
+
+    </div>
 </template>
 
 <script lang="ts">
@@ -97,7 +111,7 @@ export default defineComponent({
         // 自身状态
         let self = useUser()
         return {
-            self: self.info,
+            self: self,
         }
     },
 

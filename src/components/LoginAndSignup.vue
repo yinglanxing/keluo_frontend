@@ -1,7 +1,7 @@
 <template>
     <q-card class="items-center q-pa-lg" style="width: 500px; max-width: 80vw;">
         <q-card-section class="row">
-            <q-tabs v-model="state.loginPlain">
+            <q-tabs v-model="self.loginPlain">
                 <!--登录页面-->
                 <q-tab :label="$t('login')" :name="1"/>
                 <!--注册页面-->
@@ -14,7 +14,7 @@
                 <!--名称+滑动动画-->
                 <q-slide-transition appear>
                     <q-input
-                        v-show="state.loginPlain>1"
+                        v-show="self.loginPlain>1"
                         v-model="form.name" :label="$t('form.name')"
                         name="name" outlined
                     ></q-input>
@@ -27,12 +27,12 @@
                 <!--密码-->
                 <q-input
                     v-model="form.pass" :label="$t('form.pass')" class="q-my-md"
-                    name="pass" outlined
+                    name="pass" outlined type="password"
                 ></q-input>
                 <!--确认密码+滑动动画-->
                 <q-slide-transition appear>
                     <q-input
-                        v-show="state.loginPlain>1"
+                        v-show="self.loginPlain>1"
                         v-model="form.repass" :label="$t('form.repass')"
                         name="repass" outlined
                     ></q-input>
@@ -40,12 +40,16 @@
 
                 <!--验证码-->
                 <q-card-section class="q-py-md" horizontal>
-                    <q-img :ratio="3" class="q-mr-md" src="card-bg.jpg"></q-img>
-                    <q-input v-model="form.v_code" :label="$t('form.v_code')" name="verify"></q-input>
+                    <q-img
+                        :ratio="2.5" :src="captchaUrl"
+                        class="q-mr-md cursor-pointer" @click="getCaptchaId"
+                    />
+                    <!--<q-img :ratio="3" class="q-mr-md" src="card-bg.jpg"></q-img>-->
+                    <q-input v-model="form.v_code" :label="$t('form.v_code')" name="captchaCode"></q-input>
                 </q-card-section>
 
                 <!--登录按钮-->
-                <q-btn v-if=" state.loginPlain < 2" class="full-width" color="primary">
+                <q-btn v-if=" self.loginPlain < 2" class="full-width" color="primary" @click="submit">
                     {{ $t("login") }}
                 </q-btn>
                 <!--注册按钮-->
@@ -81,20 +85,30 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
-import {useUser} from 'stores/useUser';
+import axios from 'axios';
 // 状态
+import {useUser} from 'stores/useUser';
+import {useQuasar} from 'quasar';
 
 export default defineComponent({
+
     setup() {
-        // 是否进入注册页面状态
-        // const show = show_login()
-        const state = useUser()
+        // 状态管理
+        const self = useUser()
+        const quasar = useQuasar()
         return {
-            state: state,
+            self,
+            quasar,
         }
     },
+
     data() {
         return {
+            // id码
+            captchaId: '',
+            // url路径
+            captchaUrl: '',
+            // 数据内容
             form: {
                 name: '',
                 email: '',
@@ -103,6 +117,59 @@ export default defineComponent({
                 v_code: '',
             },
         }
+
+    },
+
+    mounted() {
+        // 打开弹窗时刷新验证码
+        this.getCaptchaId()
+    },
+
+    methods: {
+        // 获取新 id 与验证码图片
+        getCaptchaId() {
+            axios.get('https://mlog.club/api/captcha/request?captchaId=').then((req) => {
+                this.captchaId = req.data.data.captchaId
+                this.captchaUrl = req.data.data.captchaUrl
+            })
+        },
+
+        // 提交内容
+        submit() {
+            // 表单
+            const formTable = new FormData();
+            formTable.append('captchaId', this.captchaId);
+            formTable.append('captchaCode', this.form.v_code);
+            formTable.append('username', this.form.email);
+            formTable.append('password', this.form.pass);
+            // 发送登录请求
+            axios.post('https://mlog.club/api/login/signin', formTable).then((req) => {
+                // 成功登录
+                if (req.data.success) {
+                    // 载入 token
+                    this.self.userToken = req.data.data.token
+                    // 载入用户信息
+                    this.self.info = req.data.data.user
+                    // 关闭登录栏
+                    this.self.alert_plain(0)
+                }
+                // 信息提示
+                this.quasar.notify({
+                    message: req.data.message,
+                    color: req.data.success ? 'green' : 'red'
+                })
+
+            })
+        },
+
+        // todo 第三方登录
+        github() {
+            this.quasar.notify({message: 'github'})
+        },
+
+        qq() {
+            this.quasar.notify({message: 'qq'})
+        },
     },
 })
 </script>
