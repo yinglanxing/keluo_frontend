@@ -2,6 +2,11 @@
     <!--文章列表-->
     <div class="q-gutter-y-lg">
 
+        <!--列表为空-->
+        <q-btn v-if="dataList.length == 0"
+               class="full-width" icon="refresh"></q-btn>
+
+        <!--列表内容-->
         <q-card v-for="item in pageItem" :key="item.articleId">
 
             <!--头部-->
@@ -146,8 +151,11 @@ export default defineComponent({
             // 获取新数据
             if (!this.lock && url) {
                 axios.get(url).then((req) => {
-                    // 装载数据
-                    this.dataList.push(...req.data.data.results)
+                    // 如果存在数据则装载数据
+                    if (req.data.data.results) {
+                        // 装载数据
+                        this.dataList.push(...req.data.data.results)
+                    }
                     // 最大页数刷新
                     this.maxCount = this.dataList.length / 10
                     // ! 下一个页面参数
@@ -158,6 +166,19 @@ export default defineComponent({
                     this.cutPageItems()
                 })
             }
+        },
+
+        initialization() {
+            // 初始化所有内容
+            this.dataList.length = 0
+            this.pageItem.length = 0
+            // 重置页数
+            this.maxCount = 0
+            this.pageNum = 0
+            this.lock = false
+            // 获取新数据
+            this.getData(this.url)
+
         },
 
         cutPageItems() {
@@ -184,14 +205,7 @@ export default defineComponent({
 
         url() {
             // 切换数据获取地址后，清空默认存储数据
-            this.dataList.length = 0
-            this.pageItem.length = 0
-            // 重置页数
-            this.maxCount = 0
-            this.pageNum = 0
-            this.lock = false
-            // 获取新数据
-            this.getData(this.url)
+            this.initialization()
         }
     }
 })

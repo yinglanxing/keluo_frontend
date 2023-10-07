@@ -1,7 +1,7 @@
 <template>
     <!--头像-->
     <div class="float-right">
-        <q-avatar color="info" @click="clickInfo">
+        <q-avatar @click="clickInfo">
             <q-icon name="person"></q-icon>
         </q-avatar>
     </div>

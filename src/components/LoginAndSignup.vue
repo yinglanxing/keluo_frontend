@@ -22,12 +22,12 @@
                 <!--账户-->
                 <q-input
                     v-model="form.email" :label="$t('form.email')" class="q-my-md"
-                    name="email" outlined
+                    name="username" outlined
                 ></q-input>
                 <!--密码-->
                 <q-input
                     v-model="form.pass" :label="$t('form.pass')" class="q-my-md"
-                    name="pass" outlined type="password"
+                    name="password" outlined type="password"
                 ></q-input>
                 <!--确认密码+滑动动画-->
                 <q-slide-transition appear>

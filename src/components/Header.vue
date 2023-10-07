@@ -4,11 +4,24 @@
     <q-header :class="['header',$q.dark.isActive ? '' :'text-dark' ]" bordered reveal>
         <q-toolbar class="q-gutter-x-lg">
             <!--菜单展开按钮-->
-            <q-btn aria-label="menu" dense flat icon="menu" round @click="toggleLeftDrawer"/>
+            <!--隐藏级别 md lg xl-->
+            <q-btn
+                aria-label="menu" class="md-hide lg-hide xl-hide"
+                dense flat icon="menu"
+                round
+                @click="toggleLeftDrawer"
+            />
 
-            <q-tabs v-model="$route.path" shrink>
-                <q-tab
-                    v-for="item in essentialLinks" :key="item"
+            <!--默认菜单效果-->
+            <!--隐藏级别 xs sm-->
+            <q-tabs
+                v-model="$route.path"
+                class="xs-hide sm-hide" outside-arrows
+                shrink
+            >
+                <q-route-tab
+                    v-for="item in essentialLinks" :key="item.title"
+                    :icon="item.icon" :to="item.link"
                     :label="item.title" :name="item.link"
                 />
             </q-tabs>
@@ -18,9 +31,7 @@
                 <img alt="ico" src="/favicon.ico">
             </q-avatar>
 
-            <q-toolbar-title>
-                {{ $t('project.title') }}
-            </q-toolbar-title>
+            <q-space></q-space>
 
             <popup-self></popup-self>
 
@@ -60,7 +71,9 @@
         <!--show-if-above-->
         <q-list>
             <q-item-label header>
-                标题
+                <q-avatar>
+                    <img alt="ico" src="/favicon.ico">
+                </q-avatar>
             </q-item-label>
 
             <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link"/>
@@ -81,7 +94,7 @@ const linksList = [
         title: '首页',
         caption: 'index',
         icon: 'home',
-        link: ''
+        link: '/'
     },
     {
         title: '话题',

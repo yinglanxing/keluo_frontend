@@ -11,14 +11,14 @@
             <q-space></q-space>
 
             <!--头像-->
-            <q-avatar color="blue-1" @click="moreAboutUser">
+            <q-avatar @click="moreAboutUser">
                 <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
                 <!--<q-icon v-else name="person"/>-->
                 <q-icon name="person"/>
             </q-avatar>
 
             <!--motto / 格言 / 个性-->
-            <div class="col-12">
+            <div class="col-12 q-mt-md">
                 {{ user.description }}
             </div>
         </q-card-section>
@@ -44,7 +44,8 @@
             <div>{{ $t("self.r_count") }}:{{ user.commentCount }}</div>
         </q-card-actions>
 
-        <q-separator inset/>
+        <!--底部分割线-->
+        <q-separator v-if="showActions" inset/>
 
         <!--操作按钮-->
         <!--<q-card-actions v-if="user?.id != self.id">-->
@@ -64,7 +65,7 @@ import {useUser} from 'stores/useUser';
 import {UserInfo} from 'stores/schemas/user';
 
 export default defineComponent({
-    name: 'UserCard',
+    name: 'UserCardVue',
 
     props: {
         // 获取传入用户

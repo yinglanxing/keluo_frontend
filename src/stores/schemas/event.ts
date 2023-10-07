@@ -57,7 +57,6 @@ export interface TouchPanEvent {
 }
 
 // Intersection 事件
-
 export interface IntersectionEvent {
     // 包含客户端矩形信息的对象
     boundingClientRect?: DomElement,

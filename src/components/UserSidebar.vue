@@ -21,21 +21,33 @@
 
             <!--用户信息-->
             <q-card-section>
-                <q-list>
-                    <q-item>
-                        {{ $t("self.name") }}
+                <q-list class="overflow-hidden">
+                    <q-item class="row">
+                        <div class="col-auto">
+                            {{ $t("self.name") }}
+                        </div>
                         <q-space></q-space>
-                        {{ user.nickname }}
+                        <div class="col-auto">
+                            {{ user.nickname }}
+                        </div>
                     </q-item>
-                    <q-item>
-                        {{ $t("self.motto") }}
+                    <q-item class="row">
+                        <div class="col-auto">
+                            {{ $t("self.motto") }}
+                        </div>
                         <q-space></q-space>
-                        {{ user.description }}
+                        <div class="col-auto">
+                            {{ user.description }}
+                        </div>
                     </q-item>
-                    <q-item>
-                        {{ $t("self.index") }}
+                    <q-item class="row">
+                        <div class="col-auto">
+                            {{ $t("self.index") }}
+                        </div>
                         <q-space></q-space>
-                        {{ user.homePage }}
+                        <div class="col-auto">
+                            {{ user.homePage }}
+                        </div>
                     </q-item>
                 </q-list>
             </q-card-section>
@@ -101,6 +113,7 @@ import {useUser} from 'stores/useUser';
 import {UserInfo} from 'stores/schemas/user';
 
 export default defineComponent({
+    name: 'UserSidebarVue',
 
     props: {
         // 获取传入用户
