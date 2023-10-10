@@ -11,19 +11,17 @@
             <q-space></q-space>
 
             <!--头像-->
-            <q-avatar @click="moreAboutUser">
+            <q-avatar color="blue-1" @click="moreAboutUser">
                 <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
                 <!--<q-icon v-else name="person"/>-->
                 <q-icon name="person"/>
             </q-avatar>
 
             <!--motto / 格言 / 个性-->
-            <div class="col-12 q-mt-md">
+            <div class="col-12">
                 {{ user.description }}
             </div>
         </q-card-section>
-
-        <q-separator inset/>
 
         <!--主页背景-->
         <q-card-section>
@@ -31,8 +29,6 @@
             <!--<q-img v-else src="card-bg.jpg"/>-->
             <q-img src="card-bg.jpg"/>
         </q-card-section>
-
-        <q-separator inset/>
 
         <!--信息统计-->
         <q-card-actions class="justify-around">
@@ -44,14 +40,12 @@
             <div>{{ $t("self.r_count") }}:{{ user.commentCount }}</div>
         </q-card-actions>
 
-        <!--底部分割线-->
-        <q-separator v-if="showActions" inset/>
+        <q-separator inset/>
 
         <!--操作按钮-->
         <!--<q-card-actions v-if="user?.id != self.id">-->
         <q-card-actions v-if="showActions">
-            <q-btn class="col">关注</q-btn>
-            <q-btn class="col">私信</q-btn>
+            <q-btn v-if="user?.id != self.info?.id" class="col">{{ $t('self.follow') }}</q-btn>
         </q-card-actions>
     </q-card>
 
@@ -65,7 +59,7 @@ import {useUser} from 'stores/useUser';
 import {UserInfo} from 'stores/schemas/user';
 
 export default defineComponent({
-    name: 'UserCardVue',
+    name: 'UserCard',
 
     props: {
         // 获取传入用户
@@ -81,7 +75,7 @@ export default defineComponent({
         // 自身状态
         const self = useUser()
         return {
-            self: self.info,
+            self,
         }
     },
 

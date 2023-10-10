@@ -5,9 +5,9 @@
         <!--用户资料管理-->
         <q-card>
             <q-card-section class="row">
-            <span>
-                {{ $t("self.info") }}
-            </span>
+                <span>
+                    {{ $t("self.info") }}
+                </span>
                 <q-space></q-space>
                 <!--用户头像-->
 
@@ -94,19 +94,57 @@
         <!--关注列表-->
         <q-card>
             <q-card-section>{{ $t("self.follow") }}</q-card-section>
+            <q-list bordered separator class="overflow-hidden">
+                <q-item v-for="item in followList" :key="item.id" v-ripple clickable @click="moreAboutUser(item.id)">
+                    <!--头像-->
+                    <q-item-section avatar>
+                        <q-avatar>
+                            <q-icon name="person"></q-icon>
+                        </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                        <!--名称-->
+                        <q-item-label>
+                            {{ item.nickname }}
+                        </q-item-label>
+                        <q-item-label caption>
+                            {{ item.score }}
+                        </q-item-label>
+                    </q-item-section>
+                </q-item>
+            </q-list>
         </q-card>
 
         <!--粉丝列表-->
         <q-card>
             <q-card-section>{{ $t("self.fans") }}</q-card-section>
+            <q-list bordered separator class="overflow-hidden">
+                <q-item v-for="item in fansList" :key="item.id" v-ripple clickable @click="moreAboutUser(item.id)">
+                    <!--头像-->
+                    <q-item-section avatar>
+                        <q-avatar>
+                            <q-icon name="person"></q-icon>
+                        </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                        <!--名称-->
+                        <q-item-label>
+                            {{ item.nickname }}
+                        </q-item-label>
+                        <q-item-label caption>
+                            {{ item.score }}
+                        </q-item-label>
+                    </q-item-section>
+                </q-item>
+            </q-list>
         </q-card>
 
     </div>
 </template>
 
 <script lang="ts">
-
 import {defineComponent, PropType} from 'vue';
+import axios from 'axios';
 // 状态
 import {useUser} from 'stores/useUser';
 // 模型
@@ -117,22 +155,76 @@ export default defineComponent({
 
     props: {
         // 获取传入用户
-        user: {} as PropType<UserInfo>
+        user: {
+            // 类型注释
+            type: Object as PropType<UserInfo>,
+            // 强制非空
+            required: true,
+        }
     },
 
     data() {
         // 自身状态
-        let self = useUser()
+        const self = useUser()
+        const followList: UserInfo[] = []
+        const fansList: UserInfo[] = []
         return {
             self: self,
+            followList,
+            fansList,
         }
     },
 
-    methods: {}
+    mounted() {
+        this.getAll()
+    },
+
+    methods: {
+        getAll() {
+
+            // 获取关注列表
+            axios.get(
+                'https://mlog.club/api/fans/recent/follow?userId=' +
+                (this.user?.id || this.$route.params['id'])
+            ).then((req) => {
+                this.followList = req.data.data.results || []
+            }).catch(() => {
+                this.followList = []
+            })
+
+            // 获取粉丝列表
+            axios.get(
+                'https://mlog.club/api/fans/recent/fans?userId=' +
+                (this.user?.id || this.$route.params['id'])
+            ).then((req) => {
+                this.fansList = req.data.data.results || []
+            }).catch(() => {
+                this.followList = []
+            })
+
+            // 判断已登录且非用户本人
+            // if (this.self.userToken){
+            // todo 更多登录后可用功能
+            // }
+
+        },
+
+        // 查看用户信息
+        moreAboutUser(id: number) {
+            this.$router.push('/user/' + id)
+        }
+    },
+
+    watch: {
+        '$route.params'() {
+            // 切换 id 时刷新内容
+            if (this.$route.params['id']) {
+                this.getAll()
+            }
+        }
+    }
 })
 </script>
 
 
-<style scoped>
-
-</style>
+<style scoped></style>

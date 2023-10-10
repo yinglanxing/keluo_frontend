@@ -66,8 +66,8 @@ export default {
     'login_tips.other_account': '第三方账号登录',
 
     // 侧边栏内容
-    'side.git_hot': '开源热榜',
-    'side.p_rank': '积分排行',
+    'side.github_hot': '开源热榜',
+    'side.point_rank': '积分排行',
     'side.full_rank': '完整榜单',
 
     // 跳转按钮

@@ -2,7 +2,7 @@
     <!--用户登录信息-->
 
     <!--非登录状态-->
-    <q-card v-if="!user.isLogin" class="q-pa-lg">
+    <q-card v-if="!user.userToken" class="q-pa-lg">
         <div class="row q-col-gutter-lg">
             <!--提示标题-->
             <div class="col-12 text-h5">
@@ -42,7 +42,7 @@
 
 
     <!--已登录状态-->
-    <div v-if="user.isLogin">
+    <div v-else>
         <user-card :user="user.info"></user-card>
     </div>
 

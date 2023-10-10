@@ -69,15 +69,31 @@ export default defineComponent({
 
     mounted() {
         // 获取用户信息
-        axios.get('https://mlog.club/api/user/' + this.$route.params['id']).then((req) => {
-            this.user = req.data.data;
-            // 定位到用户的文章列表
-            this.articleUrl = 'https://mlog.club/api/article/user/articles?userId=' + this.user.id
-        }).catch(() => {
-            // 无法获取信息，返回上一页
-            this.$router.back()
-        })
+        this.getUser()
     },
+
+    methods: {
+        getUser() {
+            // 获取用户数据
+            axios.get('https://mlog.club/api/user/' + this.$route.params['id']).then((req) => {
+                this.user = req.data.data;
+                // 定位到用户的文章列表
+                this.articleUrl = 'https://mlog.club/api/article/user/articles?userId=' + this.user.id
+            }).catch(() => {
+                // 无法获取信息，返回上一页
+                this.$router.back()
+            })
+        }
+    },
+
+    watch: {
+        '$route.params'() {
+            // 切换 id 时刷新内容
+            if (this.$route.params['id']) {
+                this.getUser()
+            }
+        }
+    }
 })
 
 </script>

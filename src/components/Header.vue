@@ -16,12 +16,15 @@
             <!--隐藏级别 xs sm-->
             <q-tabs
                 v-model="$route.path"
-                class="xs-hide sm-hide" outside-arrows
+                class="xs-hide sm-hide"
+                inline-label
+                outside-arrows
                 shrink
             >
-                <q-route-tab
-                    v-for="item in essentialLinks" :key="item.title"
-                    :icon="item.icon" :to="item.link"
+                <q-tab
+                    v-for="item in essentialLinks"
+                    :key="item.title"
+                    :icon="item.icon" @click="changeRoute(item.link)"
                     :label="item.title" :name="item.link"
                 />
             </q-tabs>
@@ -147,7 +150,6 @@ export default defineComponent({
     },
 
     data() {
-        this.$route.path
         return {
             // 左侧边栏状态
             leftDrawerOpen: false,
@@ -167,6 +169,7 @@ export default defineComponent({
         toggleLeftDrawer() {
             this.leftDrawerOpen = !this.leftDrawerOpen
         },
+
         // 切换主题颜色
         toggleMainTheme() {
             if (this.state.theme == 'light') {
@@ -174,6 +177,11 @@ export default defineComponent({
             } else {
                 this.state.theme = 'light'
             }
+        },
+
+        // 切换路径
+        changeRoute(take: string) {
+            this.$router.push(take)
         }
     },
 

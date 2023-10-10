@@ -13,19 +13,28 @@
         <q-card>
             <!--积分排行-->
             <q-card-section>
-                {{}}
+                {{ $t('side.point_rank') }}
             </q-card-section>
 
             <q-separator/>
 
             <q-list separator>
-                <q-item v-for="x in 10" :key="x" v-ripple clickable>
+                <q-item v-for="item in rank" :key="item" v-ripple clickable>
+                    <!--头像-->
                     <q-item-section avatar>
-                        <q-avatar color="primary" text-color="white">
-                            {{ x }}
+                        <q-avatar>
+                            <q-icon name="person"></q-icon>
                         </q-avatar>
                     </q-item-section>
-                    <q-item-section>Letter avatar-type</q-item-section>
+                    <q-item-section>
+                        <!--名称-->
+                        <q-item-label>
+                            {{ item.nickname }}
+                        </q-item-label>
+                        <q-item-label caption>
+                            {{ item.score }}
+                        </q-item-label>
+                    </q-item-section>
                 </q-item>
             </q-list>
         </q-card>
@@ -34,8 +43,10 @@
 
 <script lang="ts">
 import {defineComponent} from 'vue';
+import axios from 'axios';
 // 组件
 import LoginTips from 'components/LoginTips.vue';
+import {UserInfo} from 'stores/schemas/user';
 
 export default defineComponent({
     name: 'IndexRightSidebarVue',
@@ -46,7 +57,17 @@ export default defineComponent({
     },
 
     data() {
-        return {}
+        const rank: UserInfo[] = []
+        return {
+            rank
+        }
+    },
+
+    mounted() {
+        // 获取用户排行
+        axios.get('https://mlog.club/api/user/score/rank').then((req) => {
+            if (req.data.success) this.rank = req.data.data;
+        })
     },
 })
 </script>

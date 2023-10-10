@@ -59,7 +59,7 @@ export interface ArticleListInfo {
     // 数据
     data: {
         // 列表
-        results: ArticleInfo,
+        results?: ArticleInfo,
         // 获取下一页的状态码
         cursor: string,
         // 有更多数据

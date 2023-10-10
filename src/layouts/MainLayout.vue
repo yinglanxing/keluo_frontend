@@ -77,7 +77,7 @@ export default defineComponent({
             this.showLoginDialog = this.self.loginPlain > 0
         },
         // 用户登录状态变动，关闭登录弹窗
-        'self.isLogin'() {
+        'self.userToken'() {
             if (this.self.isLogin) {
                 this.self.alert_plain(0)
             }

@@ -101,6 +101,8 @@ import {date} from 'quasar';
 import {ArticleInfo} from 'src/stores/schemas/article';
 
 export default defineComponent({
+    name: 'ArticleListVue',
+
     props: {
         // 数据获取路径
         url: {
@@ -146,22 +148,24 @@ export default defineComponent({
 
         }
     },
+
     methods: {
         getData(url: string) {
             // 获取新数据
             if (!this.lock && url) {
                 axios.get(url).then((req) => {
                     // 如果存在数据则装载数据
-                    if (req.data.data.results) {
+                    if (req.data.data.results?.length) {
                         // 装载数据
                         this.dataList.push(...req.data.data.results)
                     }
+                    // 是否已取完数据
+                    this.lock = !req.data.data.hasMore
                     // 最大页数刷新
                     this.maxCount = this.dataList.length / 10
                     // ! 下一个页面参数
                     this.cursor = req.data.data.cursor
-                    // 是否已取完数据
-                    this.lock = !req.data.data.hasMore
+
                     // 刷新页面内容
                     this.cutPageItems()
                 })
@@ -174,24 +178,25 @@ export default defineComponent({
             this.pageItem.length = 0
             // 重置页数
             this.maxCount = 0
-            this.pageNum = 0
+            this.pageNum = 1
             this.lock = false
             // 获取新数据
             this.getData(this.url)
-
         },
 
         cutPageItems() {
             // 裁出当前页面应有的元素
-            this.pageItem = this.dataList.slice((this.pageNum - 1) * 10, this.pageNum * 10)
+                        this.pageItem = this.dataList.slice((this.pageNum - 1) * 10, this.pageNum * 10)
         },
     },
+
     watch: {
-        pageNum() {
+        'pageNum'() {
             // 开启页面模式的状态下，数值变动更新列表
             if (this.usePage) {
                 this.cutPageItems()
             }
+
             // 页面值达到最大，且未上锁
             if (this.pageNum == this.maxCount && !this.lock) {
                 // 获取后续页面
@@ -203,7 +208,7 @@ export default defineComponent({
             }
         },
 
-        url() {
+        'url'() {
             // 切换数据获取地址后，清空默认存储数据
             this.initialization()
         }

@@ -4,8 +4,8 @@
         <q-card>
             <!--开源热榜-->
             <q-card-section>
-                <q-icon name="whatshot"/>
-                {{ $t("side.git_hot") }}
+                <q-icon name="bi-github"/>
+                {{ $t("side.github_hot") }}
             </q-card-section>
 
             <!--列表内容-->
@@ -16,18 +16,18 @@
                         <q-item-section>
                             <!--标题-->
                             <q-item-label>
-                                {{ x + $t("side.git_hot") }}
+                                {{ x }} title
                             </q-item-label>
 
                             <!--内容-->
                             <q-item-label caption class="ellipsis-2-lines" style="height: 2.5em">
-                                {{ $t("side.git_hot") }}
-                                {{ $t("side.git_hot") }}
-                                {{ $t("side.git_hot") }}
-                                {{ $t("side.git_hot") }}
-                                {{ $t("side.git_hot") }}
-                                {{ $t("side.git_hot") }}
-                                {{ $t("side.git_hot") }} {{ x }}
+                                any any any any any any any
+                                any any any any any any any
+                                any any any any any any any
+                                any any any any any any any
+                                any any any any any any any
+                                any any any any any any any
+                                any any any any any any any {{ x }}
                             </q-item-label>
                         </q-item-section>
 
@@ -50,9 +50,12 @@
         <!--热门tag-->
         <q-card>
             <div class="q-pa-md q-gutter-sm">
-                <q-chip v-for="i in 75" :key="i" color="blue-1">
+                <q-chip v-for="i in 75" :key="i">
                     <div class="ellipsis">
-                        {{ i }}tag
+                        {{ i }}
+                        <span v-if="i % 9 ==0">
+                            {{ String(Math.random()).slice(0, 7) }}
+                        </span>
                     </div>
                 </q-chip>
             </div>

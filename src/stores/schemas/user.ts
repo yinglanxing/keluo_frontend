@@ -51,8 +51,8 @@ export interface UserInfo {
     // 用户主页
     homePage: string,
 
-    // ? 唯一账号名？
+    // ? 唯一账号名
     username: string,
-    // ? 封禁状态？其他状态?
+    // ? 封禁状态？其他状态
     status: number,
 }
