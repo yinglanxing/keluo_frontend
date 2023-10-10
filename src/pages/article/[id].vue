@@ -1,5 +1,4 @@
 <template>
-
     <!--左侧固定按钮-->
     <q-fab
         color="primary" direction="down" icon="add"
@@ -48,7 +47,6 @@
         <!--中间页面内容-->
         <div class="col-8">
             <q-card class="q-my-md q-gutter-ma-md">
-                <!--todo 限制图片大小-->
                 <q-img :ratio="16/9" alt="bg" src="/card-bg.jpg"/>
 
                 <!--页头-->
@@ -93,10 +91,7 @@
         <div class="col-3">
             <div class="q-ma-md q-gutter-md">
                 <!--页面作者的信息-->
-                <user-card
-                    v-intersection="onIntersection" :user="author"
-                    show-actions
-                ></user-card>
+                <user-card v-intersection="onIntersection" :user="author" show-actions></user-card>
 
                 <!--markdown 目录-->
                 <q-card>
@@ -106,20 +101,17 @@
                 </q-card>
 
                 <!--推荐-->
-                <q-card style=" top: 15px;position: sticky;left: 0;">
+                <q-card>
                     <!--精选内容-->
                     <q-card-section>
-                        <!--{{ $t('') }}-->
+                        {{ $t('side.related') }}
                     </q-card-section>
 
                     <q-list bordered separator>
-                        <q-item v-for="x in 10" :key="x" v-ripple clickable>
-                            <q-item-section avatar>
-                                <q-avatar color="primary" text-color="white">
-                                    {{ x }}
-                                </q-avatar>
+                        <q-item v-for="item in relatedList" :key="item.articleId" v-ripple clickable>
+                            <q-item-section>
+                                {{ item.title }}
                             </q-item-section>
-                            <q-item-section>Letter avatar-type</q-item-section>
                         </q-item>
                     </q-list>
                 </q-card>
@@ -131,13 +123,13 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
-import {date} from 'quasar'
+import { date } from 'quasar'
 // 模型
-import {UserInfo} from 'stores/schemas/user';
-import {ArticleInfo} from 'stores/schemas/article';
-import {IntersectionEvent} from 'stores/schemas/event';
+import { UserInfo } from 'stores/schemas/user';
+import { ArticleView } from 'stores/schemas/article';
+import { IntersectionEvent } from 'stores/schemas/event';
 // 组件
 import UserCard from 'components/UserCard.vue';
 
@@ -151,8 +143,9 @@ export default defineComponent({
 
     data() {
         // 用户信息
-        let article: ArticleInfo = {} as ArticleInfo;
+        let article: ArticleView = {} as ArticleView;
         let author: UserInfo = {} as UserInfo;
+        let relatedList: ArticleView[] = [];
         return {
             // 日期api
             date,
@@ -163,6 +156,8 @@ export default defineComponent({
             article,
             // 作者
             author,
+            // 相关推荐
+            relatedList,
         }
     },
 
@@ -180,6 +175,12 @@ export default defineComponent({
                 this.article = req.data.data
                 // 用户数据
                 this.author = req.data.data.user
+                // 获取相关文章
+                axios.get(
+                    'https://mlog.club/api/article/related/' + this.$route.params['id']
+                ).then((req) => {
+                    this.relatedList = req.data.data || []
+                })
             }).catch(() => {
                 // 无法获取信息，返回上一页
                 this.$router.back()
@@ -195,5 +196,4 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

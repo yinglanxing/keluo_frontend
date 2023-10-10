@@ -1,12 +1,12 @@
 <template>
-    <router-view/>
+    <router-view />
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 // 状态
-import {useQuasar} from 'quasar';
-import {useState} from 'stores/useState';
+import { useQuasar } from 'quasar';
+import { useState } from 'stores/useState';
 
 export default defineComponent({
     name: 'App',

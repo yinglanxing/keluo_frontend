@@ -73,9 +73,18 @@
 
             <!--卡片底部内容-->
             <q-card-actions>
-                <q-btn flat icon="event" round/>
-                <q-btn color="primary" flat>
+                <q-btn flat v-if="item.content">
                     Reserve
+                </q-btn>
+                <q-space/>
+                <q-btn flat icon="more_vert" round>
+                    <q-menu cover>
+                        <q-card>
+                            <q-card-section>
+                                123
+                            </q-card-section>
+                        </q-card>
+                    </q-menu>
                 </q-btn>
             </q-card-actions>
         </q-card>
@@ -186,7 +195,7 @@ export default defineComponent({
 
         cutPageItems() {
             // 裁出当前页面应有的元素
-                        this.pageItem = this.dataList.slice((this.pageNum - 1) * 10, this.pageNum * 10)
+            this.pageItem = this.dataList.slice((this.pageNum - 1) * 10, this.pageNum * 10)
         },
     },
 

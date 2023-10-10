@@ -15,7 +15,7 @@
                 <q-avatar>
                     <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
                     <!--<q-icon v-else name="person"/>-->
-                    <q-icon name="person"/>
+                    <q-icon name="person" />
                 </q-avatar>
             </q-card-section>
 
@@ -52,13 +52,13 @@
                 </q-list>
             </q-card-section>
 
-            <q-card-actions class="col">
-                <!--用户操作-->
+            <!--用户操作-->
+            <!-- <q-card-actions class="col">
                 <q-btn class="col">{{ $t("self.change_info") }}</q-btn>
                 <q-btn class="col">{{ $t("self.safe") }}</q-btn>
-            </q-card-actions>
+            </q-card-actions> -->
 
-            <q-card-actions v-if="self.userToken" class="col">
+            <q-card-actions v-if="self.userToken && self.info.status" class="col">
                 <!--管理员模式-->
                 <q-btn class="col">{{ $t("self.ban_7") }}</q-btn>
                 <q-btn class="col">{{ $t("self.ban_ever") }}</q-btn>
@@ -94,64 +94,34 @@
         <!--关注列表-->
         <q-card>
             <q-card-section>{{ $t("self.follow") }}</q-card-section>
-            <q-list bordered separator class="overflow-hidden">
-                <q-item v-for="item in followList" :key="item.id" v-ripple clickable @click="moreAboutUser(item.id)">
-                    <!--头像-->
-                    <q-item-section avatar>
-                        <q-avatar>
-                            <q-icon name="person"></q-icon>
-                        </q-avatar>
-                    </q-item-section>
-                    <q-item-section>
-                        <!--名称-->
-                        <q-item-label>
-                            {{ item.nickname }}
-                        </q-item-label>
-                        <q-item-label caption>
-                            {{ item.score }}
-                        </q-item-label>
-                    </q-item-section>
-                </q-item>
-            </q-list>
+            <rank-list :rank="followList" />
         </q-card>
 
         <!--粉丝列表-->
         <q-card>
             <q-card-section>{{ $t("self.fans") }}</q-card-section>
-            <q-list bordered separator class="overflow-hidden">
-                <q-item v-for="item in fansList" :key="item.id" v-ripple clickable @click="moreAboutUser(item.id)">
-                    <!--头像-->
-                    <q-item-section avatar>
-                        <q-avatar>
-                            <q-icon name="person"></q-icon>
-                        </q-avatar>
-                    </q-item-section>
-                    <q-item-section>
-                        <!--名称-->
-                        <q-item-label>
-                            {{ item.nickname }}
-                        </q-item-label>
-                        <q-item-label caption>
-                            {{ item.score }}
-                        </q-item-label>
-                    </q-item-section>
-                </q-item>
-            </q-list>
+            <rank-list :rank="fansList" />
         </q-card>
-
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from 'vue';
+import { defineComponent, PropType } from 'vue';
 import axios from 'axios';
 // 状态
-import {useUser} from 'stores/useUser';
+import { useUser } from 'stores/useUser';
 // 模型
-import {UserInfo} from 'stores/schemas/user';
+import { UserInfo } from 'stores/schemas/user';
+// 组件
+import RankList from 'components/RankList.vue';
 
 export default defineComponent({
     name: 'UserSidebarVue',
+
+    // 引用组件
+    components: {
+        RankList,
+    },
 
     props: {
         // 获取传入用户
@@ -160,71 +130,66 @@ export default defineComponent({
             type: Object as PropType<UserInfo>,
             // 强制非空
             required: true,
-        }
+        },
     },
 
     data() {
         // 自身状态
-        const self = useUser()
-        const followList: UserInfo[] = []
-        const fansList: UserInfo[] = []
+        const self = useUser();
+        const followList: UserInfo[] = [];
+        const fansList: UserInfo[] = [];
         return {
             self: self,
             followList,
             fansList,
-        }
+        };
     },
 
     mounted() {
-        this.getAll()
+        this.getAll();
     },
 
     methods: {
         getAll() {
-
             // 获取关注列表
             axios.get(
-                'https://mlog.club/api/fans/recent/follow?userId=' +
-                (this.user?.id || this.$route.params['id'])
+                'https://mlog.club/api/fans/recent/follow?userId=' + this.user.id
             ).then((req) => {
-                this.followList = req.data.data.results || []
+                this.followList = req.data.data.results || [];
             }).catch(() => {
-                this.followList = []
-            })
+                this.followList = [];
+            });
 
             // 获取粉丝列表
             axios.get(
-                'https://mlog.club/api/fans/recent/fans?userId=' +
-                (this.user?.id || this.$route.params['id'])
+                'https://mlog.club/api/fans/recent/fans?userId=' + this.user.id
             ).then((req) => {
-                this.fansList = req.data.data.results || []
+                this.fansList = req.data.data.results || [];
             }).catch(() => {
-                this.followList = []
-            })
+                this.followList = [];
+            });
 
             // 判断已登录且非用户本人
             // if (this.self.userToken){
             // todo 更多登录后可用功能
             // }
-
         },
 
         // 查看用户信息
         moreAboutUser(id: number) {
-            this.$router.push('/user/' + id)
-        }
+            this.$router.push('/user/' + id);
+        },
     },
 
     watch: {
         '$route.params'() {
             // 切换 id 时刷新内容
             if (this.$route.params['id']) {
-                this.getAll()
+                this.getAll();
             }
-        }
-    }
-})
+        },
+    },
+});
 </script>
-
 
 <style scoped></style>
