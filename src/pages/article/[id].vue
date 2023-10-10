@@ -9,32 +9,32 @@
             :label="$t('article.comment')" color="primary" external-label
             fab icon="comment"
             label-position="left"
-        />
+        ></q-fab-action>
         <!--收藏-->
         <q-fab-action
             :label="$t('article.collect')" color="primary" external-label
             fab icon="star"
             label-position="left"
-        />
+        ></q-fab-action>
         <!--分享-->
         <q-fab-action
             :label="$t('article.share')" color="primary" external-label
             fab icon="share"
             label-position="left"
-        />
+        ></q-fab-action>
         <!--举报-->
         <q-fab-action
             :label="$t('article.report')" color="primary" external-label
             fab icon="report"
             label-position="left"
-        />
+        ></q-fab-action>
         <!--作者+滑动动画-->
         <q-fab-action
             v-show="showNavUser"
             :label="$t('article.author')" color="primary" external-label
             fab icon="person"
             label-position="left"
-        />
+        ></q-fab-action>
     </q-fab>
 
 
@@ -47,7 +47,7 @@
         <!--中间页面内容-->
         <div class="col-8">
             <q-card class="q-my-md q-gutter-ma-md">
-                <q-img :ratio="16/9" alt="bg" src="/card-bg.jpg"/>
+                <q-img :ratio="16/9" alt="bg" src="/card-bg.jpg"></q-img>
 
                 <!--页头-->
                 <q-card-section>
@@ -58,7 +58,7 @@
                         </div>
                         <!--时间-->
                         <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-                            <q-icon name="schedule"/>
+                            <q-icon name="schedule"></q-icon>
                             {{ date.formatDate(article.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
                         </div>
                     </div>
@@ -71,7 +71,7 @@
                 </q-card-section>
 
                 <!--分割线-->
-                <q-separator/>
+                <q-separator></q-separator>
 
                 <!--tags-->
                 <q-card-section class="q-gutter-md">
@@ -96,7 +96,7 @@
                 <!--markdown 目录-->
                 <q-card>
                     <q-card-section>
-                        {{ $t("dir") }}
+                        {{ $t('dir') }}
                     </q-card-section>
                 </q-card>
 
@@ -125,7 +125,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import { date } from 'quasar'
+import { date } from 'quasar';
 // 模型
 import { UserInfo } from 'stores/schemas/user';
 import { ArticleView } from 'stores/schemas/article';
@@ -138,7 +138,7 @@ export default defineComponent({
 
     // 引用组件
     components: {
-        UserCard
+        UserCard,
     },
 
     data() {
@@ -158,13 +158,13 @@ export default defineComponent({
             author,
             // 相关推荐
             relatedList,
-        }
+        };
     },
 
 
     mounted() {
         // 获取文章信息
-        this.getData('https://mlog.club/api/article/' + this.$route.params['id'])
+        this.getData('https://mlog.club/api/article/' + this.$route.params['id']);
     },
 
     methods: {
@@ -172,28 +172,28 @@ export default defineComponent({
         getData(url: string) {
             axios.get(url).then((req) => {
                 // 文章数据
-                this.article = req.data.data
+                this.article = req.data.data;
                 // 用户数据
-                this.author = req.data.data.user
+                this.author = req.data.data.user;
                 // 获取相关文章
                 axios.get(
-                    'https://mlog.club/api/article/related/' + this.$route.params['id']
+                    'https://mlog.club/api/article/related/' + this.$route.params['id'],
                 ).then((req) => {
-                    this.relatedList = req.data.data || []
-                })
+                    this.relatedList = req.data.data || [];
+                });
             }).catch(() => {
                 // 无法获取信息，返回上一页
-                this.$router.back()
-            })
+                this.$router.back();
+            });
         },
 
         // 用户卡片超过可视范围
         onIntersection(entry: IntersectionEvent) {
             // 左侧按钮显示用户信息按钮
-            this.showNavUser = !Boolean(entry.isIntersecting)
-        }
+            this.showNavUser = !Boolean(entry.isIntersecting);
+        },
     },
-})
+});
 </script>
 
 <style scoped></style>

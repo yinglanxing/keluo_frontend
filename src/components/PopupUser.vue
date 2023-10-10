@@ -10,11 +10,11 @@
 
 </template>
 <script lang="ts">
-import {defineComponent, PropType} from 'vue'
+import { defineComponent, PropType } from 'vue';
 // 状态
-import {useUser} from 'stores/useUser';
+import { useUser } from 'stores/useUser';
 // 模型
-import {UserInfo} from 'stores/schemas/user';
+import { UserInfo } from 'stores/schemas/user';
 
 
 export default defineComponent({
@@ -30,12 +30,12 @@ export default defineComponent({
         const self = useUser();
         return {
             self: self.info,
-        }
+        };
     },
 
-    methods: {}
+    methods: {},
 
-})
+});
 </script>
 
 <style scoped>

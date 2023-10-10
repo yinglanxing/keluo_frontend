@@ -44,9 +44,9 @@ export default defineComponent({
     setup() {
         return {
             count: 0,
-        }
+        };
     },
-})
+});
 </script>
 
 <style scoped></style>

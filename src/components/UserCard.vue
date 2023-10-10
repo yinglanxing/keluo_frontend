@@ -13,8 +13,8 @@
             <!--头像-->
             <q-avatar @click="moreAboutUser">
                 <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
-                <!--<q-icon v-else name="person"/>-->
-                <q-icon name="person"/>
+                <!--<q-icon v-else name="person"></q-icon>-->
+                <q-icon name="person"></q-icon>
             </q-avatar>
 
             <!--motto / 格言 / 个性-->
@@ -25,23 +25,23 @@
 
         <!--主页背景-->
         <q-card-section>
-            <!--<q-img v-if="user?.backgroundImage" :src="user.backgroundImage"/>-->
-            <!--<q-img v-else src="card-bg.jpg"/>-->
-            <q-img src="card-bg.jpg"/>
+            <!--<q-img v-if="user?.backgroundImage" :src="user.backgroundImage"></q-img>-->
+            <!--<q-img v-else src="card-bg.jpg"></q-img>-->
+            <q-img src="card-bg.jpg"></q-img>
         </q-card-section>
 
         <!--信息统计-->
         <q-card-actions class="justify-around">
             <!--统计文章-->
-            <div>{{ $t("self.a_count") }}:{{ user.topicCount }}</div>
+            <div>{{ $t('self.a_count') }}:{{ user.topicCount }}</div>
             <!--统计粉丝-->
-            <div>{{ $t("self.f_count") }}:{{ user.fansCount }}</div>
+            <div>{{ $t('self.f_count') }}:{{ user.fansCount }}</div>
             <!--统计回复-->
-            <div>{{ $t("self.r_count") }}:{{ user.commentCount }}</div>
+            <div>{{ $t('self.r_count') }}:{{ user.commentCount }}</div>
         </q-card-actions>
 
         <!--底部分割线-->
-        <q-separator v-if="showActions" inset/>
+        <q-separator v-if="showActions" inset></q-separator>
 
         <!--操作按钮-->
         <!--<q-card-actions v-if="user?.id != self.id">-->
@@ -53,11 +53,11 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, PropType} from 'vue'
+import { defineComponent, PropType } from 'vue';
 // 状态
-import {useUser} from 'stores/useUser';
+import { useUser } from 'stores/useUser';
 // 模型
-import {UserInfo} from 'stores/schemas/user';
+import { UserInfo } from 'stores/schemas/user';
 
 export default defineComponent({
     name: 'UserCardVue',
@@ -74,19 +74,19 @@ export default defineComponent({
 
     setup() {
         // 自身状态
-        const self = useUser()
+        const self = useUser();
         return {
             self,
-        }
+        };
     },
 
     methods: {
         // 查看更多用户信息
         moreAboutUser() {
-            this.$router.push('/user/' + this.user?.id)
-        }
-    }
-})
+            this.$router.push('/user/' + this.user?.id);
+        },
+    },
+});
 </script>
 
 <style scoped>

@@ -6,7 +6,7 @@
 
         <!-- 签到组件 -->
         <q-card>
-            <check-in />
+            <check-in></check-in>
         </q-card>
 
         <!--积分排行-->
@@ -15,7 +15,7 @@
                 {{ $t('side.point_rank') }}
             </q-card-section>
             <q-list bordered separator>
-                <rank-list :rank="rank" extra/>
+                <rank-list :rank="rank" extar></rank-list>
             </q-list>
         </q-card>
     </div>

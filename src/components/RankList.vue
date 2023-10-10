@@ -21,7 +21,7 @@
             </q-item-section>
 
             <!-- 附加信息 -->
-            <q-item-section v-if="extra" side top>
+            <q-item-section v-if="extar" side top>
                 <q-item-label caption>
                     <q-icon name="bi-coin"></q-icon>
                     {{ item.score }}
@@ -48,7 +48,7 @@ export default defineComponent({
             required: true,
         },
         // 附加参数
-        extra: {
+        extar: {
             type: Boolean,
             default: false,
         },

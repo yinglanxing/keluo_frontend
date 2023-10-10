@@ -13,9 +13,9 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from 'vue';
 // 状态
-import {useUser} from 'stores/useUser';
+import { useUser } from 'stores/useUser';
 
 export default defineComponent({
     name: 'PopupSelfVue',
@@ -26,10 +26,10 @@ export default defineComponent({
     setup() {
 
         // 用户状态
-        const user = useUser()
+        const user = useUser();
         return {
             user,
-        }
+        };
     },
 
     methods: {
@@ -37,19 +37,19 @@ export default defineComponent({
             // 点击用户信息
             if (!this.user.isLogin) {
                 // 弹出登录窗口
-                this.user.alert_plain(1)
+                this.user.alert_plain(1);
             } else {
-                this.checkInfo()
+                this.checkInfo();
             }
         },
 
         checkInfo() {
             // 查询用户信息
-            this.$router.push('/user/' + this.user.info.id)
-        }
-    }
+            this.$router.push('/user/' + this.user.info.id);
+        },
+    },
 
-})
+});
 </script>
 
 <style scoped>

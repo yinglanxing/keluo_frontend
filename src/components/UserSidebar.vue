@@ -6,7 +6,7 @@
         <q-card>
             <q-card-section class="row">
                 <span>
-                    {{ $t("self.info") }}
+                    {{ $t('self.info') }}
                 </span>
                 <q-space></q-space>
                 <!--用户头像-->
@@ -14,8 +14,8 @@
                 <!--头像-->
                 <q-avatar>
                     <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
-                    <!--<q-icon v-else name="person"/>-->
-                    <q-icon name="person" />
+                    <!--<q-icon v-else name="person"></q-icon>-->
+                    <q-icon name="person"></q-icon>
                 </q-avatar>
             </q-card-section>
 
@@ -24,7 +24,7 @@
                 <q-list class="overflow-hidden">
                     <q-item class="row">
                         <div class="col-auto">
-                            {{ $t("self.name") }}
+                            {{ $t('self.name') }}
                         </div>
                         <q-space></q-space>
                         <div class="col-auto">
@@ -33,7 +33,7 @@
                     </q-item>
                     <q-item class="row">
                         <div class="col-auto">
-                            {{ $t("self.motto") }}
+                            {{ $t('self.motto') }}
                         </div>
                         <q-space></q-space>
                         <div class="col-auto">
@@ -42,7 +42,7 @@
                     </q-item>
                     <q-item class="row">
                         <div class="col-auto">
-                            {{ $t("self.index") }}
+                            {{ $t('self.index') }}
                         </div>
                         <q-space></q-space>
                         <div class="col-auto">
@@ -60,47 +60,47 @@
 
             <q-card-actions v-if="self.userToken && self.info.status" class="col">
                 <!--管理员模式-->
-                <q-btn class="col">{{ $t("self.ban_7") }}</q-btn>
-                <q-btn class="col">{{ $t("self.ban_ever") }}</q-btn>
+                <q-btn class="col">{{ $t('self.ban_7') }}</q-btn>
+                <q-btn class="col">{{ $t('self.ban_ever') }}</q-btn>
             </q-card-actions>
         </q-card>
 
         <!--用户状态统计-->
         <q-card>
             <q-card-section>
-                {{ $t("self.achievements") }}
+                {{ $t('self.achievements') }}
             </q-card-section>
 
             <div class="row q-col-gutter-lg q-pa-lg">
                 <!--积分-->
                 <div class="col-6 text-center">
-                    {{ $t("self.points") }}:{{ user.score }}
+                    {{ $t('self.points') }}:{{ user.score }}
                 </div>
                 <!--统计文章-->
                 <div class="col-6 text-center">
-                    {{ $t("self.a_count") }}:{{ user.topicCount }}
+                    {{ $t('self.a_count') }}:{{ user.topicCount }}
                 </div>
                 <!--统计回复-->
                 <div class="col-6 text-center">
-                    {{ $t("self.r_count") }}:{{ user.commentCount }}
+                    {{ $t('self.r_count') }}:{{ user.commentCount }}
                 </div>
                 <!--注册-->
                 <div class="col-6 text-center">
-                    {{ $t("self.signup_rank") }}:{{ user.id }}
+                    {{ $t('self.signup_rank') }}:{{ user.id }}
                 </div>
             </div>
         </q-card>
 
         <!--关注列表-->
         <q-card>
-            <q-card-section>{{ $t("self.follow") }}</q-card-section>
-            <rank-list :rank="followList" />
+            <q-card-section>{{ $t('self.follow') }}</q-card-section>
+            <rank-list :rank="followList"></rank-list>
         </q-card>
 
         <!--粉丝列表-->
         <q-card>
-            <q-card-section>{{ $t("self.fans") }}</q-card-section>
-            <rank-list :rank="fansList" />
+            <q-card-section>{{ $t('self.fans') }}</q-card-section>
+            <rank-list :rank="fansList"></rank-list>
         </q-card>
     </div>
 </template>
@@ -153,7 +153,7 @@ export default defineComponent({
         getAll() {
             // 获取关注列表
             axios.get(
-                'https://mlog.club/api/fans/recent/follow?userId=' + this.user.id
+                'https://mlog.club/api/fans/recent/follow?userId=' + this.user.id,
             ).then((req) => {
                 this.followList = req.data.data.results || [];
             }).catch(() => {
@@ -162,7 +162,7 @@ export default defineComponent({
 
             // 获取粉丝列表
             axios.get(
-                'https://mlog.club/api/fans/recent/fans?userId=' + this.user.id
+                'https://mlog.club/api/fans/recent/fans?userId=' + this.user.id,
             ).then((req) => {
                 this.fansList = req.data.data.results || [];
             }).catch(() => {

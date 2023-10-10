@@ -2,8 +2,6 @@
 // so you can safely delete all default props below
 
 export default {
-    'project.title': '科洛',
-    // '': '',
     // '': '',
     // '': '',
     // '': '',
@@ -69,6 +67,7 @@ export default {
     'side.github_hot': '开源热榜',
     'side.point_rank': '积分排行',
     'side.full_rank': '完整榜单',
+    'side.related': '精选内容',
 
     // 跳转按钮
     'article.author': '作者',

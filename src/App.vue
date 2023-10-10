@@ -1,5 +1,5 @@
 <template>
-    <router-view />
+    <router-view></router-view>
 </template>
 
 <script lang="ts">
@@ -13,22 +13,22 @@ export default defineComponent({
 
     setup() {
         // 状态管理
-        const state = useState()
-        const quasar = useQuasar()
+        const state = useState();
+        const quasar = useQuasar();
         return {
             state,
             quasar,
-        }
+        };
     },
 
     watch: {
         // 监听主题变动
         'state.theme'() {
             this.quasar.dark.set(
-                this.state.theme == 'dark'
-            )
-        }
-    }
+                this.state.theme == 'dark',
+            );
+        },
+    },
 
 });
 </script>

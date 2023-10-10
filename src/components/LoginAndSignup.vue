@@ -3,9 +3,9 @@
         <q-card-section class="row">
             <q-tabs v-model="self.loginPlain">
                 <!--登录页面-->
-                <q-tab :label="$t('login')" :name="1"/>
+                <q-tab :label="$t('login')" :name="1"></q-tab>
                 <!--注册页面-->
-                <q-tab :label="$t('signup')" :name="2"/>
+                <q-tab :label="$t('signup')" :name="2"></q-tab>
             </q-tabs>
         </q-card-section>
 
@@ -43,18 +43,18 @@
                     <q-img
                         :ratio="2.5" :src="captchaUrl"
                         class="q-mr-md cursor-pointer" @click="getCaptchaId"
-                    />
+                    ></q-img>
                     <!--<q-img :ratio="3" class="q-mr-md" src="card-bg.jpg"></q-img>-->
                     <q-input v-model="form.v_code" :label="$t('form.v_code')" name="captchaCode"></q-input>
                 </q-card-section>
 
                 <!--登录按钮-->
                 <q-btn v-if=" self.loginPlain < 2" class="full-width" color="primary" @click="submit">
-                    {{ $t("login") }}
+                    {{ $t('login') }}
                 </q-btn>
                 <!--注册按钮-->
                 <q-btn v-else class="full-width" color="teal-3">
-                    {{ $t("signup") }}
+                    {{ $t('signup') }}
                 </q-btn>
             </q-form>
 
@@ -62,7 +62,7 @@
 
         <!--第三方登录提示-->
         <!--{{ $t("login_tips.other_account") }}-->
-        <q-separator/>
+        <q-separator></q-separator>
 
         <!--卡片底部-->
         <q-card-actions>
@@ -84,22 +84,22 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 import axios from 'axios';
 // 状态
-import {useUser} from 'stores/useUser';
-import {useQuasar} from 'quasar';
+import { useUser } from 'stores/useUser';
+import { useQuasar } from 'quasar';
 
 export default defineComponent({
 
     setup() {
         // 状态管理
-        const self = useUser()
-        const quasar = useQuasar()
+        const self = useUser();
+        const quasar = useQuasar();
         return {
             self,
             quasar,
-        }
+        };
     },
 
     data() {
@@ -116,22 +116,22 @@ export default defineComponent({
                 repass: '',
                 v_code: '',
             },
-        }
+        };
 
     },
 
     mounted() {
         // 打开弹窗时刷新验证码
-        this.getCaptchaId()
+        this.getCaptchaId();
     },
 
     methods: {
         // 获取新 id 与验证码图片
         getCaptchaId() {
             axios.get('https://mlog.club/api/captcha/request?captchaId=').then((req) => {
-                this.captchaId = req.data.data.captchaId
-                this.captchaUrl = req.data.data.captchaUrl
-            })
+                this.captchaId = req.data.data.captchaId;
+                this.captchaUrl = req.data.data.captchaUrl;
+            });
         },
 
         // 提交内容
@@ -147,31 +147,31 @@ export default defineComponent({
                 // 成功登录
                 if (req.data.success) {
                     // 载入 token
-                    this.self.userToken = req.data.data.token
+                    this.self.userToken = req.data.data.token;
                     // 载入用户信息
-                    this.self.info = req.data.data.user
+                    this.self.info = req.data.data.user;
                     // 关闭登录栏
-                    this.self.alert_plain(0)
+                    this.self.alert_plain(0);
                 }
                 // 信息提示
                 this.quasar.notify({
                     message: req.data.message,
-                    color: req.data.success ? 'green' : 'red'
-                })
+                    color: req.data.success ? 'green' : 'red',
+                });
 
-            })
+            });
         },
 
         // todo 第三方登录
         github() {
-            this.quasar.notify({message: 'github'})
+            this.quasar.notify({ message: 'github' });
         },
 
         qq() {
-            this.quasar.notify({message: 'qq'})
+            this.quasar.notify({ message: 'qq' });
         },
     },
-})
+});
 </script>
 
 <style scoped>

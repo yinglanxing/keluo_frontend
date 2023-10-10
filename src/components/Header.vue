@@ -10,29 +10,30 @@
                 dense flat icon="menu"
                 round
                 @click="toggleLeftDrawer"
-            />
+            ></q-btn>
+
+            <q-space></q-space>
+
+            <!--项目logo-->
+            <q-avatar class="xs-hide sm-hide">
+                <img alt="ico" src="/favicon.ico">
+            </q-avatar>
 
             <!--默认菜单效果-->
             <!--隐藏级别 xs sm-->
             <q-tabs
                 v-model="$route.path"
                 class="xs-hide sm-hide"
-                inline-label
+                inline-label shrink
                 outside-arrows
-                shrink
             >
                 <q-tab
                     v-for="item in essentialLinks"
                     :key="item.title"
                     :icon="item.icon" @click="changeRoute(item.link)"
                     :label="item.title" :name="item.link"
-                />
+                ></q-tab>
             </q-tabs>
-
-            <!--项目logo-->
-            <q-avatar>
-                <img alt="ico" src="/favicon.ico">
-            </q-avatar>
 
             <q-space></q-space>
 
@@ -43,11 +44,13 @@
                 <q-btn-dropdown :label="$t('menu.edit_space')" auto-close flat icon="edit" stretch>
                     <q-list>
                         <q-item clickable>
-                            <q-item-section>Movies</q-item-section>
+                            <q-item-section>
+                            </q-item-section>
                         </q-item>
 
                         <q-item clickable>
-                            <q-item-section>Photos</q-item-section>
+                            <q-item-section>
+                            </q-item-section>
                         </q-item>
                     </q-list>
                 </q-btn-dropdown>
@@ -58,8 +61,8 @@
             <!--todo-->
             <!--<q-input dark dense standout v-model="queryText" input-class="text-right" class="q-ml-md">-->
             <!--    <template v-slot:append>-->
-            <!--        <q-icon v-if="queryText === ''" name="search"/>-->
-            <!--        <q-icon v-else name="clear" class="cursor-pointer" @click="queryText = ''"/>-->
+            <!--        <q-icon v-if="queryText === ''" name="search"></q-icon>-->
+            <!--        <q-icon v-else name="clear" class="cursor-pointer" @click="queryText = ''"></q-icon>-->
             <!--    </template>-->
             <!--</q-input>-->
 
@@ -72,24 +75,37 @@
     <q-drawer v-model="leftDrawerOpen" bordered>
         <!--宽度如果足够，直接展开-->
         <!--show-if-above-->
-        <q-list>
-            <q-item-label header>
-                <q-avatar>
-                    <img alt="ico" src="/favicon.ico">
-                </q-avatar>
-            </q-item-label>
+        <q-card flat>
+            <q-card-actions class="q-pa-lg">
+                <q-btn color="grey-9" icon="settings" round @click="toggleMainTheme"></q-btn>
 
-            <EssentialLink v-for="link in essentialLinks" :key="link.title" v-bind="link"/>
-        </q-list>
+            </q-card-actions>
+
+            <q-card-section>
+                <q-tabs
+                    v-model="$route.path"
+                    inline-label
+                    outside-arrows
+                    shrink
+                    vertical
+                >
+                    <q-tab
+                        v-for="item in essentialLinks"
+                        :key="item.title"
+                        :icon="item.icon" :label="item.title"
+                        :name="item.link" @click="changeRoute(item.link)"
+                    ></q-tab>
+                </q-tabs>
+            </q-card-section>
+        </q-card>
     </q-drawer>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 // 状态
-import {useState} from 'stores/useState';
+import { useState } from 'stores/useState';
 // 组件使用
-import EssentialLink from 'components/EssentialLink.vue';
 import PopupSelf from 'components/PopupSelf.vue';
 
 const linksList = [
@@ -97,37 +113,37 @@ const linksList = [
         title: '首页',
         caption: 'index',
         icon: 'home',
-        link: '/'
+        link: '/',
     },
     {
         title: '话题',
         caption: 'subject',
         icon: 'subject',
-        link: '/talks'
+        link: '/talks',
     },
     {
         title: '文章',
         caption: 'article',
         icon: 'article',
-        link: '/article'
+        link: '/article',
     },
     {
         title: '问答',
         icon: 'question_answer',
         caption: 'article',
-        link: '/qa'
+        link: '/qa',
     },
     {
         title: '硬件商城',
         caption: 'hardware store',
         icon: 'memory',
-        link: '/hardware'
+        link: '/hardware',
     },
     {
         title: '文档',
         caption: 'document',
         icon: 'description',
-        link: '/docs'
+        link: '/docs',
     },
 ];
 
@@ -137,16 +153,15 @@ export default defineComponent({
 
     // 使用组件
     components: {
-        EssentialLink,
         PopupSelf,
     },
 
     setup() {
         // 状态管理
-        let state = useState()
+        let state = useState();
         return {
             state,
-        }
+        };
     },
 
     data() {
@@ -161,28 +176,28 @@ export default defineComponent({
             queryText: '',
 
             path: '/',
-        }
+        };
     },
 
     methods: {
         // 切换左侧边栏状态
         toggleLeftDrawer() {
-            this.leftDrawerOpen = !this.leftDrawerOpen
+            this.leftDrawerOpen = !this.leftDrawerOpen;
         },
 
         // 切换主题颜色
         toggleMainTheme() {
             if (this.state.theme == 'light') {
-                this.state.theme = 'dark'
+                this.state.theme = 'dark';
             } else {
-                this.state.theme = 'light'
+                this.state.theme = 'light';
             }
         },
 
         // 切换路径
         changeRoute(take: string) {
-            this.$router.push(take)
-        }
+            this.$router.push(take);
+        },
     },
 
 });

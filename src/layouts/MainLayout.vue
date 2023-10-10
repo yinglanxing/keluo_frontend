@@ -13,7 +13,7 @@
 
                 <!--内容-->
                 <div class="col-12 col-lg-10">
-                    <router-view/>
+                    <router-view></router-view>
                 </div>
 
                 <!--右侧空白-->
@@ -35,9 +35,9 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 // 状态
-import {useUser} from 'stores/useUser';
+import { useUser } from 'stores/useUser';
 // 组件
 import header from 'components/Header.vue';
 import footer from 'components/Footer.vue';
@@ -55,10 +55,10 @@ export default defineComponent({
 
     setup() {
         // 状态管理
-        const self = useUser()
+        const self = useUser();
         return {
             self,
-        }
+        };
     },
 
     data() {
@@ -66,7 +66,7 @@ export default defineComponent({
             // 弹窗状态
             showLoginDialog: false,
             showSettingDialog: false,
-        }
+        };
     },
 
     methods: {},
@@ -74,14 +74,14 @@ export default defineComponent({
     watch: {
         // 监听用户需求，弹出登录弹窗
         'self.loginPlain'() {
-            this.showLoginDialog = this.self.loginPlain > 0
+            this.showLoginDialog = this.self.loginPlain > 0;
         },
         // 用户登录状态变动，关闭登录弹窗
         'self.userToken'() {
             if (this.self.isLogin) {
-                this.self.alert_plain(0)
+                this.self.alert_plain(0);
             }
         },
-    }
+    },
 });
 </script>

@@ -51,7 +51,7 @@ export interface ArticleInfo {
 // Article页面内容
 export interface ArticleView extends ArticleInfo {
     // 文章内容
-    content: string
+    content: string;
 }
 
 // 取得 article 时的所有信息
@@ -76,5 +76,5 @@ export interface ArticleListInfo {
 
 // 相关文章
 export interface ArticleRelated extends ArticleInfo {
-    content: undefined
+    content: undefined;
 }

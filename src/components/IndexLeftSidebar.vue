@@ -4,8 +4,8 @@
         <q-card>
             <!--开源热榜-->
             <q-card-section>
-                <q-icon name="bi-github"/>
-                {{ $t("side.github_hot") }}
+                <q-icon name="bi-github"></q-icon>
+                {{ $t('side.github_hot') }}
             </q-card-section>
 
             <!--列表内容-->
@@ -65,16 +65,16 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 
 
 export default defineComponent({
     name: 'IndexLeftSidebarVue',
 
     data() {
-        return {}
+        return {};
     },
-})
+});
 </script>
 
 <style scoped>

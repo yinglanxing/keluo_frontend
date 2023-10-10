@@ -6,35 +6,35 @@
         <div class="row q-col-gutter-lg">
             <!--提示标题-->
             <div class="col-12 text-h5">
-                {{ $t("login_tips.title") }}：
+                {{ $t('login_tips.title') }}：
             </div>
             <!--提示语句-->
             <div class="col-6 text-body1">
-                <q-icon name="hotel_class"/>
-                {{ $t("login_tips.p1") }}
+                <q-icon name="hotel_class"></q-icon>
+                {{ $t('login_tips.p1') }}
             </div>
             <div class="col-6 text-body1">
-                <q-icon name="groups"/>
-                {{ $t("login_tips.p2") }}
+                <q-icon name="groups"></q-icon>
+                {{ $t('login_tips.p2') }}
             </div>
             <div class="col-6 text-body1">
-                <q-icon name="feedback"/>
-                {{ $t("login_tips.p3") }}
+                <q-icon name="feedback"></q-icon>
+                {{ $t('login_tips.p3') }}
             </div>
             <div class="col-6 text-body1">
-                <q-icon name="all_inbox"/>
-                {{ $t("login_tips.p4") }}
+                <q-icon name="all_inbox"></q-icon>
+                {{ $t('login_tips.p4') }}
             </div>
             <!--按钮-->
             <div class="col-12">
                 <q-btn class="full-width" color="primary" @click="user.alert_plain(1)">
-                    {{ $t("login") }}
+                    {{ $t('login') }}
                 </q-btn>
             </div>
             <div class="col-12 text-body1">
                 {{ $t('login_tips.req_account') }}
                 <q-btn @click="user.alert_plain(2)">
-                    {{ $t("signup") }}
+                    {{ $t('signup') }}
                 </q-btn>
             </div>
         </div>
@@ -49,9 +49,9 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from 'vue';
 // 状态
-import {useUser} from 'stores/useUser';
+import { useUser } from 'stores/useUser';
 // 组件
 import UserCard from 'components/UserCard.vue';
 
@@ -65,12 +65,12 @@ export default defineComponent({
 
     setup() {
         // 用户状态
-        const user = useUser()
+        const user = useUser();
         return {
             user,
-        }
+        };
     },
-})
+});
 </script>
 
 <style scoped>

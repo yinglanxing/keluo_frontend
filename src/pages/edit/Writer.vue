@@ -14,7 +14,7 @@
                 input-debounce="0"
                 label="tag" multiple
                 new-value-mode="add-unique" use-chips use-input
-            />
+            ></q-select>
 
             <!--内容-->
             <q-editor v-model="content"></q-editor>
@@ -49,24 +49,18 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
+import { defineComponent, ref } from 'vue';
 
 // 组件
-// import Markdown from 'components/Markdown.vue';
-import {TouchPanEvent} from 'stores/schemas/event';
+import { TouchPanEvent } from 'stores/schemas/event';
 
 
 export default defineComponent({
     name: 'WriterPage',
 
-    // 组件
-    components: {
-        // Markdown,
-    },
-
     data() {
-        const fabPos = ref([18, 18])
-        const draggingFab = ref(false)
+      const fabPos = ref([18, 18]);
+      const draggingFab = ref(false);
         return {
             // 标题
             title: '',
@@ -82,17 +76,17 @@ export default defineComponent({
             draggingFab,
             moveFab(ev: TouchPanEvent) {
                 // 如果两个事件都为假，则判断为真(正在拖拽中)
-                draggingFab.value = ev.isFirst !== true && ev.isFinal !== true
+              draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
                 // 修改坐标
                 fabPos.value = [
                     fabPos.value[0] - ev.delta.x,
-                    fabPos.value[1] - ev.delta.y
-                ]
-            }
-        }
+                  fabPos.value[1] - ev.delta.y,
+                ];
+            },
+        };
     },
 
 
     methods: {},
-})
+});
 </script>

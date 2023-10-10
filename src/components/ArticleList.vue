@@ -26,8 +26,8 @@
                     <q-item-section avatar>
                         <q-avatar>
                             <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
-                            <!--<q-icon v-else name="person"/>-->
-                            <q-icon name="person"/>
+                            <!--<q-icon v-else name="person"></q-icon>-->
+                            <q-icon name="person"></q-icon>
                         </q-avatar>
                     </q-item-section>
 
@@ -37,7 +37,7 @@
                         <q-item-label caption>
                             <!--时间-->
                             <div class="text-grey row no-wrap">
-                                <q-icon name="schedule"/>
+                                <q-icon name="schedule"></q-icon>
                                 {{ date.formatDate(item.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
                             </div>
                         </q-item-label>
@@ -45,7 +45,7 @@
                 </q-item>
 
                 <!--评分-->
-                <!--<q-rating v-model="stars" :max="5" size="32px"/>-->
+                <!--<q-rating v-model="stars" :max="5" size="32px"><q-rating>-->
 
                 <!--文章内容，超过两行省略-->
                 <div class="text-subtitle1 ellipsis-2-lines" style="height: 3.2em">
@@ -57,26 +57,26 @@
                 <!--数据统计-->
                 <div class="text-caption text-grey">
                     <!--浏览-->
-                    <q-icon name="visibility"/>
+                    <q-icon name="visibility"></q-icon>
                     {{ item.viewCount }}
                     <!--评论-->
-                    <q-icon class="q-pl-md" name="comment"/>
+                    <q-icon class="q-pl-md" name="comment"></q-icon>
                     {{ item.commentCount }}
                     <!--关注-->
-                    <q-icon class="q-pl-md" name="star"/>
+                    <q-icon class="q-pl-md" name="star"></q-icon>
                     {{ item.likeCount }}
                 </div>
             </q-card-section>
 
             <!--分割线-->
-            <q-separator/>
+            <q-separator></q-separator>
 
             <!--卡片底部内容-->
             <q-card-actions>
-                <q-btn flat v-if="item.content">
+                <q-btn v-if="item.content" flat>
                     Reserve
                 </q-btn>
-                <q-space/>
+                <q-space></q-space>
                 <q-btn flat icon="more_vert" round>
                     <q-menu cover>
                         <q-card>
@@ -97,17 +97,17 @@
             :max-pages="6"
             boundary-links
             direction-links
-        />
+        ></q-pagination>
     </div>
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 // 状态
 import axios from 'axios';
-import {date} from 'quasar';
+import { date } from 'quasar';
 // 声明
-import {ArticleInfo} from 'src/stores/schemas/article';
+import { ArticleInfo } from 'src/stores/schemas/article';
 
 export default defineComponent({
     name: 'ArticleListVue',
@@ -123,20 +123,20 @@ export default defineComponent({
     setup() {
         return {
             // 日期api
-            date
-        }
+            date,
+        };
     },
 
     mounted() {
         // 刷新数据
-        this.getData(this.url)
+        this.getData(this.url);
     },
 
     data() {
         // 存储内容
-        let dataList: ArticleInfo[] = []
+        let dataList: ArticleInfo[] = [];
         // 页面内容
-        let pageItem: ArticleInfo[] = []
+        let pageItem: ArticleInfo[] = [];
 
         return {
             // 所有数据
@@ -155,7 +155,7 @@ export default defineComponent({
             cursor: '',
             // 其他参数
 
-        }
+        };
     },
 
     methods: {
@@ -166,36 +166,36 @@ export default defineComponent({
                     // 如果存在数据则装载数据
                     if (req.data.data.results?.length) {
                         // 装载数据
-                        this.dataList.push(...req.data.data.results)
+                        this.dataList.push(...req.data.data.results);
                     }
                     // 是否已取完数据
-                    this.lock = !req.data.data.hasMore
+                    this.lock = !req.data.data.hasMore;
                     // 最大页数刷新
-                    this.maxCount = this.dataList.length / 10
+                    this.maxCount = this.dataList.length / 10;
                     // ! 下一个页面参数
-                    this.cursor = req.data.data.cursor
+                    this.cursor = req.data.data.cursor;
 
                     // 刷新页面内容
-                    this.cutPageItems()
-                })
+                    this.cutPageItems();
+                });
             }
         },
 
         initialization() {
             // 初始化所有内容
-            this.dataList.length = 0
-            this.pageItem.length = 0
+            this.dataList.length = 0;
+            this.pageItem.length = 0;
             // 重置页数
-            this.maxCount = 0
-            this.pageNum = 1
-            this.lock = false
+            this.maxCount = 0;
+            this.pageNum = 1;
+            this.lock = false;
             // 获取新数据
-            this.getData(this.url)
+            this.getData(this.url);
         },
 
         cutPageItems() {
             // 裁出当前页面应有的元素
-            this.pageItem = this.dataList.slice((this.pageNum - 1) * 10, this.pageNum * 10)
+            this.pageItem = this.dataList.slice((this.pageNum - 1) * 10, this.pageNum * 10);
         },
     },
 
@@ -203,26 +203,26 @@ export default defineComponent({
         'pageNum'() {
             // 开启页面模式的状态下，数值变动更新列表
             if (this.usePage) {
-                this.cutPageItems()
+                this.cutPageItems();
             }
 
             // 页面值达到最大，且未上锁
             if (this.pageNum == this.maxCount && !this.lock) {
                 // 获取后续页面
                 if (this.url.indexOf('?') >= 0) {
-                    this.getData(this.url + '&cursor=' + this.cursor)
+                    this.getData(this.url + '&cursor=' + this.cursor);
                 } else {
-                    this.getData(this.url + '?cursor=' + this.cursor)
+                    this.getData(this.url + '?cursor=' + this.cursor);
                 }
             }
         },
 
         'url'() {
             // 切换数据获取地址后，清空默认存储数据
-            this.initialization()
-        }
-    }
-})
+            this.initialization();
+        },
+    },
+});
 </script>
 
 <style lang="sass" scoped>
