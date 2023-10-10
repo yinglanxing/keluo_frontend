@@ -38,9 +38,10 @@
 import { defineComponent } from 'vue';
 // 状态
 import { useUser } from 'stores/useUser';
+// 布局
+import header from 'layouts/Header.vue';
+import footer from 'layouts/Footer.vue';
 // 组件
-import header from 'components/Header.vue';
-import footer from 'components/Footer.vue';
 import LoginAndSignup from 'components/LoginAndSignup.vue';
 
 export default defineComponent({

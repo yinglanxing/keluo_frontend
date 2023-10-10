@@ -182,7 +182,7 @@ export default defineComponent({
     },
 
     watch: {
-        '$route.params'() {
+        '$route'() {
             // 切换 id 时刷新内容
             if (this.$route.params['id']) {
                 this.getAll();

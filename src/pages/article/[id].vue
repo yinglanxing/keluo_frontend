@@ -83,7 +83,7 @@
             </q-card>
 
             <!--评论区-->
-            <!--<comment></comment>-->
+            <comments></comments>
         </div>
 
 
@@ -132,6 +132,7 @@ import { ArticleView } from 'stores/schemas/article';
 import { IntersectionEvent } from 'stores/schemas/event';
 // 组件
 import UserCard from 'components/UserCard.vue';
+import Comments from 'components/Comments.vue';
 
 export default defineComponent({
     name: 'ArticleIdPage',
@@ -139,6 +140,7 @@ export default defineComponent({
     // 引用组件
     components: {
         UserCard,
+        Comments,
     },
 
     data() {
@@ -191,6 +193,15 @@ export default defineComponent({
         onIntersection(entry: IntersectionEvent) {
             // 左侧按钮显示用户信息按钮
             this.showNavUser = !Boolean(entry.isIntersecting);
+        },
+    },
+
+    watch: {
+        '$route'() {
+            // 切换 id 时刷新内容
+            if (this.$route.params['id']) {
+                this.getData('https://mlog.club/api/article/' + this.$route.params['id']);
+            }
         },
     },
 });
