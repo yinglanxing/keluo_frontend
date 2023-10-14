@@ -1,42 +1,41 @@
 <template>
     <!--左侧固定按钮-->
-    <q-fab
-        color="primary" direction="down" icon="add"
-        style="top: 10vh;position: sticky;left: 0;"
+    <!--隐藏条件 xs sm-->
+    <div
+        class="q-gutter-md xs-hide sm-hide"
+        style="width: 10px;height: 10px;top: 20vh;position: sticky;left: 0;"
     >
         <!--评论区-->
-        <q-fab-action
-            :label="$t('article.comment')" color="primary" external-label
-            fab icon="comment"
-            label-position="left"
-        ></q-fab-action>
+        <q-btn fab color="primary" icon="comment">
+            <q-tooltip anchor="center left" self="center end">
+                {{ $t('article.comment') }}
+            </q-tooltip>
+        </q-btn>
         <!--收藏-->
-        <q-fab-action
-            :label="$t('article.collect')" color="primary" external-label
-            fab icon="star"
-            label-position="left"
-        ></q-fab-action>
+        <q-btn fab color="primary" icon="star">
+            <q-tooltip anchor="center left" self="center end">
+                {{ $t('article.collect') }}
+            </q-tooltip>
+        </q-btn>
         <!--分享-->
-        <q-fab-action
-            :label="$t('article.share')" color="primary" external-label
-            fab icon="share"
-            label-position="left"
-        ></q-fab-action>
+        <q-btn fab color="primary" icon="share">
+            <q-tooltip anchor="center left" self="center end">
+                {{ $t('article.share') }}
+            </q-tooltip>
+        </q-btn>
         <!--举报-->
-        <q-fab-action
-            :label="$t('article.report')" color="primary" external-label
-            fab icon="report"
-            label-position="left"
-        ></q-fab-action>
-        <!--作者+滑动动画-->
-        <q-fab-action
-            v-show="showNavUser"
-            :label="$t('article.author')" color="primary" external-label
-            fab icon="person"
-            label-position="left"
-        ></q-fab-action>
-    </q-fab>
-
+        <q-btn fab color="primary" icon="report">
+            <q-tooltip anchor="center left" self="center end">
+                {{ $t('article.report') }}
+            </q-tooltip>
+        </q-btn>
+        <!--作者+超过高度隐藏-->
+        <q-btn v-show="showNavUser" fab color="primary" icon="person">
+            <q-tooltip anchor="center left" self="center end">
+                {{ $t('article.author') }}
+            </q-tooltip>
+        </q-btn>
+    </div>
 
     <!--固定内容-->
     <div class="row">
@@ -67,7 +66,7 @@
 
                 <!--内容-->
                 <q-card-section>
-                    <q-editor v-model="article.content" min-height="10vh" readonly></q-editor>
+                    <q-editor v-model="article.content" min-height="10vh" readonly :toolbar="[]"></q-editor>
                 </q-card-section>
 
                 <!--分割线-->
@@ -154,6 +153,7 @@ export default defineComponent({
             // 状态切换
             renderReady: false,
             showNavUser: false,
+            showFab: true,
             // 文章
             article,
             // 作者
