@@ -1,8 +1,8 @@
 // 用户状态
-import {defineStore} from 'pinia';
+import { defineStore } from 'pinia';
 
 // 模型
-import {SelfInfo, UserInfo} from 'stores/schemas/user';
+import { SelfInfo, UserInfo } from 'stores/schemas/user';
 
 
 export const useUser = defineStore('user_state', {

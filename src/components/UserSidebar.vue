@@ -5,121 +5,191 @@
         <!--用户资料管理-->
         <q-card>
             <q-card-section class="row">
-            <span>
-                {{ $t("self.info") }}
-            </span>
+                <span>
+                    {{ $t('self.info') }}
+                </span>
                 <q-space></q-space>
                 <!--用户头像-->
 
                 <!--头像-->
                 <q-avatar>
                     <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
-                    <!--<q-icon v-else name="person"/>-->
-                    <q-icon name="person"/>
+                    <!--<q-icon v-else name="person"></q-icon>-->
+                    <q-icon name="person"></q-icon>
                 </q-avatar>
             </q-card-section>
 
             <!--用户信息-->
             <q-card-section>
-                <q-list>
-                    <q-item>
-                        {{ $t("self.name") }}
+                <q-list class="overflow-hidden">
+                    <q-item class="row">
+                        <div class="col-auto">
+                            {{ $t('self.name') }}
+                        </div>
                         <q-space></q-space>
-                        {{ user.nickname }}
+                        <div class="col-auto">
+                            {{ user.nickname }}
+                        </div>
                     </q-item>
-                    <q-item>
-                        {{ $t("self.motto") }}
+                    <q-item class="row">
+                        <div class="col-auto">
+                            {{ $t('self.motto') }}
+                        </div>
                         <q-space></q-space>
-                        {{ user.description }}
+                        <div class="col-auto">
+                            {{ user.description }}
+                        </div>
                     </q-item>
-                    <q-item>
-                        {{ $t("self.index") }}
+                    <q-item class="row">
+                        <div class="col-auto">
+                            {{ $t('self.index') }}
+                        </div>
                         <q-space></q-space>
-                        {{ user.homePage }}
+                        <div class="col-auto">
+                            {{ user.homePage }}
+                        </div>
                     </q-item>
                 </q-list>
             </q-card-section>
 
-            <q-card-actions class="col">
-                <!--用户操作-->
+            <!--用户操作-->
+            <!-- <q-card-actions class="col">
                 <q-btn class="col">{{ $t("self.change_info") }}</q-btn>
                 <q-btn class="col">{{ $t("self.safe") }}</q-btn>
-            </q-card-actions>
+            </q-card-actions> -->
 
-            <q-card-actions v-if="self.userToken" class="col">
+            <q-card-actions v-if="self.userToken && self.info.status" class="col">
                 <!--管理员模式-->
-                <q-btn class="col">{{ $t("self.ban_7") }}</q-btn>
-                <q-btn class="col">{{ $t("self.ban_ever") }}</q-btn>
+                <q-btn class="col">{{ $t('self.ban_7') }}</q-btn>
+                <q-btn class="col">{{ $t('self.ban_ever') }}</q-btn>
             </q-card-actions>
         </q-card>
 
         <!--用户状态统计-->
         <q-card>
             <q-card-section>
-                {{ $t("self.achievements") }}
+                {{ $t('self.achievements') }}
             </q-card-section>
 
             <div class="row q-col-gutter-lg q-pa-lg">
                 <!--积分-->
                 <div class="col-6 text-center">
-                    {{ $t("self.points") }}:{{ user.score }}
+                    {{ $t('self.points') }}:{{ user.score }}
                 </div>
                 <!--统计文章-->
                 <div class="col-6 text-center">
-                    {{ $t("self.a_count") }}:{{ user.topicCount }}
+                    {{ $t('self.a_count') }}:{{ user.topicCount }}
                 </div>
                 <!--统计回复-->
                 <div class="col-6 text-center">
-                    {{ $t("self.r_count") }}:{{ user.commentCount }}
+                    {{ $t('self.r_count') }}:{{ user.commentCount }}
                 </div>
                 <!--注册-->
                 <div class="col-6 text-center">
-                    {{ $t("self.signup_rank") }}:{{ user.id }}
+                    {{ $t('self.signup_rank') }}:{{ user.id }}
                 </div>
             </div>
         </q-card>
 
         <!--关注列表-->
         <q-card>
-            <q-card-section>{{ $t("self.follow") }}</q-card-section>
+            <q-card-section>{{ $t('self.follow') }}</q-card-section>
+            <rank-list :rank="followList"></rank-list>
         </q-card>
 
         <!--粉丝列表-->
         <q-card>
-            <q-card-section>{{ $t("self.fans") }}</q-card-section>
+            <q-card-section>{{ $t('self.fans') }}</q-card-section>
+            <rank-list :rank="fansList"></rank-list>
         </q-card>
-
     </div>
 </template>
 
 <script lang="ts">
-
-import {defineComponent, PropType} from 'vue';
+import { defineComponent, PropType } from 'vue';
+import axios from 'axios';
 // 状态
-import {useUser} from 'stores/useUser';
+import { useUser } from 'stores/useUser';
 // 模型
-import {UserInfo} from 'stores/schemas/user';
+import { UserInfo } from 'stores/schemas/user';
+// 组件
+import RankList from 'components/RankList.vue';
 
 export default defineComponent({
+    name: 'UserSidebarVue',
+
+    // 引用组件
+    components: {
+        RankList,
+    },
 
     props: {
         // 获取传入用户
-        user: {} as PropType<UserInfo>
+        user: {
+            // 类型注释
+            type: Object as PropType<UserInfo>,
+            // 强制非空
+            required: true,
+        },
     },
 
     data() {
         // 自身状态
-        let self = useUser()
+        const self = useUser();
+        const followList: UserInfo[] = [];
+        const fansList: UserInfo[] = [];
         return {
             self: self,
-        }
+            followList,
+            fansList,
+        };
     },
 
-    methods: {}
-})
+    mounted() {
+        this.getAll();
+    },
+
+    methods: {
+        getAll() {
+            // 获取关注列表
+            axios.get(
+                'https://mlog.club/api/fans/recent/follow?userId=' + this.user.id,
+            ).then((req) => {
+                this.followList = req.data.data.results || [];
+            }).catch(() => {
+                this.followList = [];
+            });
+
+            // 获取粉丝列表
+            axios.get(
+                'https://mlog.club/api/fans/recent/fans?userId=' + this.user.id,
+            ).then((req) => {
+                this.fansList = req.data.data.results || [];
+            }).catch(() => {
+                this.followList = [];
+            });
+
+            // 判断已登录且非用户本人
+            // if (this.self.userToken){
+            // todo 更多登录后可用功能
+            // }
+        },
+
+        // 查看用户信息
+        moreAboutUser(id: number) {
+            this.$router.push('/user/' + id);
+        },
+    },
+
+    watch: {
+        '$route'() {
+            // 切换 id 时刷新内容
+            if (this.$route.params['id']) {
+                this.getAll();
+            }
+        },
+    },
+});
 </script>
 
-
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -1,5 +1,5 @@
 // 用户信息模型
-import {UserInfo} from 'stores/schemas/user';
+import { UserInfo } from 'stores/schemas/user';
 
 // 封面细节
 interface CoverDetail {
@@ -48,6 +48,12 @@ export interface ArticleInfo {
     favorited: boolean,
 }
 
+// Article页面内容
+export interface ArticleView extends ArticleInfo {
+    // 文章内容
+    content: string;
+}
+
 // 取得 article 时的所有信息
 export interface ArticleListInfo {
     // 错误码
@@ -59,11 +65,16 @@ export interface ArticleListInfo {
     // 数据
     data: {
         // 列表
-        results: ArticleInfo,
+        results?: ArticleInfo[],
         // 获取下一页的状态码
         cursor: string,
         // 有更多数据
         hasMore: boolean,
     },
 
+}
+
+// 相关文章
+export interface ArticleRelated extends ArticleInfo {
+    content: undefined;
 }
