@@ -1,6 +1,6 @@
 <template>
     <!--页首顶栏-->
-    <q-header v-if="1" bordered reveal>
+    <q-header bordered reveal>
         <q-toolbar class="header">
             <!--左-->
             <div class="hidari">
@@ -62,7 +62,7 @@
     </q-header>
 
     <!--菜单抽屉-->
-    <q-drawer v-if="1" v-model="leftDrawerOpen" bordered>
+    <q-drawer v-model="leftDrawerOpen" bordered>
         <!--宽度如果足够，直接展开-->
         <!--show-if-above-->
         <q-card flat>
@@ -201,7 +201,7 @@ export default defineComponent({
 }
 
 .chuukann {
-    width: 992px;
+    width: $torso-width;
     justify-content: space-between;
     // background-color: wheat; // 调试用
 }
@@ -209,7 +209,7 @@ export default defineComponent({
 .migi,
 .hidari {
     flex: 1;
-    max-width: 432px;
+    max-width: $wings-width;
     // background-color: aqua; // 调试用
 }
 
@@ -217,5 +217,9 @@ export default defineComponent({
 .chuukann,
 .hidari {
     display: flex;
+}
+
+.migi {
+    justify-content: end;
 }
 </style>

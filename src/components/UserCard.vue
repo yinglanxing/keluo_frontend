@@ -5,27 +5,27 @@
         <q-card-section class="row">
             <!--名字-->
             <div class="text-h5">
-                {{ user.nickname }}
+                {{ user?.nickname }}
             </div>
 
             <q-space></q-space>
 
             <!--头像-->
             <q-avatar @click="moreAboutUser">
-                <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
+                <!--<q-img v-if="user?.avatar" :src="user?.avatar"></q-img>-->
                 <!--<q-icon v-else name="person"></q-icon>-->
                 <q-icon name="person"></q-icon>
             </q-avatar>
 
             <!--motto / 格言 / 个性-->
             <div class="col-12 q-mt-md">
-                {{ user.description }}
+                {{ user?.description }}
             </div>
         </q-card-section>
 
         <!--主页背景-->
         <q-card-section>
-            <!--<q-img v-if="user?.backgroundImage" :src="user.backgroundImage"></q-img>-->
+            <!--<q-img v-if="user?.backgroundImage" :src="user?.backgroundImage"></q-img>-->
             <!--<q-img v-else src="card-bg.jpg"></q-img>-->
             <q-img src="card-bg.jpg"></q-img>
         </q-card-section>
@@ -33,11 +33,11 @@
         <!--信息统计-->
         <q-card-actions class="justify-around">
             <!--统计文章-->
-            <div>{{ $t('self.a_count') }}:{{ user.topicCount }}</div>
+            <div>{{ $t('self.a_count') }}:{{ user?.topicCount }}</div>
             <!--统计粉丝-->
-            <div>{{ $t('self.f_count') }}:{{ user.fansCount }}</div>
+            <div>{{ $t('self.f_count') }}:{{ user?.fansCount }}</div>
             <!--统计回复-->
-            <div>{{ $t('self.r_count') }}:{{ user.commentCount }}</div>
+            <div>{{ $t('self.r_count') }}:{{ user?.commentCount }}</div>
         </q-card-actions>
 
         <!--底部分割线-->

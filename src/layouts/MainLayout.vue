@@ -7,18 +7,9 @@
 
         <!--页面内容-->
         <q-page-container>
-            <div class="row q-mt-lg-lg q-mt-md-md q-mt-sm">
-                <!--左侧空白-->
-                <div class="col-0 col-lg-1"></div>
-
-                <!--内容-->
-                <div class="col-12 col-lg-10">
-                    <router-view></router-view>
-                </div>
-
-                <!--右侧空白-->
-                <div class="col-0 col-lg-1"></div>
-            </div>
+            <main>
+                <router-view></router-view>
+            </main>
         </q-page-container>
 
         <!--设置弹窗-->
@@ -30,7 +21,7 @@
         </q-dialog>
 
         <!--页尾-->
-        <footer-components></footer-components>
+        <footer-components v-if="0"></footer-components>
     </q-layout>
 </template>
 
@@ -86,3 +77,17 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped lang="scss">
+main {
+    max-width: $torso-width;
+    margin: auto;
+    overflow: hidden;
+    display: grid;
+    gap: 16px;
+
+    @media screen and (min-width: 1920px) {
+        max-width: 1888px;
+    }
+}
+</style>
