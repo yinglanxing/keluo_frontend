@@ -1,1 +1,10 @@
 // app global css in SCSS form
+
+:root,
+:root[data-theme=light] {
+    color-scheme: light
+}
+
+:root[data-theme=dark] {
+    color-scheme: dark
+}

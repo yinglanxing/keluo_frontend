@@ -1,78 +1,68 @@
 <template>
-
     <!--页首顶栏-->
-    <q-header :class="['header',$q.dark.isActive ? '' :'text-dark' ]" bordered reveal>
-        <q-toolbar class="q-gutter-x-lg">
-            <!--菜单展开按钮-->
-            <!--隐藏级别 md lg xl-->
-            <q-btn
-                aria-label="menu" class="md-hide lg-hide xl-hide"
-                dense flat icon="menu"
-                round
-                @click="toggleLeftDrawer"
-            ></q-btn>
+    <q-header v-if="1" bordered reveal>
+        <q-toolbar class="header">
+            <!--左-->
+            <div class="hidari">
+                <q-btn aria-label="menu" class="lg-hide xl-hide" flat icon="menu" round @click="toggleLeftDrawer" />
+                <q-avatar class="xs-hide sm-hide md-hide">
+                    <img alt="ico" src="/favicon.ico">
+                </q-avatar>
+            </div>
+            <!--中-->
+            <div class="chuukann md-hide xs-hide sm-hide">
+                <q-tabs v-model="$route.path" inline-label shrink outside-arrows>
+                    <q-tab v-for="item in essentialLinks" :key="item.title" :icon="item.icon"
+                        @click="changeRoute(item.link)" :label="item.title" :name="item.link"></q-tab>
+                </q-tabs>
 
-            <q-space></q-space>
+                <!--搜索栏输入框-->
+                <!--todo-->
+                <q-input dark standout v-model="queryText" input-class="text-right" class="q-ml-md">
+                    <template #append>
+                        <q-icon v-if="queryText === ''" name="search"></q-icon>
+                        <q-icon v-else name="clear" class="cursor-pointer" @click="queryText = ''"></q-icon>
+                    </template>
+                </q-input>
+            </div>
+            <!--右-->
+            <div class="migi md-hide xs-hide sm-hide">
+                <popup-self></popup-self><!--创作中心-->
+                <q-tabs inline-label shrink>
+                    <q-btn-dropdown :label="$t('menu.edit_space')" auto-close flat icon="edit" stretch>
+                        <q-list>
+                            <q-item clickable>
+                                <q-item-section>
+                                </q-item-section>
+                            </q-item>
 
-            <!--项目logo-->
-            <q-avatar class="xs-hide sm-hide">
-                <img alt="ico" src="/favicon.ico">
-            </q-avatar>
-
-            <!--默认菜单效果-->
-            <!--隐藏级别 xs sm-->
-            <q-tabs
-                v-model="$route.path"
-                class="xs-hide sm-hide"
-                inline-label shrink
-                outside-arrows
-            >
-                <q-tab
-                    v-for="item in essentialLinks"
-                    :key="item.title"
-                    :icon="item.icon" @click="changeRoute(item.link)"
-                    :label="item.title" :name="item.link"
-                ></q-tab>
-            </q-tabs>
-
-            <q-space></q-space>
-
-            <popup-self></popup-self>
-
-            <!--创作中心-->
-            <q-tabs inline-label shrink>
-                <q-btn-dropdown :label="$t('menu.edit_space')" auto-close flat icon="edit" stretch>
-                    <q-list>
-                        <q-item clickable>
-                            <q-item-section>
-                            </q-item-section>
-                        </q-item>
-
-                        <q-item clickable>
-                            <q-item-section>
-                            </q-item-section>
-                        </q-item>
-                    </q-list>
-                </q-btn-dropdown>
-            </q-tabs>
+                            <q-item clickable>
+                                <q-item-section>
+                                </q-item-section>
+                            </q-item>
+                        </q-list>
+                    </q-btn-dropdown>
+                </q-tabs>
 
 
-            <!--搜索栏输入框-->
-            <!--todo-->
-            <!--<q-input dark dense standout v-model="queryText" input-class="text-right" class="q-ml-md">-->
-            <!--    <template v-slot:append>-->
-            <!--        <q-icon v-if="queryText === ''" name="search"></q-icon>-->
-            <!--        <q-icon v-else name="clear" class="cursor-pointer" @click="queryText = ''"></q-icon>-->
-            <!--    </template>-->
-            <!--</q-input>-->
+                <!--搜索栏输入框-->
+                <!--todo-->
+                <!--<q-input dark standout v-model="queryText" input-class="text-right" class="q-ml-md">-->
+                <!--    <template v-slot:append>-->
+                <!--        <q-icon v-if="queryText === ''" name="search"></q-icon>-->
+                <!--        <q-icon v-else name="clear" class="cursor-pointer" @click="queryText = ''"></q-icon>-->
+                <!--    </template>-->
+                <!--</q-input>-->
 
-            <!--设置按钮-->
-            <q-btn color="grey-9" icon="settings" round @click="toggleMainTheme"></q-btn>
+                <!--设置按钮-->
+                <q-btn :color="$q.dark.isActive ? 'purple' : 'amber'" :icon="$q.dark.isActive ? 'dark_mode' : 'light_mode'"
+                    round @click="toggleMainTheme"></q-btn>
+            </div>
         </q-toolbar>
     </q-header>
 
     <!--菜单抽屉-->
-    <q-drawer v-model="leftDrawerOpen" bordered>
+    <q-drawer v-if="1" v-model="leftDrawerOpen" bordered>
         <!--宽度如果足够，直接展开-->
         <!--show-if-above-->
         <q-card flat>
@@ -82,19 +72,9 @@
             </q-card-actions>
 
             <q-card-section>
-                <q-tabs
-                    v-model="$route.path"
-                    inline-label
-                    outside-arrows
-                    shrink
-                    vertical
-                >
-                    <q-tab
-                        v-for="item in essentialLinks"
-                        :key="item.title"
-                        :icon="item.icon" :label="item.title"
-                        :name="item.link" @click="changeRoute(item.link)"
-                    ></q-tab>
+                <q-tabs v-model="$route.path" inline-label outside-arrows shrink vertical>
+                    <q-tab v-for="item in essentialLinks" :key="item.title" :icon="item.icon" :label="item.title"
+                        :name="item.link" @click="changeRoute(item.link)"></q-tab>
                 </q-tabs>
             </q-card-section>
         </q-card>
@@ -104,7 +84,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 // 状态
-import { useState } from 'stores/useState';
+import { useQuasar } from 'quasar';
 // 组件使用
 import PopupSelf from 'components/PopupSelf.vue';
 
@@ -158,9 +138,9 @@ export default defineComponent({
 
     setup() {
         // 状态管理
-        let state = useState();
+        let quasar = useQuasar();
         return {
-            state,
+            quasar,
         };
     },
 
@@ -187,11 +167,9 @@ export default defineComponent({
 
         // 切换主题颜色
         toggleMainTheme() {
-            if (this.state.theme == 'light') {
-                this.state.theme = 'dark';
-            } else {
-                this.state.theme = 'light';
-            }
+            this.quasar.dark.toggle();
+            const theme: 'dark' | 'light' = (['light', 'dark'] as const)[+this.quasar.dark.isActive];
+            document.documentElement.dataset.theme = theme;
         },
 
         // 切换路径
@@ -203,14 +181,41 @@ export default defineComponent({
 });
 </script>
 
-<style lang="sass" scoped>
-// 毛玻璃效果
-@supports (backdrop-filter: none)
-    .header
-        background-color: rgba(0, 0, 0, .1)
-        backdrop-filter: blur(15px)
+<style lang="scss" scoped>
+/*.header{
+    background-color: $grey-4
+}
 
-@supports not (backdrop-filter: none)
-    .header
-        background-color: $grey-4
+// 毛玻璃效果
+@supports (backdrop-filter: none){
+    .header{
+        background-color: rgba(0, 0, 0, .1);
+        backdrop-filter: blur(15px);
+    }
+        
+}*/
+.header {
+    justify-content: space-between;
+    max-width: 1920px;
+    margin: auto;
+}
+
+.chuukann {
+    width: 992px;
+    justify-content: space-between;
+    // background-color: wheat; // 调试用
+}
+
+.migi,
+.hidari {
+    flex: 1;
+    max-width: 432px;
+    // background-color: aqua; // 调试用
+}
+
+.migi,
+.chuukann,
+.hidari {
+    display: flex;
+}
 </style>
