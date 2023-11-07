@@ -86,6 +86,9 @@ main {
     display: grid;
     gap: 16px;
 
+    @media screen and (min-width: 1440px) {
+        max-width: 1440px;
+    }
     @media screen and (min-width: 1920px) {
         max-width: 1888px;
     }

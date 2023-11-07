@@ -5,7 +5,7 @@
         <div class="torso">轮播图占位</div>
         <div class="wings">广告图占位</div>
     </section>
-    <section>
+    <section class="index">
         <div class="wings">左下角占位</div>
         <div class="torso">文章占位</div>
         <div class="wings">右下角占位</div>
@@ -61,6 +61,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .index {
+    font-size: 40px;
     height: 1500px;
     background-color: aquamarine;
 
@@ -77,7 +78,19 @@ section {
         background-color: azure;
     }
 
+    @media screen and (min-width: 1440px) {
+        grid-template-columns: $wings-width $torso-width;
+
+        .torso {
+            grid-area: 1 / 2 / 3 / 3;
+        }
+    }
+
     @media screen and (min-width: 1920px) {
         grid-template-columns: $wings-width $torso-width $wings-width;
+
+        .torso {
+            grid-area: unset;
+        }
     }
 }</style>

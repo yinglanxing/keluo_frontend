@@ -196,8 +196,14 @@ export default defineComponent({
 }*/
 .header {
     justify-content: space-between;
-    max-width: 1920px;
     margin: auto;
+
+    @media screen and (min-width: 1440px) {
+        max-width: 1440px;
+    }
+    @media screen and (min-width: 1920px) {
+        max-width: 1920px;
+    }
 }
 
 .chuukann {
