@@ -4,6 +4,7 @@ export interface SelfInfo {
     loginPlain: number,
     // 用户身份
     userToken: string | null,
+    resetToken: string | null,
     // 当前用户
     info: UserInfo,
 }
@@ -16,6 +17,8 @@ export interface UserInfo {
     avatar?: string,
     // 背景图
     backgroundImage?: string,
+    // 账号名
+    username: string,
 
     // 积分
     score: number,
@@ -29,15 +32,15 @@ export interface UserInfo {
     followCount: number,
     // 创建时间
     createTime: number,
+    // 用户主页
+    homePage: string,
 
-    // 被 ban 禁用用户
-    forbidden: boolean,
+    // // 被 ban 禁用用户
+    // forbidden: boolean,
     // 已关注
     followed: boolean,
 
     // todo create
-    // 名称
-    // name: string,
     // 座右铭 | 简述
     // motto: number,
     // 管理员身份
@@ -45,14 +48,8 @@ export interface UserInfo {
 
     // todo delete
     // 昵称 绰号 外号
-    nickname: string,
-    // 自我介绍
-    description: string,
-    // 用户主页
-    homePage: string,
+    // username: string,
 
-    // ? 唯一账号名
-    username: string,
-    // ? 封禁状态？其他状态
+    // 封禁状态 其他状态
     status: number,
 }

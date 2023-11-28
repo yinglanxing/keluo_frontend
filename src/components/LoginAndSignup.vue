@@ -88,89 +88,82 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 // 状态
 import { useUser } from 'stores/useUser';
-import { useQuasar } from 'quasar';
 
 export default defineComponent({
 
     setup() {
-        // 状态管理
         const self = useUser();
-        const quasar = useQuasar();
         return {
-            self,
-            quasar,
+            self
         };
     },
-
     data() {
         return {
-            // id码
-            captchaId: '',
-            // url路径
-            captchaUrl: '',
-            // 数据内容
+            captchaId: "",
+            captchaUrl: "",
             form: {
-                name: '',
-                email: '',
-                pass: '',
-                repass: '',
-                v_code: '',
-            },
+                name: "",
+                email: "",
+                pass: "",
+                repass: "",
+                v_code: ""
+            }
         };
-
     },
-
     mounted() {
-        // 打开弹窗时刷新验证码
         this.getCaptchaId();
     },
-
     methods: {
-        // 获取新 id 与验证码图片
         getCaptchaId() {
-            axios.get('https://mlog.club/api/captcha/request?captchaId=').then((req) => {
-                this.captchaId = req.data.data.captchaId;
-                this.captchaUrl = req.data.data.captchaUrl;
-            });
+            axios.get("/api/v1/captcha").then((req)=>{
+                    this.captchaId = req.data.id;
+                    this.captchaUrl = req.data.image;
+                }
+            );
         },
-
-        // 提交内容
-        submit() {
-            // 表单
+        getForm() {
             const formTable = new FormData();
-            formTable.append('captchaId', this.captchaId);
-            formTable.append('captchaCode', this.form.v_code);
-            formTable.append('username', this.form.email);
-            formTable.append('password', this.form.pass);
-            // 发送登录请求
-            axios.post('https://mlog.club/api/login/signin', formTable).then((req) => {
-                // 成功登录
-                if (req.data.success) {
-                    // 载入 token
-                    this.self.userToken = req.data.data.token;
-                    // 载入用户信息
-                    this.self.info = req.data.data.user;
-                    // 关闭登录栏
+            formTable.append("captcha", this.form.v_code);
+            formTable.append("email", this.form.email);
+            formTable.append("password", this.form.pass);
+            if (this.self.loginPlain == 2) {
+                if (this.form.pass == this.form.repass) {
+                    formTable.append("name", this.form.repass);
+                    formTable.append("name", this.form.name);
+                } else {
+                    throw Error(this.$t("different_passwords"));
+                }
+            }
+            return formTable;
+        },
+        getQuery() {
+            return `?verify_code=${this.form.v_code}&verify_id=${this.captchaId}`;
+        },
+        submit() {
+            const formData = this.getForm();
+            const queryUrl = this.getQuery();
+            axios.post("/api/v1/login" + queryUrl, formData).then((req)=>{
+                    if (req.status == 200) {
+                        axios.defaults.headers.common["Authorization"] = `Bearer ` + req.data.aToken;
+                        this.self.userToken = req.data.aToken;
+                        this.self.resetToken = req.data.rToken;
+                        this.userinfo();
+                    }
+                }
+            );
+        },
+        userinfo() {
+            axios.get("/api/v1/user/self").then((req)=>{
+                    this.self.info = req.data;
                     this.self.alert_plain(0);
                 }
-                // 信息提示
-                this.quasar.notify({
-                    message: req.data.message,
-                    color: req.data.success ? 'green' : 'red',
-                });
-
-            });
-        },
-
-        // todo 第三方登录
-        github() {
-            this.quasar.notify({ message: 'github' });
-        },
-
-        qq() {
-            this.quasar.notify({ message: 'qq' });
-        },
-    },
+            ).catch(()=>{
+                    this.self.userToken = this.self.resetToken = "";
+                    axios.defaults.headers.common["Authorization"] = "";
+                }
+            );
+        }
+    }
 });
 </script>
 

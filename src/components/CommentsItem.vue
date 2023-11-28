@@ -10,7 +10,7 @@
             <q-card-section>
                 <!--用户名称-->
                 <q-item-label>
-                    {{ comment.user.nickname }}
+                    {{ comment.user.username }}
                 </q-item-label>
                 <!--发布时间-->
                 <q-item-label caption>

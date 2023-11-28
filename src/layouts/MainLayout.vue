@@ -27,6 +27,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useQuasar } from 'quasar';
+import axios from 'axios';
 // 状态
 import { useUser } from 'stores/useUser';
 // 布局
@@ -48,6 +50,14 @@ export default defineComponent({
     setup() {
         // 状态管理
         const self = useUser();
+        const quasar = useQuasar();
+        // 非 200 状态响应报告错误
+        axios.interceptors.response.use(null, function (req) {
+            quasar.notify({
+                message: 'error:' + req.response.data,
+                color: 'red',
+            });
+        });
         return {
             self,
         };

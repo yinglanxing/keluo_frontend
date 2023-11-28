@@ -2,17 +2,17 @@
 import { defineStore } from 'pinia';
 
 export const useState = defineStore('state', {
-    state(): GlobalState {
-        
-    },
+    // state(): GlobalState {
+    //
+    // },
     getters: {
-        
+
     },
     actions: {
-        
+
     },
 });
 
 interface GlobalState {
-    
+
 }

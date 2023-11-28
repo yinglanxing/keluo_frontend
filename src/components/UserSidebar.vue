@@ -28,7 +28,7 @@
                         </div>
                         <q-space></q-space>
                         <div class="col-auto">
-                            {{ user.nickname }}
+                            {{ user.username }}
                         </div>
                     </q-item>
                     <q-item class="row">
@@ -37,7 +37,7 @@
                         </div>
                         <q-space></q-space>
                         <div class="col-auto">
-                            {{ user.description }}
+                            <!--{{ user.description }}-->
                         </div>
                     </q-item>
                     <q-item class="row">
@@ -94,13 +94,13 @@
         <!--关注列表-->
         <q-card>
             <q-card-section>{{ $t('self.follow') }}</q-card-section>
-            <rank-list :rank="followList"></rank-list>
+            <rank-list :rank="followingList"></rank-list>
         </q-card>
 
         <!--粉丝列表-->
         <q-card>
             <q-card-section>{{ $t('self.fans') }}</q-card-section>
-            <rank-list :rank="fansList"></rank-list>
+            <rank-list :rank="followerList"></rank-list>
         </q-card>
     </div>
 </template>
@@ -136,12 +136,12 @@ export default defineComponent({
     data() {
         // 自身状态
         const self = useUser();
-        const followList: UserInfo[] = [];
-        const fansList: UserInfo[] = [];
+        const followingList: UserInfo[] = [];
+        const followerList: UserInfo[] = [];
         return {
-            self: self,
-            followList,
-            fansList,
+            self,
+            followingList,
+            followerList,
         };
     },
 
@@ -152,27 +152,21 @@ export default defineComponent({
     methods: {
         getAll() {
             // 获取关注列表
-            axios.get(
-                'https://mlog.club/api/fans/recent/follow?userId=' + this.user.id,
-            ).then((req) => {
-                this.followList = req.data.data.results || [];
-            }).catch(() => {
-                this.followList = [];
-            });
-
+            axios.get('/api/v1/user/following?id=' + this.user.id).then((req) => {
+                    this.followingList = req.data.data.results || [];
+                },
+            ).catch(() => {
+                    this.followingList = [];
+                },
+            );
             // 获取粉丝列表
-            axios.get(
-                'https://mlog.club/api/fans/recent/fans?userId=' + this.user.id,
-            ).then((req) => {
-                this.fansList = req.data.data.results || [];
-            }).catch(() => {
-                this.followList = [];
-            });
-
-            // 判断已登录且非用户本人
-            // if (this.self.userToken){
-            // todo 更多登录后可用功能
-            // }
+            axios.get('/api/v1/user/follower?id=' + this.user.id).then((req) => {
+                    this.followerList = req.data.data.results || [];
+                },
+            ).catch(() => {
+                    this.followerList = [];
+                },
+            );
         },
 
         // 查看用户信息

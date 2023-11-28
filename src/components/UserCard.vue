@@ -5,7 +5,7 @@
         <q-card-section class="row">
             <!--名字-->
             <div class="text-h5">
-                {{ user?.nickname }}
+                {{ user?.username }}
             </div>
 
             <q-space></q-space>

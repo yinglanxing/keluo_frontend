@@ -1,5 +1,6 @@
 <template>
     <!--主页-->
+
     <section class="index">
         <div class="wings">热搜榜单占位</div>
         <div class="torso">轮播图占位</div>
@@ -15,19 +16,19 @@
         <div class="row q-col-gutter-lg">
             <!--页面左侧边栏-->
             <div class="col-md-3">
-                <index-left-sidebar />
+                <index-left-sidebar/>
             </div>
 
             <!--页面内容-->
             <div class="col-md-6">
                 <!-- 顶部nav-->
                 <!--<default-nav></default-nav>-->
-                <article-list />
+                <article-list/>
             </div>
 
             <!--页面右侧边栏-->
             <div class="col-md-3">
-                <index-right-sidebar />
+                <index-right-sidebar/>
             </div>
         </div>
     </div>
@@ -73,7 +74,7 @@ section {
     display: grid;
     gap: 16px;
 
-    &>* {
+    & > * {
         background-color: azure;
     }
 

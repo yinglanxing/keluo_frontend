@@ -1,44 +1,13 @@
-// This is just an example,
-// so you can safely delete all default props below
+import error from './notify/errors';
+import status from './notify/status';
+import button from './notify/button';
+import other from './other';
 
 export default {
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // '': '',
-    // 常用词
-    'dir': '目录',
-    'back': '返回',
-    'send': '发送',
-    'login': '登录',
-    'signup': '注册',
-    'checkin': '签到',
-    'question': '提问',
-
-    // 菜单
-    'menu.index': '首页',
-    'menu.talks': '话题',
-    'menu.article': '文章',
-    'menu.qa': '问答',
-    'menu.store': '硬件商城',
-    'menu.docs': '文档',
-    'menu.edit_space': '创作中心',
+    ...error,
+    ...status,
+    ...button,
+    ...other,
 
     // nav bar
     'nav.hot': '热门',
@@ -75,9 +44,6 @@ export default {
     'article.collect': '收藏',
     'article.share': '分享',
     'article.report': '举报',
-
-    // 错误页面
-    'error_page.title': '服务器出错了',
 
     // 个人主页
     'self.points': '积分',

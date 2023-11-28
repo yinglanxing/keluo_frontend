@@ -33,7 +33,7 @@
 
                     <!--名称与发布时间-->
                     <q-item-section>
-                        <q-item-label>{{ item.user.nickname }}</q-item-label>
+                        <q-item-label>{{ item.user.username }}</q-item-label>
                         <q-item-label caption>
                             <!--时间-->
                             <div class="text-grey row no-wrap">
@@ -116,7 +116,7 @@ export default defineComponent({
         // 数据获取路径
         url: {
             type: String,
-            default: 'https://mlog.club/api/article/articles',
+            default: '/api/v1/articles',
         },
     },
 
@@ -161,22 +161,27 @@ export default defineComponent({
     methods: {
         getData(url: string) {
             // 获取新数据
-            if (!this.lock && url) {
+            // if (!this.lock && url) {
+            if (url) {
                 axios.get(url).then((req) => {
-                    // 如果存在数据则装载数据
-                    if (req.data.data.results?.length) {
-                        // 装载数据
-                        this.dataList.push(...req.data.data.results);
+                    // // 如果存在数据则装载数据
+                    // if (req.data.data.results?.length) {
+                    //     // 装载数据
+                    //     this.dataList.push(...req.data.data.results);
+                    // }
+                    // // 是否已取完数据
+                    // this.lock = !req.data.data.hasMore;
+                    // // 最大页数刷新
+                    // this.maxCount = this.dataList.length / 10;
+                    this.maxCount = req.data.total / 10;
+                    // // ! 下一个页面参数
+                    // this.cursor = req.data.data.cursor;
+                    //
+                    // // 刷新页面内容
+                    // this.cutPageItems();
+                    if (req.data.list) {
+                        this.pageItem = req.data.list;
                     }
-                    // 是否已取完数据
-                    this.lock = !req.data.data.hasMore;
-                    // 最大页数刷新
-                    this.maxCount = this.dataList.length / 10;
-                    // ! 下一个页面参数
-                    this.cursor = req.data.data.cursor;
-
-                    // 刷新页面内容
-                    this.cutPageItems();
                 });
             }
         },
@@ -188,7 +193,7 @@ export default defineComponent({
             // 重置页数
             this.maxCount = 0;
             this.pageNum = 1;
-            this.lock = false;
+            // this.lock = false;
             // 获取新数据
             this.getData(this.url);
         },
@@ -203,18 +208,19 @@ export default defineComponent({
         'pageNum'() {
             // 开启页面模式的状态下，数值变动更新列表
             if (this.usePage) {
-                this.cutPageItems();
+                // this.cutPageItems();
+                this.getData(this.url + '&page=' + this.pageNum);
             }
 
-            // 页面值达到最大，且未上锁
-            if (this.pageNum == this.maxCount && !this.lock) {
-                // 获取后续页面
-                if (this.url.indexOf('?') >= 0) {
-                    this.getData(this.url + '&cursor=' + this.cursor);
-                } else {
-                    this.getData(this.url + '?cursor=' + this.cursor);
-                }
-            }
+            // // 页面值达到最大，且未上锁
+            // if (this.pageNum == this.maxCount && !this.lock) {
+            //     // 获取后续页面
+            //     if (this.url.indexOf('?') >= 0) {
+            //         this.getData(this.url + '&cursor=' + this.cursor);
+            //     } else {
+            //         this.getData(this.url + '?cursor=' + this.cursor);
+            //     }
+            // }
         },
 
         'url'() {

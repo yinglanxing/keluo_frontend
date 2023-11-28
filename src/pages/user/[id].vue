@@ -75,10 +75,10 @@ export default defineComponent({
     methods: {
         getUser() {
             // 获取用户数据
-            axios.get('https://mlog.club/api/user/' + this.$route.params['id']).then((req) => {
-                this.user = req.data.data;
+            axios.get('/api/v1/user_id/' + this.$route.params['id']).then((req) => {
+                this.user = req.data;
                 // 定位到用户的文章列表
-                this.articleUrl = 'https://mlog.club/api/article/user/articles?userId=' + this.user.id;
+                this.articleUrl = '/api/v1/articles_by_user?id=' + this.user.id;
             }).catch(() => {
                 // 无法获取信息，返回上一页
                 this.$router.back();

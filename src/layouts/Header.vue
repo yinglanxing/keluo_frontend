@@ -5,7 +5,8 @@
             <!--左-->
             <div class="hidari">
                 <q-btn aria-label="menu" class="lg-hide xl-hide" flat icon="menu" round @click="toggleLeftDrawer" />
-                <q-avatar class="xs-hide sm-hide md-hide">
+                <!--<q-avatar class="xs-hide sm-hide md-hide">-->
+                <q-avatar>
                     <img alt="ico" src="/favicon.ico">
                 </q-avatar>
             </div>
@@ -27,7 +28,8 @@
             </div>
             <!--右-->
             <div class="migi md-hide xs-hide sm-hide">
-                <popup-self></popup-self><!--创作中心-->
+                <popup-self></popup-self>
+                <!--创作中心-->
                 <q-tabs inline-label shrink>
                     <q-btn-dropdown :label="$t('menu.edit_space')" auto-close flat icon="edit" stretch>
                         <q-list>
@@ -44,16 +46,6 @@
                     </q-btn-dropdown>
                 </q-tabs>
 
-
-                <!--搜索栏输入框-->
-                <!--todo-->
-                <!--<q-input dark standout v-model="queryText" input-class="text-right" class="q-ml-md">-->
-                <!--    <template v-slot:append>-->
-                <!--        <q-icon v-if="queryText === ''" name="search"></q-icon>-->
-                <!--        <q-icon v-else name="clear" class="cursor-pointer" @click="queryText = ''"></q-icon>-->
-                <!--    </template>-->
-                <!--</q-input>-->
-
                 <!--设置按钮-->
                 <q-btn :color="$q.dark.isActive ? 'purple' : 'amber'" :icon="$q.dark.isActive ? 'dark_mode' : 'light_mode'"
                     round @click="toggleMainTheme"></q-btn>
@@ -68,7 +60,8 @@
         <q-card flat>
             <q-card-actions class="q-pa-lg">
                 <q-btn color="grey-9" icon="settings" round @click="toggleMainTheme"></q-btn>
-
+                <!--用户-->
+                <popup-self></popup-self>
             </q-card-actions>
 
             <q-card-section>
@@ -192,7 +185,7 @@ export default defineComponent({
         background-color: rgba(0, 0, 0, .1);
         backdrop-filter: blur(15px);
     }
-        
+
 }*/
 .header {
     justify-content: space-between;

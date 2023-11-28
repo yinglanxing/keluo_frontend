@@ -12,6 +12,7 @@ export const useUser = defineStore('user_state', {
             loginPlain: 0,
             // 用户身份
             userToken: null,
+            resetToken: null,
             // 当前用户信息
             info: {} as UserInfo,
         }

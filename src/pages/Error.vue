@@ -2,13 +2,11 @@
     <div class="fullscreen text-center q-pa-md flex flex-center" style="background: #0005;">
         <div>
             <div class="text-h3">
-                {{ $t('error_page.title') }}
-                <!--{{ status }}-->
+                {{ $t('nothing_page') }}
             </div>
 
             <div class="text-h6" style="opacity:.4">
-                Oops. Nothing here...
-                <!--{{ detail }}-->
+                {{ $t('developing_or_waring') }}
             </div>
 
             <q-btn class="q-mt-xl" color="dark" no-caps @click="turnBack">
