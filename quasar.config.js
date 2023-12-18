@@ -32,6 +32,7 @@ module.exports = configure(function (/* ctx */) {
         boot: [
             'i18n',
             'axios',
+            'unocss',
         ],
 
         // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
@@ -94,6 +95,9 @@ module.exports = configure(function (/* ctx */) {
                     // you need to set i18n resource including paths !
                     include: path.resolve(__dirname, './src/i18n/**'),
                 }],
+                // 原子 css
+                ["unocss/vite", {
+                }],
             ],
         },
 
@@ -151,7 +155,7 @@ module.exports = configure(function (/* ctx */) {
 
         // https://v2.quasar.dev/quasar-cli-vite/developing-ssr/configuring-ssr
         ssr: {
-            // ssrPwaHtmlFilename: 'offline.html', // do NOT use index.html as name!
+            // ssrPwaHtmlFilename: 'offline.html', // do NOT use index. as name!
             // will mess up SSR
 
             // extendSSRWebserverConf (esbuildConf) {},
