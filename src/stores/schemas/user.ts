@@ -1,3 +1,9 @@
+// token 格式
+export interface TokenJson{
+    a_token: string,
+    r_token: string,
+}
+
 // 登录用户自身信息
 export interface SelfInfo {
     // 登录板状态
@@ -11,12 +17,18 @@ export interface SelfInfo {
 
 // 用户信息
 export interface UserInfo {
+
+    // "userID": "203492",
+    // "email": "root@qq.com",
+    // "github": "",
+    // "position": "",
+
     // id
     id: number,
     // 头像
-    avatar?: string,
+    avatar: string,
     // 背景图
-    backgroundImage?: string,
+    backgroundImage: string,
     // 账号名
     username: string,
 
@@ -27,28 +39,17 @@ export interface UserInfo {
     // 文章统计
     topicCount: number,
     // 被关注统计
-    fansCount: number,
+    follower: number,
     // 关注统计
-    followCount: number,
+    following: number,
     // 创建时间
     createTime: number,
     // 用户主页
     homePage: string,
-
-    // // 被 ban 禁用用户
-    // forbidden: boolean,
+    // 介绍
+    introduction: string,
     // 已关注
-    followed: boolean,
-
-    // todo create
-    // 座右铭 | 简述
-    // motto: number,
-    // 管理员身份
-    // readonly admin: boolean,
-
-    // todo delete
-    // 昵称 绰号 外号
-    // username: string,
+    isFollow: boolean,
 
     // 封禁状态 其他状态
     status: number,

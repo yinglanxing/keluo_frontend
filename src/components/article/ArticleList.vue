@@ -3,21 +3,17 @@
     <div class="q-gutter-y-lg">
 
         <!--列表为空-->
-        <q-btn v-if="dataList.length == 0"
-               class="full-width" icon="refresh"></q-btn>
+        <q-btn v-if="pageItem.length == 0" class="full-width" icon="refresh" @click="getData(url)"></q-btn>
 
         <!--列表内容-->
-        <q-card v-for="item in pageItem" :key="item.articleId">
+        <q-card v-for="item in pageItem" :key="item.articleInfo.id">
 
             <!--头部-->
             <q-card-section>
                 <!--标题-->
-                <router-link
-                    :to="'/article/'+item.articleId"
-                    class="q-btn ellipsis-2-lines text-left"
-                >
+                <router-link :to="'/article/' + item.articleInfo.id" class="q-btn ellipsis-2-lines text-left">
                     <q-item-label class="ell_title text-h6 ellipsis">
-                        {{ item.title }}
+                        {{ item.articleInfo.title }}
                     </q-item-label>
                 </router-link>
 
@@ -33,12 +29,12 @@
 
                     <!--名称与发布时间-->
                     <q-item-section>
-                        <q-item-label>{{ item.user.username }}</q-item-label>
+                        <q-item-label>{{ item.authorName }}</q-item-label>
                         <q-item-label caption>
                             <!--时间-->
                             <div class="text-grey row no-wrap">
                                 <q-icon name="schedule"></q-icon>
-                                {{ date.formatDate(item.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
+                                {{ date.formatDate(item.articleInfo.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
                             </div>
                         </q-item-label>
                     </q-item-section>
@@ -49,7 +45,6 @@
 
                 <!--文章内容，超过两行省略-->
                 <div class="text-subtitle1 ellipsis-2-lines" style="height: 3.2em">
-                    {{ item.summary }}
                 </div>
             </q-card-section>
 
@@ -58,13 +53,13 @@
                 <div class="text-caption text-grey">
                     <!--浏览-->
                     <q-icon name="visibility"></q-icon>
-                    {{ item.viewCount }}
+                    {{ item.articleInfo.viewCount }}
                     <!--评论-->
                     <q-icon class="q-pl-md" name="comment"></q-icon>
-                    {{ item.commentCount }}
+                    {{ item.articleInfo.comments }}
                     <!--关注-->
                     <q-icon class="q-pl-md" name="star"></q-icon>
-                    {{ item.likeCount }}
+                    {{ item.articleInfo.likes }}
                 </div>
             </q-card-section>
 
@@ -73,7 +68,7 @@
 
             <!--卡片底部内容-->
             <q-card-actions>
-                <q-btn v-if="item.content" flat>
+                <q-btn v-if="item.articleInfo.content" flat>
                     Reserve
                 </q-btn>
                 <q-space></q-space>
@@ -92,31 +87,22 @@
 
     <!--翻页器-->
     <div class="q-pa-lg flex flex-center">
-        <q-pagination
-            v-model="pageNum" :max="maxCount"
-            :max-pages="6"
-            boundary-links
-            direction-links
-        ></q-pagination>
+        <q-pagination v-model="pageNum" :max="maxCount" :max-pages="6" boundary-links direction-links></q-pagination>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// 状态
 import axios from 'axios';
 import { date } from 'quasar';
-// 声明
-import { ArticleInfo } from 'src/stores/schemas/article';
+import { ApiArticleInfo } from 'src/stores/schemas/article';
 
 export default defineComponent({
-    name: 'ArticleListVue',
-
     props: {
         // 数据获取路径
         url: {
             type: String,
-            default: '/api/v1/articles',
+            default: '/api/v1/recommend/article',
         },
     },
 
@@ -134,9 +120,9 @@ export default defineComponent({
 
     data() {
         // 存储内容
-        let dataList: ArticleInfo[] = [];
+        let dataList: ApiArticleInfo[] = [];
         // 页面内容
-        let pageItem: ArticleInfo[] = [];
+        let pageItem: ApiArticleInfo[] = [];
 
         return {
             // 所有数据
@@ -164,23 +150,25 @@ export default defineComponent({
             // if (!this.lock && url) {
             if (url) {
                 axios.get(url).then((req) => {
-                    // // 如果存在数据则装载数据
-                    // if (req.data.data.results?.length) {
-                    //     // 装载数据
-                    //     this.dataList.push(...req.data.data.results);
-                    // }
-                    // // 是否已取完数据
-                    // this.lock = !req.data.data.hasMore;
-                    // // 最大页数刷新
-                    // this.maxCount = this.dataList.length / 10;
-                    this.maxCount = req.data.total / 10;
-                    // // ! 下一个页面参数
-                    // this.cursor = req.data.data.cursor;
-                    //
-                    // // 刷新页面内容
-                    // this.cutPageItems();
-                    if (req.data.list) {
-                        this.pageItem = req.data.list;
+                    if (req.status == 200) {
+                        // // 如果存在数据则装载数据
+                        // if (req.data.data.results?.length) {
+                        //     // 装载数据
+                        //     this.dataList.push(...req.data.data.results);
+                        // }
+                        // // 是否已取完数据
+                        // this.lock = !req.data.data.hasMore;
+                        // // 最大页数刷新
+                        // this.maxCount = this.dataList.length / 10;
+                        this.maxCount = req.data.total / 10;
+                        // // ! 下一个页面参数
+                        // this.cursor = req.data.data.cursor;
+                        //
+                        // // 刷新页面内容
+                        // this.cutPageItems();
+                        if (req.data.list) {
+                            this.pageItem = req.data.list;
+                        }
                     }
                 });
             }
@@ -231,17 +219,15 @@ export default defineComponent({
 });
 </script>
 
-<style lang="sass" scoped>
-// 交叉动画
-//.example-item
-//    height: 240px
-//    width: 100%
-
-// 解决 flex 带来的 nowrap 无法确定组件宽度问题
-.ell_title
+<style lang="css" scoped>
+/* 解决 flex 带来的 nowrap 无法确定组件宽度问题 */
+.ell_title {
     max-width: 80vw
+}
 
-@media screen and (max-width: 680px)
-    .ell_title
+@media screen and (max-width: 680px) {
+    .ell_title {
         max-width: 70vw
+    }
+}
 </style>

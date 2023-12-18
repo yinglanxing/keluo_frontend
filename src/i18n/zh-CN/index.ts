@@ -2,12 +2,14 @@ import error from './notify/errors';
 import status from './notify/status';
 import button from './notify/button';
 import other from './other';
+import setting from './setting';
 
 export default {
     ...error,
     ...status,
     ...button,
     ...other,
+    ...setting,
 
     // nav bar
     'nav.hot': '热门',

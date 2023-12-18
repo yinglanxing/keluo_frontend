@@ -5,9 +5,7 @@
                 {{ $t('nothing_page') }}
             </div>
 
-            <div class="text-h6" style="opacity:.4">
-                {{ $t('developing_or_waring') }}
-            </div>
+            <q-img class="my-15" src="/image/404.svg"></q-img>
 
             <q-btn class="q-mt-xl" color="dark" no-caps @click="turnBack">
                 {{ $t('back') }}
@@ -20,11 +18,14 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: 'ErrorPage',
-
     methods: {
         turnBack() {
-            this.$router.back();
+            // 无上一页记录
+            if (window.history.length == 1) {
+                this.$router.push('/');
+            } else {
+                this.$router.back();
+            }
         },
     },
 });

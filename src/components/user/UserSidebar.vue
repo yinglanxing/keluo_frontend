@@ -9,13 +9,11 @@
                     {{ $t('self.info') }}
                 </span>
                 <q-space></q-space>
-                <!--用户头像-->
-
                 <!--头像-->
                 <q-avatar>
-                    <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
-                    <!--<q-icon v-else name="person"></q-icon>-->
-                    <q-icon name="person"></q-icon>
+                    <q-img v-if="user?.avatar" :src="user.avatar"></q-img>
+                    <q-icon v-else name="person"></q-icon>
+                    <!--                  <q-icon name="person"></q-icon>-->
                 </q-avatar>
             </q-card-section>
 
@@ -108,17 +106,15 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import axios from 'axios';
-// 状态
+
 import { useUser } from 'stores/useUser';
-// 模型
+
 import { UserInfo } from 'stores/schemas/user';
-// 组件
+
 import RankList from 'components/RankList.vue';
 
 export default defineComponent({
-    name: 'UserSidebarVue',
 
-    // 引用组件
     components: {
         RankList,
     },
@@ -153,7 +149,9 @@ export default defineComponent({
         getAll() {
             // 获取关注列表
             axios.get('/api/v1/user/following?id=' + this.user.id).then((req) => {
-                    this.followingList = req.data.data.results || [];
+                    if (req.status == 200) {
+                        this.followingList = req.data.data.results || [];
+                    }
                 },
             ).catch(() => {
                     this.followingList = [];
@@ -161,7 +159,9 @@ export default defineComponent({
             );
             // 获取粉丝列表
             axios.get('/api/v1/user/follower?id=' + this.user.id).then((req) => {
-                    this.followerList = req.data.data.results || [];
+                    if (req.status == 200) {
+                        this.followerList = req.data.data.results || [];
+                    }
                 },
             ).catch(() => {
                     this.followerList = [];

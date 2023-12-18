@@ -29,6 +29,8 @@ export default boot(({ app }) => {
         locale: 'zh-CN',
         fallbackLocale: 'en-US',
         // warnHtmlInMessage: false,
+        silentFallbackWarn: true,
+        silentTranslationWarn: true,
         messages,
     });
 

@@ -2,7 +2,7 @@
     <!--用户登录信息-->
 
     <!--非登录状态-->
-    <q-card v-if="!user.userToken" class="q-pa-lg">
+    <q-card v-if="!self.userToken" class="q-pa-lg">
         <div class="row q-col-gutter-lg">
             <!--提示标题-->
             <div class="col-12 text-h5">
@@ -27,47 +27,44 @@
             </div>
             <!--按钮-->
             <div class="col-12">
-                <q-btn class="full-width" color="primary" @click="user.alert_plain(1)">
+                <q-btn class="full-width" color="primary" @click="self.alert_plain(1)">
                     {{ $t('login') }}
                 </q-btn>
             </div>
             <div class="col-12 text-body1">
                 {{ $t('login_tips.req_account') }}
-                <q-btn @click="user.alert_plain(2)">
+                <q-btn @click="self.alert_plain(2)">
                     {{ $t('signup') }}
                 </q-btn>
             </div>
         </div>
     </q-card>
 
-
     <!--已登录状态-->
     <div v-else>
-        <user-card :user="user.info"></user-card>
+        <user-card :user="self.info"></user-card>
     </div>
 
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// 状态
+
 import { useUser } from 'stores/useUser';
-// 组件
-import UserCard from 'components/UserCard.vue';
+
+import UserCard from 'components/user/UserCard.vue';
 
 export default defineComponent({
-    name: 'LoginTips',
 
-    // 引用组件
     components: {
         UserCard,
     },
 
     setup() {
         // 用户状态
-        const user = useUser();
+        const self = useUser();
         return {
-            user,
+            self,
         };
     },
 });

@@ -12,8 +12,6 @@ import { defineComponent } from 'vue';
 import { date } from 'quasar';
 
 export default defineComponent({
-    name: 'CheckInVue',
-
     data() {
         return {
             // 日期

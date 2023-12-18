@@ -5,6 +5,8 @@
             <!--头像-->
             <q-item-section avatar>
                 <q-avatar>
+                    <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
+                    <!--<q-icon v-else name="person"></q-icon>-->
                     <q-icon name="person"></q-icon>
                 </q-avatar>
             </q-item-section>
@@ -33,12 +35,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// 模型
+
 import { UserInfo } from 'src/stores/schemas/user';
 
 export default defineComponent({
-    name: 'RankListVue',
-
     props: {
         // 获取传入用户
         rank: {
