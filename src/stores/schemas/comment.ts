@@ -1,51 +1,70 @@
 // 回复详情
-import { UserInfo } from 'stores/schemas/user';
-
-export interface CommentReplies {
-    // 内容列表
-    'results': CommentInfo[],
-    // 翻页信息
-    'cursor': string,
-    // 可翻页 flag
-    'hasMore': boolean,
+export interface CommentListItem {
+    comment_id: string,
+    comment_info: CommentInfo,
+    user_info: CommentUserInfo,
+    reply_infos: ReplyInfos[],
 }
 
-// 评论信息
 export interface CommentInfo {
-    // id
-    'commentId': number,
-    // 用户信息
-    'user': UserInfo,
+    is_like: boolean,
+    is_click: boolean,
+    reply_count: number,
+    item_type: number,
+    comment_status: number,
+    likes: number,
+    comment_id: string,
+    user_id: string,
+    item_id: string,
+    content: string,
+    picture: string,
+    format: string,
+    create_time: string,
+    binding: string,
+    comment_replies: CommentReply[],
+}
 
-    // 评论目标
-    'entityType': 'article',
-    'entityId': 6208735,
+// 评论列表类型
+export interface CommentReply {
+    is_like: boolean,
+    is_click: boolean,
+    level: number,
+    item_type: number,
+    likes: number,
+    reply_status: number,
+    reply_comment_id: string,
+    reply_id: string,
+    reply_to_reply_id: string,
+    user_id: string,
+    reply_to_user_id: string,
+    item_id: string,
+    reply_content: string,
+    reply_picture: string,
+    format: string,
+    binding: string,
+    create_time: string,
+}
 
-    // 内容类型
-    'contentType': 'text',
-    // 内容
-    'content': 'wqw',
 
-    // 图片列表
-    'imageList'?: string[],
-    // 回复统计
-    'commentCount': 1,
-    // 已点赞
-    'liked': boolean,
-    // 总赞数
-    'likeCount': 0,
+export interface ReplyInfos {
+    reply_id: string,
+    reply_info: CommentReply,
+    parent_reply: CommentReply,
+    user_info: CommentUserInfo,
+    reply_user: CommentUserInfo,
+}
 
-    // ! 回复内容1
-    'quote'?: CommentInfo,
-    'quoteId': 0,
 
-    // ! 回复内容2
-    'replies'?: CommentReplies,
-    // ip位置
-    'ipLocation': string,
-
-    // 状态码
-    'status': number,
-    // 创建时间
-    'createTime': number,
+export interface CommentUserInfo {
+    userID: string,
+    follower: number,
+    following: number,
+    username: string,
+    avatar: string,
+    email: string,
+    introduction: string,
+    homePage: string,
+    github: string,
+    position: string,
+    isFollow: boolean,
 }
