@@ -1,18 +1,4 @@
-<script lang="ts">
-import {defineComponent} from 'vue'
-
-export default defineComponent({
-    name: "forget_pass"
-})
-</script>
-
 <template>
-
-</template>
-
-<style scoped>
-
-</style><template>
     <div class="q-pa-md">
         <q-stepper
             v-model="step"
@@ -68,10 +54,9 @@ export default defineComponent({
 
 <script lang="ts">
 import {defineComponent} from 'vue'
-import axios from "axios";
-export default defineComponent({
-    name: "ForgetPass",
+import axios from 'axios';
 
+export default defineComponent({
     data(){
         return{
             step:1,
@@ -92,8 +77,4 @@ export default defineComponent({
     }
 })
 </script>
-
-<style scoped>
-
-</style>
 

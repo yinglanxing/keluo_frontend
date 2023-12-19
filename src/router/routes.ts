@@ -62,9 +62,9 @@ const routes: RouteRecordRaw[] = [
                 },
                 children: [
                     { path: '', redirect: '/' },
-                    { path: 'article', component: () => import('pages/edit/ArticleOrDraft.vue') },
+                    { path: 'article/:id?', component: () => import('pages/edit/ArticleOrDraft.vue') },
+                    { path: 'draft/:id?', component: () => import('pages/article/DraftsList.vue') },
                     { path: 'tag', component: () => import('pages/edit/EditTag.vue') },
-                    { path: 'draft', component: () => import('components/article/DraftsList.vue') },
                 ],
             },
             // 文章路由

@@ -1,16 +1,11 @@
 <template>
-
     <q-card>
         <q-card-section>
 
-            <q-tabs
-                v-model="tab"
-                vertical
-                inline-label
-            >
+            <q-tabs v-model="tab" vertical inline-label>
                 <q-route-tab v-for="item in dockerList" :key="item.text" :name="item.to" :to="item.to">
                     <q-avatar square>
-                        <q-img :src="'/icons/'+item.icon+'.svg'"></q-img>
+                        <q-img :src="'/icons/' + item.icon + '.svg'"></q-img>
                     </q-avatar>
                     <div class="m-1"></div>
                     {{ item.text }}
@@ -28,10 +23,10 @@
             </q-item-section>
         </q-item>
         <q-list bordered separator>
-            <q-item clickable v-ripple v-for="i in hot_tag" :key="i">
+            <q-item clickable v-ripple v-for="i in hot_tag" :key="i.id">
                 <q-item-section>{{ i.name }}</q-item-section>
                 <q-item-section side>
-                    <q-chip>{{ i.id }}</q-chip>
+                    <q-chip>{{ i.num }}</q-chip>
                 </q-item-section>
             </q-item>
         </q-list>
@@ -54,15 +49,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import { TagInfoDetail } from 'stores/schemas/tag';
+import { SelectableTag } from 'stores/schemas/tag';
 
 
 export default defineComponent({
     data() {
-        let hot_tag: TagInfoDetail[] = [];
+        let hot_tag: SelectableTag[] = [];
         return {
             hot_tag,
-            tab: '',
+            tab: '/',
             dockerList: [
                 { icon: 'news', text: '推荐', to: '/' },
                 { icon: 'maps', text: '探索', to: '/index/explore' },
@@ -82,11 +77,19 @@ export default defineComponent({
     },
 
     methods: {},
+
+    watch: {
+        'tab'() {
+            // 未登陆的页面无法前往
+            if (this.tab != this.$route.path) {
+                this.tab = this.$route.path;
+            }
+        },
+    }
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
 
 <!--<template>-->
 <!--    <q-list>-->

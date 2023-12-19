@@ -6,6 +6,8 @@ export interface TagInfoDetail {
     image:          string,
     introduction:   string,
     isFollow:       boolean,
+    followerNum:    number,
+    articleNum:     number,
 }
 
 

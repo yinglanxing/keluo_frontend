@@ -16,7 +16,7 @@ export interface ArticleInfo {
     // 用户 id
     authorID: number,
     // draft id
-    did:number,
+    did: number,
     // id
     id: number,
     // 标题
@@ -30,12 +30,12 @@ export interface ArticleInfo {
     // 封面
     image: string,
     // 文章内容
-    content: string
+    content: string;
     // 看过统计
     viewCount: number,
     // 评论统计
     comments: number,
-    // 收藏统计
+    // 推荐统计
     likes: number,
     // 创建时间
     createTime: number,
@@ -46,7 +46,7 @@ export interface ArticleInfo {
     // 已喜欢
     isLiked: boolean,
     // tags
-    tags: TagInfoDetail[]
+    tags: TagInfoDetail[];
 
     html: string,
     markdown: string,
@@ -57,7 +57,7 @@ export interface ArticleInfo {
 // Article页面内容
 export interface ApiArticleInfo {
     authorName: string,
-    avatar: string
+    avatar: string;
     articleInfo: ArticleInfo,
 }
 

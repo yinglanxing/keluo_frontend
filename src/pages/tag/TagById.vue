@@ -1,25 +1,38 @@
 <template>
     <q-card class="q-my-md q-gutter-ma-md">
-        <q-img :ratio="16/9" alt="bg" :src="tagDetail.image || '/card-bg.jpg'"></q-img>
-
         <!--页头-->
         <q-card-section>
-            <div class="row no-wrap items-center">
-                <!--标题-->
-                <div class="col text-h4 ellipsis">
+            <q-item>
+                <q-item-section avatar>
+                    <q-avatar>
+                        <q-img alt="bg" :src="tagDetail.image"></q-img>
+                    </q-avatar>
+                </q-item-section>
+                <q-item-section>
                     {{ tagDetail.name }}
-                </div>
-            </div>
-
-            <q-btn v-if="tagDetail.isFollow" color="grey-3">取消关注</q-btn>
-            <q-btn v-else color="info">关注</q-btn>
-
+                </q-item-section>
+                <q-item-section side>
+                    <q-btn v-if="tagDetail.isFollow" color="grey-3">取消关注</q-btn>
+                    <q-btn v-else color="info">关注</q-btn>
+                </q-item-section>
+            </q-item>
         </q-card-section>
 
         <!--内容-->
         <q-card-section>
             <q-editor v-model="tagDetail.introduction" min-height="10vh" readonly :toolbar="[]"></q-editor>
         </q-card-section>
+
+        <q-card-actions>
+            <q-chip>
+                <q-avatar icon="group" color="red"></q-avatar>
+                关注:{{ tagDetail.followerNum }}
+            </q-chip>
+            <q-chip>
+                <q-avatar icon="article" color="orange"></q-avatar>
+                文章:{{ tagDetail.articleNum }}
+            </q-chip>
+        </q-card-actions>
     </q-card>
 </template>
 
@@ -28,6 +41,7 @@
 import { defineComponent } from 'vue';
 import axios from 'axios';
 import { TagInfoDetail } from 'stores/schemas/tag';
+import { useUser } from 'src/stores/useUser';
 
 export default defineComponent({
 
@@ -41,36 +55,47 @@ export default defineComponent({
 
     data() {
         // 用户信息
+        let self = useUser();
         let tagDetail: TagInfoDetail = {} as TagInfoDetail;
         return {
+            self,
             // 状态切换
             renderReady: false,
             showNavUser: false,
             showFab: true,
-            // 文章
+            // tag
             tagDetail,
         };
     },
 
     mounted() {
-        // 获取文章信息
+        // 获取信息
         this.getData('/api/v1/tag/info/' + this.$route.params['id']);
     },
 
     methods: {
-        // 获取文章信息
+        // 获取信息
         getData(url: string) {
             axios.get(url).then((req) => {
                 if (req.status == 200) {
-                    // 文章数据
+                    // 数据
                     this.tagDetail = req.data;
                 }
             }).catch(() => {
                 // 无法获取信息，返回上一页
-                // this.$router.back();
+                this.$router.back();
             });
         },
 
+        follow_tag() {
+            if (this.self.is_login()) {
+                axios.post('/api/v1/tag/follow').then((req) => {
+                    if (req.status == 200) {
+                        this.tagDetail.isFollow = true;
+                    }
+                });
+            }
+        }
     },
 
     watch: {

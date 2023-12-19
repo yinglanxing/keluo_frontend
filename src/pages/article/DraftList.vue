@@ -1,12 +1,12 @@
 <template>
     <!-- Header -->
-    <q-card class="q-mb-md">
+    <q-card class="q-my-md">
         <q-card-section class="q-pa-md q-gutter-md">
             <div class="text-h6">草稿</div>
             <div class="q-mt-sm text-subtitle2">所有待发布的草稿</div>
         </q-card-section>
 
-        <q-card-actions class="q-mr-md q-mb-md">
+        <q-card-actions class="q-my-md">
             <q-btn to="/edit/article" color="primary" class="q-mr-sm">
                 <q-icon name="add" class="q-mr-xs" />
                 创建文章
@@ -15,23 +15,23 @@
     </q-card>
 
     <!-- Draft List -->
-    <q-card v-for="draft in draftList" :key="draft.id" class="q-mb-md">
+    <q-card v-for="draft in draftList" :key="draft.id" class="q-my-md">
         <q-card-section class="q-pa-md q-gutter-md">
             <!-- Picture -->
-            <q-avatar v-if="draft.image" :src="draft.image" class="q-mr-md" />
-            <div v-else class="q-avatar-placeholder bg-grey-4 q-mr-md">
+            <q-avatar v-if="draft.image" :src="draft.image" />
+            <div v-else class="q-avatar-placeholder bg-grey-4">
                 <span class="text-grey-8">没有头图</span>
             </div>
 
             <!-- Article -->
             <q-item class="q-flex q-dir-column">
-                <q-item-label header class="text-h6 q-mb-xs">
+                <q-item-label header class="text-h6 q-ma-xs">
                     <router-link :to="`/draft/${draft.id}`" class="text-primary">
                         {{ draft.title }}
                     </router-link>
                 </q-item-label>
 
-                <q-item-label class="text-body2 text-grey-6 q-mb-md">
+                <q-item-label class="text-body2 text-grey-6 q-my-md">
                     <router-link :to="`/draft/${draft.id}`" class="text-primary">
                         <span v-if="draft.subtitle">{{ draft.subtitle }} &#183; </span>
                         {{ draft.content }}
@@ -104,7 +104,7 @@ export default defineComponent({
             });
         },
         showModal(id: number) {
-            this.did = id
+            this.did = id;
             this.dialog = true;
         },
     },

@@ -39,7 +39,7 @@
                 </q-fab-action>
                 <!--草稿按钮-->
                 <q-fab-action :disable="draggingFab" :label="$t('draft')" color="primary" external-label icon="edit_note"
-                    label-position="top" @click="create_article">
+                    label-position="top" @click="create_draft">
                 </q-fab-action>
             </q-fab>
         </q-page-sticky>
@@ -48,21 +48,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
-
-import { TouchPanEvent } from 'stores/schemas/event';
 import axios from 'axios';
+import { useUser } from 'src/stores/useUser';
+import { TouchPanEvent } from 'stores/schemas/event';
 import { SelectableTag } from 'stores/schemas/tag';
+import { ArticleInfo } from 'src/stores/schemas/article';
 
 export default defineComponent({
     data() {
         let fabPos = [18, 18];
         let draggingFab = false;
-        let selectable_tags: SelectableTag[] = []
-        let selected: SelectableTag[] = []
-        let tags_list: number[] = []
-
+        let selectable_tags: SelectableTag[] = [];
+        let selected: SelectableTag[] = [];
+        let tags_list: number[] = [];
+        let self = useUser();
         return {
+            self,
             // 可选标签
             selectable_tags,
             selected,
@@ -93,31 +94,70 @@ export default defineComponent({
                     ];
                 }
             },
+
+            // 加载状态
+            loading: false,
         };
     },
 
     mounted() {
-        function test_author(article_feed_back:any) {
-            if (article_feed_back) { }
-        }
+        // 作为修改进入此页面
         if (this.$route.params['id']) {
-            console.log(this.$route.params['id'])
-            // 编辑已存在文章
-            if (this.$route.path.indexOf('/edit/draft') > -1) {
-                // this.form.content =
+            // 开启加载状态
+            this.loading = true;
+            if (this.$route.path.indexOf('article') > -1) {
+                // 编辑已存在文章
                 axios.get('/api/v1/article/' + this.$route.params['id']).then((req) => {
                     if (req.status == 200) {
-                        test_author(req.data)
+                        let article: ArticleInfo = req.data.article;
+                        // 判断不为作者
+                        if (article.authorID != this.self.info.id) {
+                            this.$router.back();
+                            return;
+                        }
+                        article.tags = req.data.tags;
+                        this.form.title = article.title;
+                        this.form.subtitle = article.subtitle;
+                        this.form.content = article.content;
+                        this.form.image = article.image;
+                        // 插入以选中的tags
+                        for (const tag of article.tags) {
+                            this.selected.push({
+                                id: tag.id,
+                                image: tag.image,
+                                name: tag.name,
+                                num: '0',
+                                f_num: 0,
+                                isFollow: tag.isFollow
+                            });
+                        }
                     }
-                })
+                    // 关闭加载状态
+                    this.loading = false;
+                });
+            } else {
+                // 编辑已存在草稿
+                axios.get('/api/v1/draft/' + this.$route.params['id']).then((req) => {
+                    if (req.status == 200) { }
+                    // 关闭加载状态
+                    this.loading = false;
+                });
             }
         }
     },
 
     unmounted() {
-        // 退出时内容不为空
-        if (this.form.content.length) {
-            this.create_draft()
+        if (this.self.is_login()) {
+            // 退出时内容不为空
+            if (
+                this.form.content ||
+                this.form.title ||
+                this.form.subtitle ||
+                this.form.image ||
+                this.selected.length
+            ) {
+                this.create_draft();
+            }
         }
     },
 
@@ -125,52 +165,58 @@ export default defineComponent({
         get_tags() {
             // 获取id
             for (let item of this.selected) {
-                this.form.tags.push(item.id)
+                this.form.tags.push(item.id);
             }
         },
 
         create_article() {
-            // 发送文章
-            this.get_tags()
-            axios.post('/api/v1/article/', this.form).then((req) => {
-                if (req.status == 200) {
-                    // 清空
-                    this.form = { title: '', subtitle: '', tags: [], content: '', image: '', }
-                }
-            })
+            if (this.self.is_login()) {
+                // 发送文章
+                this.get_tags();
+                axios.post('/api/v1/article/', this.form).then((req) => {
+                    if (req.status == 200) {
+                        // 清空
+                        this.form = { title: '', subtitle: '', tags: [], content: '', image: '', };
+                    }
+                });
+            }
         },
 
         create_draft() {
-            // 存为草稿
-            this.get_tags()
-            axios.post('/api/v1/draft/', this.form).then((req) => {
-                if (req.status == 200) {
-                    this.form = { title: '', subtitle: '', tags: [], content: '', image: '', }
-                }
-            })
+            if (this.self.is_login()) {
+                // 存为草稿
+                this.get_tags();
+                axios.post('/api/v1/draft', this.form).then((req) => {
+                    if (req.status == 200) {
+                        this.form = { title: '', subtitle: '', tags: [], content: '', image: '', };
+                    }
+                });
+            }
         },
 
 
         select_filter_keys(val: string, update: (func: () => void) => void, abort: () => void) {
-            // tag 过滤器
-            if (val === '') {
-                // 获取所有可选标签
-                axios.get('/api/v1/tag/all').then((req) => {
-                    if (req.status == 200) {
-                        update(() => {
-                            this.selectable_tags = req.data.list
-                        })
-                    }
-                }).catch(() => { abort() })
-            } else {
-                // 根据关键字查询tag
-                axios.get('/api/v1/tag/value/' + val).then((req) => {
-                    if (req.status == 200) {
-                        update(() => {
-                            this.selectable_tags = req.data.list
-                        })
-                    }
-                }).catch(() => { abort() })
+            if (this.self.is_login()) {
+                // tag 过滤器
+                if (val === '') {
+                    // 获取所有可选标签
+                    axios.get('/api/v1/tag/all').then((req) => {
+                        if (req.status == 200) {
+                            update(() => {
+                                this.selectable_tags = req.data.list;
+                            });
+                        }
+                    }).catch(() => { abort(); });
+                } else {
+                    // 根据关键字查询tag
+                    axios.get('/api/v1/tag/value/' + val).then((req) => {
+                        if (req.status == 200) {
+                            update(() => {
+                                this.selectable_tags = req.data.list;
+                            });
+                        }
+                    }).catch(() => { abort(); });
+                }
             }
         }
     },

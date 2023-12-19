@@ -1,5 +1,5 @@
 <template>
-    <article-list url="/api/v1/bookmark"></article-list>
+    <article-list url="/api/v1/collect/"></article-list>
 </template>
 
 <script lang='ts'>

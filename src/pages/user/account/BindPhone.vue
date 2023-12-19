@@ -1,21 +1,11 @@
 <template>
-
     <q-card v-if="self.userToken" class="row">
         <user-card class="col-12 col-md-4" :user="self.info"></user-card>
         <q-separator></q-separator>
         <q-card-section class="col-12 col-md-8">
 
-            <q-stepper
-                v-model="step"
-                vertical
-                color="primary"
-                animated
-            >
-                <q-step
-                    :name="1"
-                    title="须知事项"
-                    :done="step > 1"
-                >
+            <q-stepper v-model="step" vertical color="primary" animated>
+                <q-step :name="1" title="须知事项" :done="step > 1">
                     For each ad campaign that you create, you can control how much you're willing to
                     spend on clicks and conversions, which networks and geographical locations you want
                     your ads to show on, and more.
@@ -24,28 +14,19 @@
                     </q-stepper-navigation>
                 </q-step>
 
-                <q-step
-                    :name="2"
-                    title="输入账号"
-                    icon="assignment"
-                    :done="step > 2"
-                >
+                <q-step :name="2" title="输入账号" icon="assignment" :done="step > 2">
                     <q-input v-model="phone" name="email">
                         <template v-slot:prepend>
                             <q-icon name="person" />
                         </template>
                     </q-input>
                     <q-stepper-navigation>
-                        <q-btn @click="submit_bind" color="primary" label="提交" />
-                        <q-btn flat @click="step = 1" color="primary" label="返回" class="q-ml-sm" />
+                        <q-btn @click="submit_bind" color="primary">提交</q-btn>
+                        <q-btn flat @click="step = 1" color="warning" class="q-ml-sm">返回</q-btn>
                     </q-stepper-navigation>
                 </q-step>
 
-                <q-step
-                    :name="3"
-                    title="重置成功"
-                    icon="assignment"
-                >
+                <q-step :name="3" title="重置成功" icon="assignment">
                     成功重置密码，请重新登录
                     <q-stepper-navigation>
                         <q-btn color="primary" to="/">
@@ -68,11 +49,10 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 
 import { useUser } from 'stores/useUser';
-import LoginTips from "components/LoginTips.vue";
-import UserCard from "components/UserCard.vue";
+import LoginTips from 'components/LoginTips.vue';
+import UserCard from 'components/UserCard.vue';
 
 export default defineComponent({
-    name:'BindPhone',
     components: {
         UserCard,
         LoginTips
@@ -91,21 +71,21 @@ export default defineComponent({
         // axios.get('/api/v1/bind_phone')
     },
 
-    data(){
-        return{
-            step:0,
-            phone:'',
-        }
+    data() {
+        return {
+            step: 0,
+            phone: '',
+        };
     },
 
-    methods:{
-        submit_bind(){
-            axios.post('/api/v1/bind_phone?phone='+this.phone).then((req)=>{
-                if(req.status==200){
+    methods: {
+        submit_bind() {
+            axios.post('/api/v1/bind_phone?phone=' + this.phone).then((req) => {
+                if (req.status == 200) {
                     // 返回上级路由
-                    this.$router.back()
+                    this.$router.back();
                 }
-            })
+            });
         }
     }
 });

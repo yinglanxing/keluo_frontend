@@ -133,9 +133,9 @@ import { date } from 'quasar';
 import { useUser } from 'src/stores/useUser';
 
 import { UserInfo } from 'stores/schemas/user';
-import { ArticleInfo } from 'stores/schemas/article';
 import { SelectableTag } from 'stores/schemas/tag';
 import { IntersectionEvent } from 'stores/schemas/event';
+import { ArticleInfo, ArticleDetail } from 'stores/schemas/article';
 
 import UserCard from 'components/user/UserCard.vue';
 
@@ -146,7 +146,7 @@ export default defineComponent({
     },
 
     data() {
-        let article: ArticleInfo = {} as ArticleInfo;
+        let article: ArticleInfo = { content: '' } as ArticleInfo;
         let tags: SelectableTag[] = [];
         let author: UserInfo = {} as UserInfo;
         let relatedList: ArticleInfo[] = [];
@@ -181,11 +181,14 @@ export default defineComponent({
         getData(url: string) {
             axios.get(url).then((req) => {
                 if (req.status == 200) {
+                    let data: ArticleDetail = req.data;
                     // 文章数据
                     this.article = req.data.article;
                     this.tags = req.data.tags;
                     // 用户数据
                     this.author = req.data.userInfo;
+                    this.article.isLiked = data.isLiked;
+                    this.article.isCollected = data.isCollected;
                     // 获取相关文章
                     // axios.get('/api/v1/article/related/' + this.$route.params['id']).then((req) => {
                     //     if (req.status == 200) {
@@ -209,14 +212,12 @@ export default defineComponent({
             // 判断已登录
             if (this.self.is_login()) {
                 // 未点赞状态才能点赞
-                if (!this.article.isLiked) {
-                    axios.post('/api/v1/article/like?id=' + this.article.id).then((req) => {
-                        if (req.status == 200) {
-                            // 点赞成功
-                            this.article.isLiked = true
-                        }
-                    });
-                }
+                axios.post('/api/v1/article/like?id=' + this.article.id).then((req) => {
+                    if (req.status == 200) {
+                        // 操作成功
+                        this.article.isLiked = !this.article.isLiked;
+                    }
+                });
             }
         },
 
@@ -224,21 +225,12 @@ export default defineComponent({
         article_collect() {
             // 判断已登录
             if (this.self.is_login()) {
-                if (this.article.isCollected) { // 已收藏
-                    axios.delete('/api/v1/collect/').then((req) => {
-                        if (req.status == 200) {
-                            // 取消收藏成功
-                            this.article.isCollected = false
-                        }
-                    })
-                } else { // 未收藏
-                    axios.post('/api/v1/collect/', { aid: this.article.id }).then((req) => {
-                        if (req.status == 200) {
-                            // 收藏成功
-                            this.article.isCollected = true
-                        }
-                    });
-                }
+                axios.post('/api/v1/collect/', { 'aid': String(this.article.id) }).then((req) => {
+                    if (req.status == 200) {
+                        // 收藏成功
+                        this.article.isCollected = !this.article.isCollected;
+                    }
+                });
             }
         },
 
@@ -261,5 +253,3 @@ export default defineComponent({
     },
 });
 </script>
-
-<style scoped></style>
