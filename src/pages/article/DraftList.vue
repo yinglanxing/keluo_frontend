@@ -16,43 +16,42 @@
 
     <!-- Draft List -->
     <q-card v-for="draft in draftList" :key="draft.id" class="q-my-md">
-        <q-card-section class="q-pa-md q-gutter-md">
-            <!-- Picture -->
-            <q-avatar v-if="draft.image" :src="draft.image" />
-            <div v-else class="q-avatar-placeholder bg-grey-4">
-                <span class="text-grey-8">没有头图</span>
-            </div>
-
+        <q-card-section>
             <!-- Article -->
             <q-item class="q-flex q-dir-column">
-                <q-item-label header class="text-h6 q-ma-xs">
-                    <router-link :to="`/draft/${draft.id}`" class="text-primary">
-                        {{ draft.title }}
-                    </router-link>
-                </q-item-label>
+                <q-item-section avatar>
+                    <!-- Picture -->
+                    <q-avatar square v-if="draft.image">
+                        <q-img :src="draft.image"></q-img>
+                    </q-avatar>
+                    <q-avatar square v-else color="grey"></q-avatar>
+                </q-item-section>
 
-                <q-item-label class="text-body2 text-grey-6 q-my-md">
-                    <router-link :to="`/draft/${draft.id}`" class="text-primary">
-                        <span v-if="draft.subtitle">{{ draft.subtitle }} &#183; </span>
-                        {{ draft.content }}
-                    </router-link>
-                </q-item-label>
-
-                <q-item-label class="text-caption text-grey-7">
-                    上一次更新:
-                    <span class="text-primary">{{ draft.format }}</span>
-                </q-item-label>
+                <q-item-section>
+                    <q-item-label class="q-ma-xs">
+                        <span class="text-h6">
+                            {{ draft.title }}
+                        </span>
+                        <span class="text-caption m3">
+                            {{ draft.subtitle }}
+                        </span>
+                    </q-item-label>
+                    <q-item-label caption>{{ draft.format }}</q-item-label>
+                </q-item-section>
             </q-item>
         </q-card-section>
 
+        <div class="ellipsis-2-lines m-x-5">
+            {{ draft.content }}
+        </div>
+
         <q-card-actions>
             <!-- Continue Writing -->
-            <q-btn :to="`/draft/${draft.id}`" color="primary" class="q-mr-sm">
+            <q-btn :to="`/edit/draft/${draft.id}`" color="primary" class="q-ma-sm">
                 继续写作
             </q-btn>
-
             <!-- Delete -->
-            <q-btn @click.prevent="showModal(draft.id)" color="negative">
+            <q-btn @click.prevent="showModal(draft)" color="negative">
                 删除
             </q-btn>
         </q-card-actions>
@@ -66,8 +65,38 @@
     </q-card>
 
     <!-- Confirm Modal -->
-    <q-dialog title="删除草稿" v-model="dialog" @modal-on-confirm="hideAndDelete(did)">
-        <p>确定要删除这篇草稿吗?</p>
+    <q-dialog v-model="dialog">
+        <q-card style="width: 300px">
+            <q-card-section>
+                <div class="text-h6">确认操作</div>
+            </q-card-section>
+
+            <q-card-section>
+                <q-item class="q-flex q-dir-column">
+                    <q-item-section>
+                        <q-item-label class="q-ma-xs">
+                            <span class="text-h6">
+                                {{ data.title }}
+                            </span>
+                            <span class="text-caption m3">
+                                {{ data.subtitle }}
+                            </span>
+                        </q-item-label>
+                        <q-item-label caption>{{ data.format }}</q-item-label>
+                    </q-item-section>
+                </q-item>
+            </q-card-section>
+
+            <q-card-section>
+                确定要删除这篇草稿吗?
+            </q-card-section>
+
+            <q-separator></q-separator>
+
+            <q-card-actions class="text-right">
+                <q-btn color="negative" label="确定" @click="hideAndDelete" v-close-popup></q-btn>
+            </q-card-actions>
+        </q-card>
     </q-dialog>
 </template>
 
@@ -80,7 +109,7 @@ export default defineComponent({
     data() {
         let draftList: DraftInfo[] = [];
         return {
-            did: 0,
+            data: {} as DraftInfo,
             dialog: false,
             draftList,
         };
@@ -95,16 +124,17 @@ export default defineComponent({
     },
 
     methods: {
-        hideAndDelete(did: number) {
-            this.dialog = false;
-            axios.delete('/api/v1/draft?id=' + did).then((req) => {
+        hideAndDelete() {
+            axios.delete('/api/v1/draft?id=' + this.data.id).then((req) => {
                 if (req.status == 200) {
                     // 删除当前页面内该id的草稿
+                    this.draftList.splice(this.draftList.indexOf(this.data), 1);
+                    this.data = {} as DraftInfo;
                 }
             });
         },
-        showModal(id: number) {
-            this.did = id;
+        showModal(data: DraftInfo) {
+            this.data = data;
             this.dialog = true;
         },
     },

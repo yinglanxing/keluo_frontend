@@ -19,15 +19,28 @@
             </q-item-section>
         </q-item>
     </q-card>
+
     <div class="q-ma-md"></div>
-    <q-card class="row">
+
+    <q-card>
         <!--头像 用户名-->
-        <div class="col-12 col-lg-4">
-            <div class="m-3 m-r-0 q-gutter-y-lg">
-                <!--头像-->
-                <q-uploader class="w-auto" label="头像"></q-uploader>
+        <q-item v-if="$q.screen.gt.sm">
+            <q-item-section class="q-gutter-y-lg">
+                <q-uploader class="w-auto" label="头像" disable></q-uploader>
+                <!--介绍-->
+                <q-editor :toolbar="[]" placeholder="介绍" v-model="form.introduction"></q-editor>
+                <q-space></q-space>
+                <q-btn class="full-width" color="green">提交</q-btn>
+            </q-item-section>
+            <q-item-section class="q-gutter-y-lg">
                 <!--用户名-->
                 <q-input filled label="名称" v-model="form.username"></q-input>
+                <!--公司-->
+                <q-input filled label="公司" v-model="form.company"></q-input>
+                <!--git-->
+                <q-input filled label="github" v-model="form.github"></q-input>
+                <!--主页-->
+                <q-input filled label="主页" v-model="form.homePage"></q-input>
                 <!--位置-->
                 <q-select filled label="location" v-model="form.location">
                     <template #prepend>
@@ -40,28 +53,38 @@
                         <q-icon name="place"></q-icon>
                     </template>
                 </q-select>
-            </div>
-        </div>
-        <!--其他-->
-        <form class="col-12 col-lg-8">
-            <div class="m-3 q-gutter-y-lg">
+            </q-item-section>
+        </q-item>
+
+        <q-item v-else>
+            <q-item-section class="q-gutter-y-lg">
+                <q-uploader class="w-auto" label="头像" disable></q-uploader>
+                <!--介绍-->
+                <q-editor :toolbar="[]" placeholder="介绍" v-model="form.introduction"></q-editor>
+                <!--用户名-->
+                <q-input filled label="名称" v-model="form.username"></q-input>
                 <!--公司-->
                 <q-input filled label="公司" v-model="form.company"></q-input>
                 <!--git-->
                 <q-input filled label="github" v-model="form.github"></q-input>
                 <!--主页-->
                 <q-input filled label="主页" v-model="form.homePage"></q-input>
-                <!--介绍-->
-                <!--  autogrow-->
-                <q-input
-                    filled label="介绍"
-                    type="textarea"
-                    v-model="form.introduction"
-                ></q-input>
-            </div>
-        </form>
+                <!--位置-->
+                <q-select filled label="location" v-model="form.location">
+                    <template #prepend>
+                        <q-icon name="language"></q-icon>
+                    </template>
+                </q-select>
+                <!--地址-->
+                <q-select filled label="position" v-model="form.position">
+                    <template #prepend>
+                        <q-icon name="place"></q-icon>
+                    </template>
+                </q-select>
+                <q-btn class="full-width" color="green">提交</q-btn>
+            </q-item-section>
+        </q-item>
     </q-card>
-    <q-btn class="full-width m-3" color="green">提交</q-btn>
 </template>
 
 <script lang="ts">

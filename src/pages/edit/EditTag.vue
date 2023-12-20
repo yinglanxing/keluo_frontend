@@ -7,15 +7,8 @@
             <q-input v-model="form.name" clearable filled label="title"></q-input>
             <!--内容-->
             <q-card>
-                <q-input v-model="form.image" clearable filled label="img url"></q-input>
-                <!-- <q-uploader
-                    class="full-width"
-                    label="封面上传"
-                    accept="jpg,jpeg,png"
-                    auto-upload
-                    hide-upload-btn
-                    url="/api/v1/upload"
-                ></q-uploader> -->
+                <q-uploader class="full-width" label="封面上传" accept="jpg,jpeg,png" auto-upload hide-upload-btn
+                    url="/api/v1/upload" disable></q-uploader>
                 <q-editor v-model="form.introduction"></q-editor>
             </q-card>
             <q-btn class="full-width" @click="create_tag">创建标签</q-btn>

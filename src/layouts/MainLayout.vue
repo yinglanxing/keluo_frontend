@@ -80,15 +80,22 @@ export default defineComponent({
     },
 
     setup() {
+        const self = useUser();
+        const quasar = useQuasar();
+        // 初始化上次登录的身份信息
+        let token = {
+            a_token: localStorage.getItem('a_token') || '',
+            r_token: localStorage.getItem('r_token') || '',
+        };
+        if (token.a_token && token.r_token) {
+            self.user_login(token);
+        }
         // 初始化设置
-
         let state = useState();
-        state.$subscribe((mutation, state) => {
+        state.$subscribe((_, state) => {
             // 本地存储
             localStorage.setItem('state', JSON.stringify(state));
         });
-        const self = useUser();
-        const quasar = useQuasar();
         // 非 200 状态响应报告错误
         axios.interceptors.response.use(null, function (req) {
             quasar.notify({
@@ -115,14 +122,6 @@ export default defineComponent({
         this.$i18n.locale = this.state.lang;
         // 初始化主题
         this.quasar.dark.set(this.state.theme == 'dark');
-        // 初始化上次登录的身份信息
-        let token = {
-            a_token: localStorage.getItem('a_token') || '',
-            r_token: localStorage.getItem('r_token') || '',
-        };
-        if (token.a_token && token.r_token) {
-            this.self.user_login(token);
-        }
     },
 
     methods: {},
@@ -142,5 +141,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>

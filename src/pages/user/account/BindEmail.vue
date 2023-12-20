@@ -4,7 +4,7 @@
             <q-step :name="1" title="输入" :done="step > 1">
                 <q-input v-model="email" name="email">
                     <template v-slot:prepend>
-                        <q-icon name="person"/>
+                        <q-icon name="person" />
                     </template>
                 </q-input>
                 <q-stepper-navigation>
@@ -48,9 +48,7 @@ export default defineComponent({
     methods: {
         // 绑定邮箱
         send_email() {
-            const formTable = new FormData();
-            formTable.append('email', this.email);
-            axios.post('/api/v1/reset-password', formTable).then((req) => {
+            axios.post('/api/v1/reset-password?email=' + this.email).then((req) => {
                 if (req.status == 200) {
                     this.step = 2;
                 }
@@ -58,7 +56,10 @@ export default defineComponent({
         },
         // 绑定代码
         send_code() {
-            axios.post('/api/v1/reset-password').then((req) => {
+            axios.post('/api/v1/reset-password', {
+                code: this.code,
+                emial: this.email,
+            }).then((req) => {
                 if (req.status == 200) {
                     this.step = 3;
                 }

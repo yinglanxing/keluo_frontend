@@ -110,7 +110,7 @@
             <q-btn class="col" color="info">
                 QQ
             </q-btn>
-            <q-btn class="col" to="/account/forget_pass">
+            <q-btn class="col" to="/account_help/forget_pass">
                 忘记密码
             </q-btn>
         </q-card-actions>

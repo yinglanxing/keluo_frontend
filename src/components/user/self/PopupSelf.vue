@@ -6,31 +6,13 @@
 
         <!--弹窗菜单-->
         <q-menu anchor="bottom middle" self="top middle" v-if="user.userToken" auto-close>
-            <!--          主页-->
-
+            <!--主页-->
             <q-list bordered separator>
                 <q-item clickable v-ripple to="/account/self">
                     <q-item-section avatar>
                         <q-icon name="home"/>
                     </q-item-section>
                     <q-item-section>home</q-item-section>
-                </q-item>
-
-                <!---->
-                <q-item clickable v-ripple disable>
-                    <q-item-section avatar>
-                        <q-icon name="lock"/>
-                    </q-item-section>
-                    <q-item-section>safe</q-item-section>
-                </q-item>
-
-
-                <!--编辑个人信息-->
-                <q-item clickable v-ripple to="/account/edit_info">
-                    <q-item-section avatar>
-                        <q-icon name="bi-credit-card-2-front"/>
-                    </q-item-section>
-                    <q-item-section>info</q-item-section>
                 </q-item>
 
                 <!--登出-->

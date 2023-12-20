@@ -7,12 +7,6 @@
             <q-card-section class="q-pa-md q-gutter-md">
                 <div class="text-h6">一片无人探索的领域</div>
             </q-card-section>
-            <q-card-actions class="q-my-md">
-                <q-btn to="/edit/article" color="primary" class="q-mr-sm">
-                    <q-icon name="add"></q-icon>
-                    创建文章
-                </q-btn>
-            </q-card-actions>
             <q-card-actions>
                 <!-- 刷新 -->
                 <q-btn class="full-width" icon="refresh" @click="getData(url)"></q-btn>
@@ -35,9 +29,8 @@
                     <!--头像-->
                     <q-item-section avatar>
                         <q-avatar>
-                            <!--<q-img v-if="user?.avatar" :src="user.avatar"></q-img>-->
-                            <!--<q-icon v-else name="person"></q-icon>-->
-                            <q-icon name="person"></q-icon>
+                            <q-img v-if="item.avatar" :src="item.avatar"></q-img>
+                            <q-icon v-else name="person"></q-icon>
                         </q-avatar>
                     </q-item-section>
 
@@ -93,13 +86,13 @@
                 <q-separator class="m3" vertical inset></q-separator>
 
                 <!-- 标签 -->
-                <q-btn size="sm" v-if="item.articleInfo.tags?.length" :to="'/tag/' + item.articleInfo.tags[0].id">
+                <q-btn size="sm" v-if="item.articleInfo.tags?.length > 0" :to="'/tag/' + item.articleInfo.tags[0].id">
                     {{ item.articleInfo.tags[0].name }}
                 </q-btn>
-                <q-btn size="sm" v-if="item.articleInfo.tags?.length" :to="'/tag/' + item.articleInfo.tags[1].id">
+                <q-btn size="sm" v-if="item.articleInfo.tags?.length > 1" :to="'/tag/' + item.articleInfo.tags[1].id">
                     {{ item.articleInfo.tags[1].name }}
                 </q-btn>
-                <q-btn size="sm" v-if="item.articleInfo.tags?.length" :to="'/tag/' + item.articleInfo.tags[2].id">
+                <q-btn size="sm" v-if="item.articleInfo.tags?.length > 2" :to="'/tag/' + item.articleInfo.tags[2].id">
                     {{ item.articleInfo.tags[2].name }}
                 </q-btn>
 
@@ -130,14 +123,14 @@
                                 </q-item-section>
                             </q-item>
                             <!-- 举报 -->
-                            <q-item disable clickable v-ripple>
+                            <!-- <q-item disable clickable v-ripple>
                                 <q-item-section avatar>
                                     <q-icon color="red" name="report"></q-icon>
                                 </q-item-section>
                                 <q-item-section>
                                     <q-item-label> {{ $t('article.report') }}</q-item-label>
                                 </q-item-section>
-                            </q-item>
+                            </q-item> -->
                         </q-list>
                     </q-menu>
                 </q-btn>

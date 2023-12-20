@@ -24,9 +24,7 @@
             </div>
             <!--用户内容-->
             <div class="col-6">
-                <dashboard-vue></dashboard-vue>
-                <div class="q-ma-md"></div>
-                <article-list :url="articleUrl"></article-list>
+                <router-view></router-view>
             </div>
             <!--用户侧边栏-->
             <div class="col-3">
@@ -40,37 +38,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { useUser } from 'stores/useUser';
-
 import SelfRight from 'components/user/self/SelfRightSidebar.vue';
 import SelfLeft from 'components/user/self/SelfLeftSidebar.vue';
-import DashboardVue from 'components/user/self/DashBoard.vue';
-
-import { UserInfo } from 'stores/schemas/user';
-import ArticleList from 'components/article/ArticleList.vue';
 
 export default defineComponent({
 
     components: {
-        ArticleList,
-        DashboardVue,
         SelfLeft,
         SelfRight,
     },
-
-    data() {
-        // 获取自己
-        const self = useUser();
-        // 默认用户属性值
-        const user: UserInfo = {} as UserInfo;
-        return {
-            user,
-            self,
-            articleUrl: '/api/v1/articles_by_user?id=' + self.info.id,
-        };
-    },
-
-    methods: {},
 });
 
 </script>

@@ -14,8 +14,6 @@ const routes: RouteRecordRaw[] = [
             // 侧边栏路由
             sideRoute,
 
-            // 忘记密码
-            { path: 'forget_pass', component: () => import('pages/user/account/ForgetPass.vue') },
             // 用户路由
             {
                 path: 'user',
@@ -40,11 +38,30 @@ const routes: RouteRecordRaw[] = [
                 children: [
                     { path: '', redirect: '/account/self' },
                     // 用户信息页面
-                    { path: 'self', component: () => import('pages/user/SelfPage.vue') },
-                    // 用户信息页面
-                    { path: 'edit_info', component: () => import('pages/user/EditInfo.vue') },
+                    {
+                        path: 'self', component: () => import('pages/user/SelfPage.vue'),
+                        children: [
+                            { path: '', component: () => import('pages/user/DashBoard.vue') },
+                            // 文章管理
+                            { path: 'article', component: () => import('pages/article/AuthorArticlePage.vue') },
+                            // 草稿管理
+                            { path: 'draft', component: () => import('pages/article/DraftList.vue') },
+                            // 用户信息页面
+                            { path: 'edit_info', component: () => import('pages/user/EditInfo.vue') },
+                        ],
+                    },
+                ],
+            },
+            {
+                path: 'account_help',
+                children: [
+                    { path: '', redirect: '/' },
                     // 绑定手机号
                     { path: 'bind_phone', component: () => import('pages/user/account/BindPhone.vue') },
+                    // 绑定邮箱
+                    { path: 'bind_mail', component: () => import('pages/user/account/BindPhone.vue') },
+                    // 忘记密码
+                    { path: 'forget_pass', component: () => import('pages/user/account/ForgetPass.vue') },
                 ],
             },
             // 编辑路由
@@ -63,7 +80,7 @@ const routes: RouteRecordRaw[] = [
                 children: [
                     { path: '', redirect: '/' },
                     { path: 'article/:id?', component: () => import('pages/edit/ArticleOrDraft.vue') },
-                    { path: 'draft/:id?', component: () => import('pages/article/DraftsList.vue') },
+                    { path: 'draft/:id?', component: () => import('pages/edit/ArticleOrDraft.vue') },
                     { path: 'tag', component: () => import('pages/edit/EditTag.vue') },
                 ],
             },

@@ -6,9 +6,10 @@
 
             <q-stepper v-model="step" vertical color="primary" animated>
                 <q-step :name="1" title="须知事项" :done="step > 1">
-                    For each ad campaign that you create, you can control how much you're willing to
-                    spend on clicks and conversions, which networks and geographical locations you want
-                    your ads to show on, and more.
+                    ............................................................
+                    ............................................................
+                    ............................................................
+                    ............................................................
                     <q-stepper-navigation>
                         <q-btn @click="step = 2" color="red" label="我已知晓" />
                     </q-stepper-navigation>

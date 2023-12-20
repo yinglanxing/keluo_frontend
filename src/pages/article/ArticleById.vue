@@ -20,22 +20,22 @@
             </q-tooltip>
         </q-btn>
         <!--评论区-->
-        <q-btn fab color="primary" icon="comment">
+        <q-btn fab color="primary" icon="comment" @click="scroll_to_comment">
             <q-tooltip anchor="center left" self="center end">
                 {{ $t('article.comment') }}
             </q-tooltip>
         </q-btn>
         <!--举报-->
-        <q-btn fab color="primary" icon="report" @click="article_report">
+        <!-- <q-btn fab color="primary" icon="report" @click="article_report">
             <q-tooltip anchor="center left" self="center end">
                 {{ $t('article.report') }}
             </q-tooltip>
-        </q-btn>
+        </q-btn> -->
         <!--作者+超过高度隐藏-->
         <q-btn v-show="showNavUser" fab color="primary" icon="person">
             <q-menu anchor="bottom middle" self="top middle" auto-close>
                 <!--主页-->
-                <user-card :user="author"></user-card>
+                <user-card v-if="showNavUser" :user="author"></user-card>
             </q-menu>
             <q-tooltip anchor="center left" self="center end">
                 {{ $t('article.author') }}
@@ -87,6 +87,7 @@
             </q-card>
 
             <!--评论区-->
+            <div id="comment_target"></div>
             <!--<comments></comments>-->
         </div>
 
@@ -98,11 +99,11 @@
                 <user-card v-intersection="onIntersection" :user="author" show-actions></user-card>
 
                 <!--markdown 目录-->
-                <q-card>
+                <!-- <q-card>
                     <q-card-section>
                         {{ $t('dir') }}
                     </q-card-section>
-                </q-card>
+                </q-card> -->
 
                 <!--推荐-->
                 <q-card>
@@ -207,6 +208,16 @@ export default defineComponent({
             // 左侧按钮显示用户信息按钮
             this.showNavUser = !Boolean(entry.isIntersecting);
         },
+
+        // 滚动到评论区
+        scroll_to_comment() {
+            let target = document.getElementById('comment_target');
+            console.log(target, target?.offsetTop);
+            if (target) {
+                window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+            }
+        },
+
         // 点赞
         article_thumbs() {
             // 判断已登录

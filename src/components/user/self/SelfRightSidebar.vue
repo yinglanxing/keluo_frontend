@@ -1,5 +1,5 @@
 <template>
-<!--  推广-->
+    <!--  推广-->
     <q-card>
         <q-item>
             <q-item-section class="text-h6 q-ma-sm">
@@ -40,10 +40,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from "axios";
+import axios from 'axios';
 
 import { useUser } from 'stores/useUser';
-import {UserInfo} from "stores/schemas/user";
+import { UserInfo } from 'stores/schemas/user';
 
 export default defineComponent({
 
@@ -59,8 +59,8 @@ export default defineComponent({
     },
 
     methods: {
-        logout(){
-            this.user.info = {} as UserInfo
+        logout() {
+            this.user.info = {} as UserInfo;
             this.user.userToken = this.user.resetToken = '';
             axios.defaults.headers.common['Authorization'] = '';
         },

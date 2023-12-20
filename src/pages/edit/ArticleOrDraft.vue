@@ -1,4 +1,29 @@
 <template>
+    <!-- 存在更新行为 -->
+    <q-card class="q-ma-lg" v-if="pre.id">
+        <q-item class="q-flex q-dir-column">
+            <q-item-section>
+                <q-item-label class="q-ma-xs">
+                    <span class="text-h6">
+                        {{ pre.title }}
+                    </span>
+                    <span class="text-caption m3">
+                        {{ pre.subtitle }}
+                    </span>
+                </q-item-label>
+                <q-item-label caption>{{ pre.format }}</q-item-label>
+            </q-item-section>
+            <q-item-section side>
+                <q-btn round @click="update_send">
+                    <q-icon name="upload" color="green">
+                    </q-icon>
+                    <q-tooltip>
+                        提交更新
+                    </q-tooltip>
+                </q-btn>
+            </q-item-section>
+        </q-item>
+    </q-card>
     <!--创建页面-->
     <q-card class="q-ma-lg q-pa-lg q-gutter-y-md column">
         <!--标题-->
@@ -15,15 +40,16 @@
                     <q-item-section class="text-italic text-grey">
                         没有找到需要的 tag ？
                     </q-item-section>
-
-                    <q-btn color="primary" to="/edit/tag">创建</q-btn>
+                    <q-item-section side>
+                        <q-btn color="primary" to="/edit/tag">创建</q-btn>
+                    </q-item-section>
                 </q-item>
             </template>
         </q-select>
 
         <!--内容-->
         <q-uploader class="full-width" label="封面上传" accept="jpg,jpeg,png" auto-upload hide-upload-btn
-            url="/api/v1/upload"></q-uploader>
+            url="/api/v1/upload" disable></q-uploader>
         <q-editor v-model="form.content"></q-editor>
 
         <!-- <markdown v-bind:content="content"></markdown> -->
@@ -34,12 +60,24 @@
             <q-fab v-touch-pan.prevent.mouse="moveFab" direction="left" :disable="draggingFab" color="info" external-label
                 icon="edit">
                 <!--提交按钮-->
-                <q-fab-action :disable="draggingFab" :label="$t('submit')" color="primary" external-label
-                    icon="mark_as_unread" label-position="top" @click="create_article">
+                <q-fab-action :disable="draggingFab" :label="$t('submit')" color="primary" external-label icon="send"
+                    label-position="top" @click="create_article">
+                    <q-tooltip>
+                        创建文章
+                    </q-tooltip>
                 </q-fab-action>
                 <!--草稿按钮-->
                 <q-fab-action :disable="draggingFab" :label="$t('draft')" color="primary" external-label icon="edit_note"
                     label-position="top" @click="create_draft">
+                    <q-tooltip>
+                        创建草稿
+                    </q-tooltip>
+                </q-fab-action>
+                <q-fab-action :disable="draggingFab" label="创建" color="green" external-label icon="send"
+                    v-if="update == 'draft'" label-position="top" @click="create_article_by_draft">
+                    <q-tooltip>
+                        通过草稿创建文章
+                    </q-tooltip>
                 </q-fab-action>
             </q-fab>
         </q-page-sticky>
@@ -47,17 +85,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import axios from 'axios';
 import { useUser } from 'src/stores/useUser';
 import { TouchPanEvent } from 'stores/schemas/event';
 import { SelectableTag } from 'stores/schemas/tag';
-import { ArticleInfo } from 'src/stores/schemas/article';
+import { ArticleInfo, DraftDetail } from 'src/stores/schemas/article';
 
 export default defineComponent({
     data() {
-        let fabPos = [18, 18];
-        let draggingFab = false;
+        let fabPos = ref([18, 18]);
+        let draggingFab = ref(false);
         let selectable_tags: SelectableTag[] = [];
         let selected: SelectableTag[] = [];
         let tags_list: number[] = [];
@@ -80,23 +118,29 @@ export default defineComponent({
                 image: '',
             },
 
+            // 旧版
+            pre: {} as ArticleInfo,
+
             // 悬浮按钮相关
             fabPos,
             draggingFab,
             moveFab(ev: TouchPanEvent) {
                 if (ev && ev.delta) {
                     // 如果两个事件都为假，则判断为真(正在拖拽中)
-                    draggingFab = ev.isFirst !== true && ev.isFinal !== true;
+                    draggingFab.value = ev.isFirst !== true && ev.isFinal !== true;
                     // 修改坐标
-                    fabPos = [
-                        fabPos[0] - ev.delta.x,
-                        fabPos[1] - ev.delta.y,
+                    fabPos.value = [
+                        fabPos.value[0] - ev.delta.x,
+                        fabPos.value[1] - ev.delta.y,
                     ];
                 }
             },
 
             // 加载状态
             loading: false,
+
+            // 更新类型
+            update: '',
         };
     },
 
@@ -106,10 +150,12 @@ export default defineComponent({
             // 开启加载状态
             this.loading = true;
             if (this.$route.path.indexOf('article') > -1) {
+                this.update = 'article';
                 // 编辑已存在文章
                 axios.get('/api/v1/article/' + this.$route.params['id']).then((req) => {
                     if (req.status == 200) {
                         let article: ArticleInfo = req.data.article;
+                        this.pre = req.data.article;
                         // 判断不为作者
                         if (article.authorID != this.self.info.id) {
                             this.$router.back();
@@ -136,9 +182,20 @@ export default defineComponent({
                     this.loading = false;
                 });
             } else {
+                this.update = 'draft';
                 // 编辑已存在草稿
                 axios.get('/api/v1/draft/' + this.$route.params['id']).then((req) => {
-                    if (req.status == 200) { }
+                    if (req.status == 200) {
+                        let draft: DraftDetail = req.data;
+                        this.pre = req.data;
+                        this.form.title = draft.title;
+                        this.form.subtitle = draft.subtitle;
+                        this.form.content = draft.content;
+                        this.form.image = draft.image;
+                        for (const tag of draft.tagSimple) {
+                            this.selected.push({ ...tag } as SelectableTag);
+                        }
+                    }
                     // 关闭加载状态
                     this.loading = false;
                 });
@@ -169,14 +226,40 @@ export default defineComponent({
             }
         },
 
+        clear_json() {
+            // 清空
+            this.form = { title: '', subtitle: '', tags: [], content: '', image: '', };
+            this.selected = [];
+        },
+
+        update_send() {
+            if (this.self.is_login()) {
+                this.get_tags();
+                if (this.update == 'article') {
+                    // 更新文章
+                    axios.patch('/api/v1/article/' + this.pre.id, this.form).then((req) => {
+                        if (req.status == 200) {
+                            this.clear_json();
+                        }
+                    });
+                } else if (this.update == 'draft') {
+                    // 更新草稿
+                    axios.patch('/api/v1/draft/' + this.pre.id, this.form).then((req) => {
+                        if (req.status == 200) {
+                            this.clear_json();
+                        }
+                    });
+                }
+            }
+        },
+
         create_article() {
             if (this.self.is_login()) {
                 // 发送文章
                 this.get_tags();
                 axios.post('/api/v1/article/', this.form).then((req) => {
                     if (req.status == 200) {
-                        // 清空
-                        this.form = { title: '', subtitle: '', tags: [], content: '', image: '', };
+                        this.clear_json();
                     }
                 });
             }
@@ -188,7 +271,19 @@ export default defineComponent({
                 this.get_tags();
                 axios.post('/api/v1/draft', this.form).then((req) => {
                     if (req.status == 200) {
-                        this.form = { title: '', subtitle: '', tags: [], content: '', image: '', };
+                        this.clear_json();
+                    }
+                });
+            }
+        },
+
+        create_article_by_draft() {
+            if (this.self.is_login() && this.update == 'draft') {
+                // 发送文章
+                this.get_tags();
+                axios.post('/api/v1/article/', { id: this.pre.id, ...this.form }).then((req) => {
+                    if (req.status == 200) {
+                        this.clear_json();
                     }
                 });
             }
@@ -218,7 +313,7 @@ export default defineComponent({
                     }).catch(() => { abort(); });
                 }
             }
-        }
-    },
+        },
+    }
 });
 </script>
