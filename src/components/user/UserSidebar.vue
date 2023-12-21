@@ -111,12 +111,12 @@ import { useUser } from 'stores/useUser';
 
 import { UserInfo } from 'stores/schemas/user';
 
-import RankList from 'components/RankList.vue';
+// import RankList from 'components/RankList.vue';
 
 export default defineComponent({
 
     components: {
-        RankList,
+        // RankList,
     },
 
     props: {
