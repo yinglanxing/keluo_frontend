@@ -127,7 +127,7 @@ export default defineComponent({
 
         submit_phone() {
             if (this.token) {
-                axios.post('/api/v1/verify_pone?phone=' + this.phone).then((req) => {
+                axios.post('/api/v1/verify_phone?phone=' + this.phone).then((req) => {
                     if (req.status == 200) {
                         this.step = 3;
                     }
