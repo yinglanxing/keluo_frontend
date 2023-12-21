@@ -4,7 +4,7 @@
             <!--名称-->
             <q-input class="q-my-md" v-model="form.name" :label="$t('form.name')" name="name" outlined></q-input>
             <!--账户-->
-            <q-input v-model="form.email" :label="$t('form.email')" class="q-my-md" name="emial" outlined></q-input>
+            <q-input v-model="form.email" :label="$t('form.email')" class="q-my-md" name="email" outlined></q-input>
             <!--密码-->
             <q-input v-model="form.pass" :label="$t('form.pass')" class="q-my-md" name="password" outlined
                 type="password"></q-input>
@@ -75,7 +75,7 @@ export default defineComponent({
     methods: {
         check_email() {
             if (this.form.email) {
-                axios.get('/api/v1/email_verify?email' + this.form.email).then((req) => {
+                axios.get('/api/v1/email_verify?email=' + this.form.email).then((req) => {
                     if (req.status == 200) {
                         // 以发送验证码
                         this.email_checked = true;
@@ -89,9 +89,6 @@ export default defineComponent({
             const formTable = new FormData();
             if (this.form.pass != this.form.repass) {
                 throw Error(this.$t('different_passwords'));
-            }
-            if (this.email_code.length == 6 && this.email_checked) {
-                throw Error('验证码不足六位');
             }
             formTable.append('email', this.form.email);
             formTable.append('password', this.form.pass);

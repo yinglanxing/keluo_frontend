@@ -58,7 +58,7 @@ export default defineComponent({
         send_code() {
             axios.post('/api/v1/reset-password', {
                 code: this.code,
-                emial: this.email,
+                email: this.email,
             }).then((req) => {
                 if (req.status == 200) {
                     this.step = 3;

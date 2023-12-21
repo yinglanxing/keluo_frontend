@@ -84,3 +84,42 @@ export interface DraftDetail {
     format: string,
     createTime: string,
 }
+
+export interface DraftDetail {
+    tags: number[],
+    tagSimple: { id: number, name: string; }[],
+    id: number,
+    authorID: number,
+    title: string,
+    subtitle: string,
+    content: string,
+    image: string,
+    format: string,
+    createTime: string,
+}
+
+export interface DraftDetail {
+    tags: number[],
+    tagSimple: { id: number, name: string; }[],
+    id: number,
+    authorID: number,
+    title: string,
+    subtitle: string,
+    content: string,
+    image: string,
+    format: string,
+    createTime: string,
+}
+
+export interface DraftDetail {
+    tags: number[],
+    tagSimple: { id: number, name: string; }[],
+    id: number,
+    authorID: number,
+    title: string,
+    subtitle: string,
+    content: string,
+    image: string,
+    format: string,
+    createTime: string,
+}

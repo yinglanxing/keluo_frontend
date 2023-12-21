@@ -1,4 +1,5 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import router from 'src/router/index';
 // 用户状态
 import { defineStore } from 'pinia';
 
@@ -42,13 +43,20 @@ export const useUser = defineStore('user_state', {
                     }
                     // 写入用户信息
                     this.info = req.data;
-                    this.alert_plain(0);
-                }
-            }).catch((req) => {
-                // 如果为已知身份错误则清空
-                if (req.status >= 400 && req.status < 500) {
-                    // 无法取得信息时清空之前存储的
-                    this.user_logout();
+                } else if (req instanceof AxiosError) {
+                    axios.defaults.headers.common['Authorization'] = '';
+                    if (req.request.status >= 400 && req.request.status < 500) {
+                        // 无法取得信息时清空之前存储的
+                        this.user_logout();
+                    } else if (req.request.status == 301) {
+                        this.alert_plain(0);
+                        localStorage.setItem('token', token.a_token);
+                        localStorage.setItem('token2', token.r_token);
+                        // 使用 useRouter 会变成 undefined
+                        // 跳转到手机号绑定
+                        window.location.href='/#/account_help/bind_phone'
+                        location.reload()
+                    }
                 }
             });
         },
@@ -70,12 +78,9 @@ export const useUser = defineStore('user_state', {
                     this.info = req.data;
                     this.alert_plain(0);
                 }
-            }).catch((req) => {
-                // 如果为已知身份错误则清空
-                if (req.status >= 400 && req.status < 500) {
-                    // 无法取得信息时清空之前存储的
-                    this.user_logout();
-                }
+            }).catch(() => {
+                // 无法取得信息时清空之前存储的身份
+                this.user_logout();
             });
         },
         // 切换登录弹窗状态

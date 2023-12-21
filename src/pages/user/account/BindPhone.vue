@@ -1,47 +1,79 @@
 <template>
-    <q-card v-if="self.userToken" class="row">
-        <user-card class="col-12 col-md-4" :user="self.info"></user-card>
-        <q-separator></q-separator>
-        <q-card-section class="col-12 col-md-8">
-
-            <q-stepper v-model="step" vertical color="primary" animated>
-                <q-step :name="1" title="须知事项" :done="step > 1">
-                    ............................................................
-                    ............................................................
-                    ............................................................
-                    ............................................................
-                    <q-stepper-navigation>
-                        <q-btn @click="step = 2" color="red" label="我已知晓" />
-                    </q-stepper-navigation>
-                </q-step>
-
-                <q-step :name="2" title="输入账号" icon="assignment" :done="step > 2">
-                    <q-input v-model="phone" name="email">
-                        <template v-slot:prepend>
-                            <q-icon name="person" />
-                        </template>
-                    </q-input>
-                    <q-stepper-navigation>
-                        <q-btn @click="submit_bind" color="primary">提交</q-btn>
-                        <q-btn flat @click="step = 1" color="warning" class="q-ml-sm">返回</q-btn>
-                    </q-stepper-navigation>
-                </q-step>
-
-                <q-step :name="3" title="重置成功" icon="assignment">
-                    成功重置密码，请重新登录
-                    <q-stepper-navigation>
-                        <q-btn color="primary" to="/">
-                            {{ $t("back") }}
-                        </q-btn>
-                    </q-stepper-navigation>
-                </q-step>
-            </q-stepper>
-        </q-card-section>
-
+    <q-card class="q-my-md">
+        <q-item>
+            <q-item-section avatar>
+                <!--头像-->
+                <div>
+                    <q-avatar icon="phone"></q-avatar>
+                </div>
+            </q-item-section>
+            <q-item-section>
+                <div class="text-h6">
+                    手机号绑定
+                </div>
+            </q-item-section>
+            <q-item-section side>
+                <q-btn v-if="step<4" color="red" @click="cancel">取消</q-btn>
+            </q-item-section>
+        </q-item>
     </q-card>
-    <!--  无token-->
+    <q-card v-if="token">
+        <q-stepper v-model="step" vertical color="primary" animated>
+            <q-step :name="1" title="须知事项" :done="step > 1">
+                ............................................................
+                ............................................................
+                ............................................................
+                ............................................................
+                <q-stepper-navigation>
+                    <q-btn @click="step = 2" color="red" label="我已知晓"/>
+                </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="2" title="输入手机号" icon="assignment" :done="step > 2">
+                <q-input v-model="phone" name="phone" label="请输入手机号码">
+                    <template v-slot:prepend>
+                        <q-icon name="phone"></q-icon>
+                    </template>
+                </q-input>
+                <q-stepper-navigation>
+                    <q-btn @click="submit_phone" color="primary">提交</q-btn>
+                    <q-btn flat @click="step = 1" color="warning" class="q-ml-sm">返回</q-btn>
+                </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="3" title="验证并绑定" icon="assignment" :done="step > 2">
+                <q-input v-model="code" name="code" label="验证码">
+                    <template #prepend>
+                        <q-icon name="article"/>
+                    </template>
+                </q-input>
+                <q-stepper-navigation>
+                    <q-btn @click="bind_phone" color="primary">绑定</q-btn>
+                    <q-btn @click="step = 1" color="green" label="返回" class="q-ml-sm"/>
+                </q-stepper-navigation>
+            </q-step>
+
+            <q-step :name="4" title="绑定成功" icon="assignment">
+                成功绑定
+                <q-stepper-navigation>
+                    <q-btn color="primary" to="/">返回重新登录</q-btn>
+                    <q-btn color="green" @click="auto_login" class="q-ml-sm">
+                        直接登录
+                    </q-btn>
+                </q-stepper-navigation>
+            </q-step>
+        </q-stepper>
+    </q-card>
+
+    <!--localStorage 无 token-->
     <q-card v-else>
-        <login-tips></login-tips>
+        <q-card-section>
+            <q-img src="/image/wind-turbine.png"></q-img>
+        </q-card-section>
+        <q-card-section class="text-center">
+            <q-icon name="error"></q-icon>
+            没有身份令牌，无法绑定手机号。
+        </q-card-section>
     </q-card>
 </template>
 
@@ -50,14 +82,9 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 
 import { useUser } from 'stores/useUser';
-import LoginTips from 'components/LoginTips.vue';
-import UserCard from 'components/UserCard.vue';
 
 export default defineComponent({
-    components: {
-        UserCard,
-        LoginTips
-    },
+    components: {},
 
     setup() {
 
@@ -69,25 +96,57 @@ export default defineComponent({
 
     mounted() {
         // todo 判断是否已绑定
-        // axios.get('/api/v1/bind_phone')
+        this.token = localStorage.getItem('token') || '';
     },
 
     data() {
         return {
-            step: 0,
+            step: 1,
+            token: '',
             phone: '',
+            code: '',
         };
     },
 
     methods: {
-        submit_bind() {
-            axios.post('/api/v1/bind_phone?phone=' + this.phone).then((req) => {
-                if (req.status == 200) {
-                    // 返回上级路由
-                    this.$router.back();
-                }
+        cancel() {
+            // 取消行为
+            this.token = '';
+            localStorage.setItem('token', '');
+            localStorage.setItem('token2', '');
+            this.$router.back();
+        },
+
+        auto_login() {
+            this.self.user_login({
+                a_token: localStorage.getItem('token') || '',
+                r_token: localStorage.getItem('token2') || '',
             });
-        }
-    }
+        },
+
+
+        submit_phone() {
+            if (this.token) {
+                axios.post('/api/v1/verify_pone?phone=' + this.phone).then((req) => {
+                    if (req.status == 200) {
+                        this.step = 3;
+                    }
+                });
+            }
+        },
+
+        bind_phone() {
+            if (this.token) {
+                // 头部携带身份令牌
+                axios.post('/api/v1/bind_phone?phone=' + this.phone + '&code=' + this.code, {}, {
+                    headers: { Authorization: `Bearer ${this.token}` },
+                }).then((req) => {
+                    if (req.status == 200) {
+                        this.step = 4;
+                    }
+                });
+            }
+        },
+    },
 });
 </script>

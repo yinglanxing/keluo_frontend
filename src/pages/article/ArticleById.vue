@@ -71,7 +71,8 @@
 
                 <!--内容-->
                 <q-card-section>
-                    <q-editor v-model="article.content" min-height="10vh" :toolbar="[]"></q-editor>
+                    <!--<q-editor v-model="article.content" min-height="10vh" :toolbar="[]"></q-editor>-->
+                    <div v-html="article.content"></div>
                 </q-card-section>
 
                 <!--分割线-->
@@ -87,8 +88,10 @@
             </q-card>
 
             <!--评论区-->
-            <div id="comment_target"></div>
-            <!--<comments></comments>-->
+            <q-card>
+                <div id="comment_target"></div>
+                <comment-pack></comment-pack>
+            </q-card>
         </div>
 
 
@@ -139,11 +142,13 @@ import { IntersectionEvent } from 'stores/schemas/event';
 import { ArticleInfo, ArticleDetail } from 'stores/schemas/article';
 
 import UserCard from 'components/user/UserCard.vue';
+import CommentPack from 'components/comment/CommentPack.vue';
 
 export default defineComponent({
 
     components: {
         UserCard,
+        CommentPack,
     },
 
     data() {

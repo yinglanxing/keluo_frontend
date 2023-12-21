@@ -98,10 +98,21 @@ export default defineComponent({
         });
         // 非 200 状态响应报告错误
         axios.interceptors.response.use(null, function (req) {
-            quasar.notify({
-                message: 'error:' + req.response.data,
-                color: 'red',
-            });
+            if (req.status >= 400 && 500 < req.status) {
+                // 错误警告
+                quasar.notify({
+                    message: 'error:' + req.response.data,
+                    color: 'red',
+                });
+            } else {
+                // 提示
+                quasar.notify({
+                    message: 'tips:' + req.response.data,
+                    color: 'info',
+                });
+            }
+            // 不返回将导致后续的 req 变成 undefined
+            return req;
         });
         return {
             state,
