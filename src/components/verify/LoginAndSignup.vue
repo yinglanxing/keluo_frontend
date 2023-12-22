@@ -64,38 +64,18 @@
             <!--                <q-form v-show="self.loginPlain == 3">-->
             <!--                </q-form>-->
             <!--            </q-slide-transition>-->
-            <!--            邮箱登录-->
-            <email-login :show_temp="self.loginPlain == 1" :callback="call_func">
-                <template #code>
-                    <!--验证码-->
-                    <q-slide-transition>
-                        <q-card-section horizontal v-show="error_count>2">
-                            <q-img
-                                :src="captchaUrl"
-                                class="q-mt-md cursor-pointer lh-9" @click="getCaptchaId"
-                            ></q-img>
-                            <q-input v-model="v_code" :label="$t('form.v_code')" class="lh-9"
-                                     name="captchaCode"></q-input>
-                        </q-card-section>
-                    </q-slide-transition>
-                </template>
-            </email-login>
-            <!--          用户注册-->
-            <user-signup :show_temp="self.loginPlain == 2" :callback="call_func">
-                <template #code>
-                    <!--验证码-->
-                    <q-slide-transition>
-                        <q-card-section horizontal v-show="error_count>2">
-                            <q-img
-                                :src="captchaUrl"
-                                class="q-mt-md cursor-pointer lh-9" @click="getCaptchaId"
-                            ></q-img>
-                            <q-input v-model="v_code" :label="$t('form.v_code')" class="lh-9"
-                                     name="captchaCode"></q-input>
-                        </q-card-section>
-                    </q-slide-transition>
-                </template>
-            </user-signup>
+            <!--邮箱登录-->
+            <q-slide-transition>
+                <email-login v-show="self.loginPlain == 1"></email-login>
+            </q-slide-transition>
+            <!--用户注册-->
+            <q-slide-transition>
+                <user-signup v-show="self.loginPlain == 2"></user-signup>
+            </q-slide-transition>
+            <!--手机号绑定-->
+            <q-slide-transition>
+                <bind-phone v-show="self.loginPlain == 3"></bind-phone>
+            </q-slide-transition>
         </q-card-section>
 
         <!--第三方登录提示-->
@@ -129,10 +109,12 @@ import { useUser } from 'stores/useUser';
 
 import UserSignup from 'components/verify/UserSignup.vue';
 import EmailLogin from 'components/verify/EmailLogin.vue';
+import BindPhone from 'components/verify/BindPhone.vue';
 
 export default defineComponent({
 
     components: {
+        BindPhone,
         EmailLogin,
         UserSignup,
     },
@@ -143,58 +125,6 @@ export default defineComponent({
         return {
             self,
         };
-    },
-
-    data() {
-        return {
-            before: 0,
-            // id码
-            captchaId: '',
-            // url路径
-            captchaUrl: '',
-            v_code: '',
-            error_count: 0,
-        };
-    },
-    mounted() {
-        this.before = axios.interceptors.request.use((req) => {
-            // 携带验证码
-            if (this.error_count > 2 && req.baseURL) {
-                let pre = req.baseURL.indexOf('?') < 0 ? '&' : '?';
-                req.baseURL += pre + `verify_code=${this.v_code}&verify_id=${this.captchaId}`;
-            }
-            return req;
-        });
-    },
-    unmounted() {
-        // 离开页面解绑
-        if (this.before) {
-            axios.interceptors.request.eject(this.before);
-        }
-    },
-
-    methods: {
-        // 获取新 id 与验证码图片
-        getCaptchaId() {
-            axios.get('/api/v1/captcha').then((req) => {
-                    if (req.status == 200) {
-                        this.captchaId = req.data.id;
-                        this.captchaUrl = req.data.image;
-                    }
-                },
-            );
-        },
-        call_func() {
-            this.error_count++;
-        },
-    },
-    watch: {
-        error_count() {
-            if (this.error_count > 2) {
-                // 刷新验证码
-                this.getCaptchaId();
-            }
-        },
     },
 });
 </script>

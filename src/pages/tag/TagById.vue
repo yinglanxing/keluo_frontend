@@ -12,8 +12,8 @@
                     {{ tagDetail.name }}
                 </q-item-section>
                 <q-item-section side>
-                    <q-btn v-if="tagDetail.isFollow" color="grey-3">取消关注</q-btn>
-                    <q-btn v-else color="info">关注</q-btn>
+                    <q-btn v-if="tagDetail.isFollow" color="grey" @click="follow_cancel">取消关注</q-btn>
+                    <q-btn v-else color="info" @click="follow_tag">关注</q-btn>
                 </q-item-section>
             </q-item>
         </q-card-section>
@@ -89,13 +89,23 @@ export default defineComponent({
 
         follow_tag() {
             if (this.self.is_login()) {
-                axios.post('/api/v1/tag/follow').then((req) => {
+                axios.post('/api/v1/tag/follow?tid='+this.$route.params['id']).then((req) => {
                     if (req.status == 200) {
                         this.tagDetail.isFollow = true;
                     }
                 });
             }
-        }
+        },
+
+        follow_cancel() {
+            if (this.self.is_login()) {
+                axios.delete('/api/v1/tag/follow?tid='+this.$route.params['id']).then((req) => {
+                    if (req.status == 200) {
+                        this.tagDetail.isFollow = false;
+                    }
+                });
+            }
+        },
     },
 
     watch: {

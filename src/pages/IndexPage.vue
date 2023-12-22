@@ -26,7 +26,7 @@
         <!--文侧边栏始终吸顶-->
         <div class="row q-col-gutter-lg">
             <!--页面左侧边栏-->
-            <div class="col-md-3" v-if="$q.screen.gt.md">
+            <div class="col-md-2" v-if="$q.screen.gt.md">
                 <!--吸顶-->
                 <index-left-sidebar class="sticky top-17"></index-left-sidebar>
             </div>

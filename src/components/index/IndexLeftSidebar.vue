@@ -23,7 +23,7 @@
             </q-item-section>
         </q-item>
         <q-list bordered separator>
-            <q-item clickable v-ripple v-for="i in hot_tag" :key="i.id">
+            <q-item clickable v-ripple v-for="i in hot_tag" :key="i.id" :to="'/tag/'+i.id">
                 <q-item-section>{{ i.name }}</q-item-section>
                 <q-item-section side>
                     <q-chip>{{ i.num }}</q-chip>

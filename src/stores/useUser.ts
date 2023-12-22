@@ -54,8 +54,7 @@ export const useUser = defineStore('user_state', {
                         localStorage.setItem('token2', token.r_token);
                         // 使用 useRouter 会变成 undefined
                         // 跳转到手机号绑定
-                        window.location.href='/#/account_help/bind_phone'
-                        location.reload()
+                        this.alert_plain(3)
                     }
                 }
             });

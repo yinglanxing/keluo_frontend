@@ -21,33 +21,45 @@
             </q-item-section>
         </q-item>
 
-        <q-item v-for="item in comment_list" :key="item.comment_id">
-            <q-expansion-item v-if="item.reply_infos.length" class="full-width">
-                <template v-slot:header>
-                    <!--头像-->
-                    <q-item-section avatar>
-                        <q-avatar>
-                            <q-img v-if="item.user_info.avatar" :src="item.user_info.avatar"></q-img>
-                            <q-icon v-else name="person"></q-icon>
-                        </q-avatar>
-                        <q-space></q-space>
-                    </q-item-section>
-                    <q-item-section>
-                        <!--名称-->
-                        <q-item-label>
-                            {{ item.user_info.username }}
-                        </q-item-label>
-                        <!--时间-->
-                        <q-item-label caption>
-                            {{ item.comment_info.format }}
-                        </q-item-label>
-                        <!--内容-->
-                        <q-item-label>
-                            {{ item.comment_info.content }}
-                        </q-item-label>
-                    </q-item-section>
-                </template>
-                <q-item v-for="li in item.reply_infos" :key="li.reply_id">
+        <div v-for="item in comment_list" :key="item.comment_id">
+
+            <q-separator></q-separator>
+
+            <q-item>
+                <!--头像-->
+                <q-item-section avatar>
+                    <q-avatar>
+                        <q-img v-if="item.user_info.avatar" :src="item.user_info.avatar"></q-img>
+                        <q-icon v-else name="person"></q-icon>
+                    </q-avatar>
+                    <q-space></q-space>
+                </q-item-section>
+                <q-item-section>
+                    <!--名称-->
+                    <q-item-label>
+                        {{ item.user_info.username }}
+                    </q-item-label>
+                    <!--时间-->
+                    <q-item-label caption>
+                        {{ item.comment_info.format }}
+                    </q-item-label>
+                    <!--内容-->
+                    <q-item-label>
+                        {{ item.comment_info.content }}
+                    </q-item-label>
+                    <q-item-label>
+                        <q-btn v-if="rep_id == item.comment_id" color="primary" flat @click="rep_click(0)">取消回复</q-btn>
+                        <q-btn v-else flat color="primary"  @click="rep_click(item.comment_id)">回复</q-btn>
+                        <div v-if="rep_id == item.comment_id" class="mt2">
+                            <q-editor min-height="9vh" v-model="rep_content" :toolbar="[]"></q-editor>
+                            <q-btn color="primary" class="q-my-md full-width" @click="rep_create">回复</q-btn>
+                        </div>
+                    </q-item-label>
+                </q-item-section>
+            </q-item>
+            <div v-for="li in item.reply_infos" :key="li.reply_id" class="q-ml-sm">
+                <q-separator inset></q-separator>
+                <q-item>
                     <!--头像-->
                     <q-item-section avatar>
                         <q-avatar>
@@ -69,34 +81,18 @@
                         <q-item-label>
                             {{ li.reply_info.reply_content }}
                         </q-item-label>
+                        <q-item-label>
+                            <q-btn v-if="rep_id == li.reply_id" color="primary" flat @click="rep_click(0)">取消回复</q-btn>
+                            <q-btn v-else flat color="primary"  @click="rep_click(li.reply_id)">回复</q-btn>
+                            <div v-if="rep_id == li.reply_id" class="mt2">
+                                <q-editor min-height="9vh" v-model="rep_content" :toolbar="[]"></q-editor>
+                                <q-btn color="primary" class="q-my-md full-width" @click="rep_create">回复</q-btn>
+                            </div>
+                        </q-item-label>
                     </q-item-section>
                 </q-item>
-            </q-expansion-item>
-
-            <q-item v-else class="full-width">
-                <q-item-section avatar>
-                    <q-avatar>
-                        <q-img v-if="item.user_info.avatar" :src="item.user_info.avatar"></q-img>
-                        <q-icon v-else name="person"></q-icon>
-                    </q-avatar>
-                    <q-space></q-space>
-                </q-item-section>
-                <q-item-section>
-                    <!--名称-->
-                    <q-item-label>
-                        {{ item.user_info.username }}
-                    </q-item-label>
-                    <!--时间-->
-                    <q-item-label caption>
-                        {{ item.comment_info.format }}
-                    </q-item-label>
-                    <!--内容-->
-                    <q-item-label>
-                        {{ item.comment_info.content }}
-                    </q-item-label>
-                </q-item-section>
-            </q-item>
-        </q-item>
+            </div>
+        </div>
     </q-list>
 
     <!--翻页器-->
@@ -123,7 +119,8 @@ export default defineComponent({
         let comment_list: CommentListItem[] = [];
         return {
             max_page: 0,
-            page_num: 0,
+            // page_num: 0,
+            page_num: 1,
             // 评论
             comment_list,
             content: '',
@@ -181,19 +178,25 @@ export default defineComponent({
                 axios.post('/api/v1/comment', {
                     itemType: 2,
                     userID: this.self.info.id,
-                    itemID: this.$route.params['id'],
+                    itemID: Number(this.$route.params['id']),
                     content: this.content,
                 }).then((req) => {
                     if (req.status == 200) {
-                        this.loading = false;
+                        comment_get();
+                        //动态加载 this.loading = false;
                     }
                 });
             }
         },
 
         // 点击事件
-        rep_click(id: number) {
-            this.rep_id = id;
+        rep_click(id: number|string) {
+            id = Number(id)
+            if (this.rep_id == id) {
+                this.rep_id = 0;
+            } else {
+                this.rep_id = id;
+            }
             this.rep_content = '';
         },
 
@@ -204,7 +207,7 @@ export default defineComponent({
                 axios.post('/api/v1/comment', {
                     itemType: 1,
                     userID: this.self.info.id,
-                    itemID: this.$route.params['id'],
+                    itemID: Number(this.$route.params['id']),
                     toCommentID: toCommentID,
                     content: this.rep_content,
                 }).then((req) => {
@@ -226,4 +229,8 @@ export default defineComponent({
         },
     },
 });
+
+function comment_get() {
+    throw new Error('Function not implemented.');
+}
 </script>

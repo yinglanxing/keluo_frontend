@@ -98,7 +98,7 @@ export default defineComponent({
         });
         // 非 200 状态响应报告错误
         axios.interceptors.response.use(null, function (req) {
-            if (req.status >= 400 && 500 < req.status) {
+            if (req.response.status >= 400 && 500 < req.response.status) {
                 // 错误警告
                 quasar.notify({
                     message: 'error:' + req.response.data,
