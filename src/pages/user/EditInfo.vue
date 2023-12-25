@@ -13,9 +13,7 @@
             </q-item-section>
             <q-item-section>
                 {{ self.info.username }}
-                <div class="text-h6">
-                    编辑个人资料
-                </div>
+                <div class="text-h6">编辑个人资料</div>
             </q-item-section>
         </q-item>
     </q-card>
@@ -28,7 +26,11 @@
             <q-item-section class="q-gutter-y-lg">
                 <q-uploader class="w-auto" label="头像" disable></q-uploader>
                 <!--介绍-->
-                <q-editor :toolbar="[]" placeholder="介绍" v-model="form.introduction"></q-editor>
+                <q-editor
+                    :toolbar="[]"
+                    placeholder="介绍"
+                    v-model="form.introduction"
+                ></q-editor>
                 <q-space></q-space>
                 <q-btn class="full-width" color="green">提交</q-btn>
             </q-item-section>
@@ -60,7 +62,11 @@
             <q-item-section class="q-gutter-y-lg">
                 <q-uploader class="w-auto" label="头像" disable></q-uploader>
                 <!--介绍-->
-                <q-editor :toolbar="[]" placeholder="介绍" v-model="form.introduction"></q-editor>
+                <q-editor
+                    :toolbar="[]"
+                    placeholder="介绍"
+                    v-model="form.introduction"
+                ></q-editor>
                 <!--用户名-->
                 <q-input filled label="名称" v-model="form.username"></q-input>
                 <!--公司-->
@@ -89,17 +95,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 import { UserInfo } from 'stores/schemas/user';
 
 export default defineComponent({
-
     components: {},
 
     setup() {
-
         // 用户状态
         const self = useUser();
         return {
@@ -110,14 +114,14 @@ export default defineComponent({
     data() {
         return {
             form: {
-                'avatar': '',
-                'company': '',
-                'github': '',
-                'homePage': '',
-                'introduction': '',
-                'location': '',
-                'position': '',
-                'username': '',
+                avatar: '',
+                company: '',
+                github: '',
+                homePage: '',
+                introduction: '',
+                location: '',
+                position: '',
+                username: '',
             },
         };
     },
@@ -131,9 +135,8 @@ export default defineComponent({
         logout() {
             this.self.info = {} as UserInfo;
             this.self.userToken = this.self.resetToken = '';
-            axios.defaults.headers.common['Authorization'] = '';
+            api.defaults.headers.common['Authorization'] = '';
         },
     },
-
 });
 </script>

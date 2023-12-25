@@ -1,7 +1,6 @@
 <template>
     <!--文章列表-->
     <div class="q-gutter-y-lg">
-
         <!--列表为空-->
         <q-card v-if="pageItem.length == 0">
             <q-card-section class="q-pa-md q-gutter-md">
@@ -9,17 +8,23 @@
             </q-card-section>
             <q-card-actions>
                 <!-- 刷新 -->
-                <q-btn class="full-width" icon="refresh" @click="getData(url)"></q-btn>
+                <q-btn
+                    class="full-width"
+                    icon="refresh"
+                    @click="getData(url)"
+                ></q-btn>
             </q-card-actions>
         </q-card>
 
         <!--列表内容-->
         <q-card v-for="item in pageItem" :key="item.articleInfo.id">
-
             <!--头部-->
             <q-card-section>
                 <!--标题-->
-                <router-link :to="'/article/' + item.articleInfo.id" class="q-btn ellipsis-2-lines text-left">
+                <router-link
+                    :to="'/article/' + item.articleInfo.id"
+                    class="q-btn ellipsis-2-lines text-left"
+                >
                     <q-item-label class="ell_title text-h6 ellipsis">
                         {{ item.articleInfo.title }}
                     </q-item-label>
@@ -29,7 +34,10 @@
                     <!--头像-->
                     <q-item-section avatar>
                         <q-avatar>
-                            <q-img v-if="item.avatar" :src="item.avatar"></q-img>
+                            <q-img
+                                v-if="item.avatar"
+                                :src="item.avatar"
+                            ></q-img>
                             <q-icon v-else name="person"></q-icon>
                         </q-avatar>
                     </q-item-section>
@@ -52,7 +60,10 @@
                 <!--<q-rating v-model="stars" :max="5" size="32px"><q-rating>-->
 
                 <!--文章内容，超过两行省略-->
-                <div class="text-subtitle1 ellipsis-2-lines" style="height: 3.2em">
+                <div
+                    class="text-subtitle1 ellipsis-2-lines"
+                    style="height: 3.2em"
+                >
                     {{ item.articleInfo.content }}
                 </div>
             </q-card-section>
@@ -79,20 +90,35 @@
             <q-card-actions>
                 <!-- 收藏 -->
                 <q-btn round @click="article_collect(item.articleInfo)">
-                    <q-icon v-if="item.articleInfo.isCollected" name="star"></q-icon>
+                    <q-icon
+                        v-if="item.articleInfo.isCollected"
+                        name="star"
+                    ></q-icon>
                     <q-icon v-else name="star_border"></q-icon>
                 </q-btn>
 
                 <q-separator class="m3" vertical inset></q-separator>
 
                 <!-- 标签 -->
-                <q-btn size="sm" v-if="item.articleInfo.tags?.length > 0" :to="'/tag/' + item.articleInfo.tags[0].id">
+                <q-btn
+                    size="sm"
+                    v-if="item.articleInfo.tags?.length > 0"
+                    :to="'/tag/' + item.articleInfo.tags[0].id"
+                >
                     {{ item.articleInfo.tags[0].name }}
                 </q-btn>
-                <q-btn size="sm" v-if="item.articleInfo.tags?.length > 1" :to="'/tag/' + item.articleInfo.tags[1].id">
+                <q-btn
+                    size="sm"
+                    v-if="item.articleInfo.tags?.length > 1"
+                    :to="'/tag/' + item.articleInfo.tags[1].id"
+                >
                     {{ item.articleInfo.tags[1].name }}
                 </q-btn>
-                <q-btn size="sm" v-if="item.articleInfo.tags?.length > 2" :to="'/tag/' + item.articleInfo.tags[2].id">
+                <q-btn
+                    size="sm"
+                    v-if="item.articleInfo.tags?.length > 2"
+                    :to="'/tag/' + item.articleInfo.tags[2].id"
+                >
                     {{ item.articleInfo.tags[2].name }}
                 </q-btn>
 
@@ -103,23 +129,42 @@
                     <q-menu>
                         <q-list bordered>
                             <!-- 点赞 -->
-                            <q-item clickable v-ripple @click="article_thumbs(item.articleInfo)">
+                            <q-item
+                                clickable
+                                v-ripple
+                                @click="article_thumbs(item.articleInfo)"
+                            >
                                 <q-item-section avatar>
-                                    <q-icon v-if="item.articleInfo.isLiked" name="thumb_up"></q-icon>
-                                    <q-icon v-else name="thumb_up_off_alt"></q-icon>
+                                    <q-icon
+                                        v-if="item.articleInfo.isLiked"
+                                        name="thumb_up"
+                                    ></q-icon>
+                                    <q-icon
+                                        v-else
+                                        name="thumb_up_off_alt"
+                                    ></q-icon>
                                 </q-item-section>
-                                <q-item-section>
-                                    点赞
-                                </q-item-section>
+                                <q-item-section> 点赞 </q-item-section>
                             </q-item>
                             <!-- 收藏 -->
-                            <q-item clickable v-ripple @click="article_collect(item.articleInfo)">
+                            <q-item
+                                clickable
+                                v-ripple
+                                @click="article_collect(item.articleInfo)"
+                            >
                                 <q-item-section avatar>
-                                    <q-icon v-if="item.articleInfo.isCollected" name="star"></q-icon>
+                                    <q-icon
+                                        v-if="item.articleInfo.isCollected"
+                                        name="star"
+                                    ></q-icon>
                                     <q-icon v-else name="star_border"></q-icon>
                                 </q-item-section>
                                 <q-item-section>
-                                    <q-item-label> {{ $t('article.collect') }}</q-item-label>
+                                    <q-item-label>
+                                        {{
+                                            $t('article.collect')
+                                        }}</q-item-label
+                                    >
                                 </q-item-section>
                             </q-item>
                             <!-- 举报 -->
@@ -140,13 +185,19 @@
 
     <!--翻页器-->
     <div v-if="max_page" class="q-pa-lg flex flex-center">
-        <q-pagination v-model="page_num" :max="max_page" :max-pages="6" boundary-links direction-links></q-pagination>
+        <q-pagination
+            v-model="page_num"
+            :max="max_page"
+            :max-pages="6"
+            boundary-links
+            direction-links
+        ></q-pagination>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 // import { date } from 'quasar';
 import { useUser } from 'src/stores/useUser';
 import { ApiArticleInfo, ArticleInfo } from 'src/stores/schemas/article';
@@ -196,7 +247,6 @@ export default defineComponent({
             // ! 获取页面追加参数
             cursor: '',
             // 其他参数
-
         };
     },
 
@@ -205,7 +255,7 @@ export default defineComponent({
             // 获取新数据
             // if (!this.lock && url) {
             if (url) {
-                axios.get(url).then((req) => {
+                api.get(url).then((req) => {
                     if (req.status == 200) {
                         // // 如果存在数据则装载数据
                         // if (req.data.data.results?.length) {
@@ -244,7 +294,10 @@ export default defineComponent({
 
         cutPageItems() {
             // 裁出当前页面应有的元素
-            this.pageItem = this.dataList.slice((this.page_num - 1) * 10, this.page_num * 10);
+            this.pageItem = this.dataList.slice(
+                (this.page_num - 1) * 10,
+                this.page_num * 10
+            );
         },
 
         // 点赞
@@ -252,7 +305,7 @@ export default defineComponent({
             // 判断已登录
             if (this.self.is_login()) {
                 // 未点赞状态才能点赞
-                axios.post('/api/v1/article/like?id=' + item.id).then((req) => {
+                api.post('/api/v1/article/like?id=' + item.id).then((req) => {
                     if (req.status == 200) {
                         // 操作成功
                         item.isLiked = !item.isLiked;
@@ -265,18 +318,20 @@ export default defineComponent({
         article_collect(item: ArticleInfo) {
             // 判断已登录
             if (this.self.is_login()) {
-                axios.post('/api/v1/collect/', { 'aid': String(item.id) }).then((req) => {
-                    if (req.status == 200) {
-                        // 收藏成功
-                        item.isCollected = !item.isCollected;
+                api.post('/api/v1/collect/', { aid: String(item.id) }).then(
+                    (req) => {
+                        if (req.status == 200) {
+                            // 收藏成功
+                            item.isCollected = !item.isCollected;
+                        }
                     }
-                });
+                );
             }
         },
     },
 
     watch: {
-        'page_num'() {
+        page_num() {
             // 开启页面模式的状态下，数值变动更新列表
             if (this.usePage) {
                 let pre = '';
@@ -300,7 +355,7 @@ export default defineComponent({
             // }
         },
 
-        'url'() {
+        url() {
             // 切换数据获取地址后，清空默认存储数据
             this.initialization();
         },
@@ -311,12 +366,12 @@ export default defineComponent({
 <style lang="css" scoped>
 /* 解决 flex 带来的 nowrap 无法确定组件宽度问题 */
 .ell_title {
-    max-width: 80vw
+    max-width: 80vw;
 }
 
 @media screen and (max-width: 680px) {
     .ell_title {
-        max-width: 70vw
+        max-width: 70vw;
     }
 }
 </style>

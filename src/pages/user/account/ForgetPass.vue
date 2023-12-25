@@ -11,7 +11,12 @@
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="2" title="输入账号" icon="assignment" :done="step > 2">
+            <q-step
+                :name="2"
+                title="输入账号"
+                icon="assignment"
+                :done="step > 2"
+            >
                 <q-input v-model="email" name="email" type="email" label="邮箱">
                     <template #prepend>
                         <q-icon name="person" />
@@ -19,17 +24,37 @@
                 </q-input>
                 <q-stepper-navigation>
                     <q-btn @click="send_email" color="primary" label="提交" />
-                    <q-btn @click="step = 1" color="green" label="返回" class="q-ml-sm" />
+                    <q-btn
+                        @click="step = 1"
+                        color="green"
+                        label="返回"
+                        class="q-ml-sm"
+                    />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="3" title="重置账号" icon="assignment" :done="step > 2">
-                <q-input v-model="pass" name="password" type="password" label="密码">
+            <q-step
+                :name="3"
+                title="重置账号"
+                icon="assignment"
+                :done="step > 2"
+            >
+                <q-input
+                    v-model="pass"
+                    name="password"
+                    type="password"
+                    label="密码"
+                >
                     <template #prepend>
                         <q-icon name="lock" />
                     </template>
                 </q-input>
-                <q-input v-model="re_pass" name="password" type="password" label="确认密码">
+                <q-input
+                    v-model="re_pass"
+                    name="password"
+                    type="password"
+                    label="确认密码"
+                >
                     <template #prepend>
                         <q-icon name="lock" />
                     </template>
@@ -40,8 +65,17 @@
                     </template>
                 </q-input>
                 <q-stepper-navigation>
-                    <q-btn @click="reset_account" color="primary" label="提交" />
-                    <q-btn @click="step = 1" color="green" label="返回" class="q-ml-sm" />
+                    <q-btn
+                        @click="reset_account"
+                        color="primary"
+                        label="提交"
+                    />
+                    <q-btn
+                        @click="step = 1"
+                        color="green"
+                        label="返回"
+                        class="q-ml-sm"
+                    />
                 </q-stepper-navigation>
             </q-step>
 
@@ -49,7 +83,7 @@
                 成功重置密码，请重新登录
                 <q-stepper-navigation>
                     <q-btn color="primary" to="/">
-                        {{ $t("back") }}
+                        {{ $t('back') }}
                     </q-btn>
                 </q-stepper-navigation>
             </q-step>
@@ -59,7 +93,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 
 export default defineComponent({
     data() {
@@ -74,7 +108,7 @@ export default defineComponent({
 
     methods: {
         send_email() {
-            axios.get('/api/v1/reset_verify?email' + this.email).then((req) => {
+            api.get('/api/v1/reset_verify?email' + this.email).then((req) => {
                 if (req.status == 200) {
                     this.step = 3;
                 }
@@ -90,12 +124,12 @@ export default defineComponent({
             }
             formTable.append('email', this.email);
             formTable.append('password', this.pass);
-            axios.post('/api/v1/reset_password', formTable).then((req) => {
+            api.post('/api/v1/reset_password', formTable).then((req) => {
                 if (req.status == 200) {
                     this.step = 4;
                 }
             });
         },
-    }
+    },
 });
 </script>

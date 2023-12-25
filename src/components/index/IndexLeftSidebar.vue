@@ -1,29 +1,36 @@
 <template>
     <q-card>
         <q-card-section>
-
             <q-tabs v-model="tab" vertical inline-label>
-                <q-route-tab v-for="item in dockerList" :key="item.text" :name="item.to" :to="item.to">
+                <q-route-tab
+                    v-for="item in dockerList"
+                    :key="item.text"
+                    :name="item.to"
+                    :to="item.to"
+                >
                     <q-avatar square>
                         <q-img :src="'/icons/' + item.icon + '.svg'"></q-img>
                     </q-avatar>
                     <div class="m-1"></div>
                     {{ item.text }}
                 </q-route-tab>
-
             </q-tabs>
         </q-card-section>
         <q-separator></q-separator>
         <!--  热门tag-->
         <q-item>
             <q-item-section class="text-h6 q-ma-sm">
-                <q-item-label>
-                    标签排行
-                </q-item-label>
+                <q-item-label> 标签排行 </q-item-label>
             </q-item-section>
         </q-item>
         <q-list bordered separator>
-            <q-item clickable v-ripple v-for="i in hot_tag" :key="i.id" :to="'/tag/'+i.id">
+            <q-item
+                clickable
+                v-ripple
+                v-for="i in hot_tag"
+                :key="i.id"
+                :to="'/tag/' + i.id"
+            >
                 <q-item-section>{{ i.name }}</q-item-section>
                 <q-item-section side>
                     <q-chip>{{ i.num }}</q-chip>
@@ -48,9 +55,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 import { SelectableTag } from 'stores/schemas/tag';
-
 
 export default defineComponent({
     data() {
@@ -69,7 +75,7 @@ export default defineComponent({
 
     mounted() {
         // 获取推荐 tag
-        axios.get('/api/v1/recommend/tag').then((req) => {
+        api.get('/api/v1/recommend/tag').then((req) => {
             if (req.status == 200) {
                 this.hot_tag = req.data;
             }
@@ -79,13 +85,13 @@ export default defineComponent({
     methods: {},
 
     watch: {
-        'tab'() {
+        tab() {
             // 未登陆的页面无法前往
             if (this.tab != this.$route.path) {
                 this.tab = this.$route.path;
             }
         },
-    }
+    },
 });
 </script>
 

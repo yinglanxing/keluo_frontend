@@ -30,7 +30,6 @@ import LoginTips from 'components/index/LoginTips.vue';
 import { UserInfo } from 'stores/schemas/user';
 
 export default defineComponent({
-
     components: {
         CheckIn,
         RankList,
@@ -46,13 +45,12 @@ export default defineComponent({
 
     mounted() {
         // 获取用户排行
-        // axios.get('/api/v1/user/rank').then((req) => {
+        // api.get('/api/v1/user/rank').then((req) => {
         //     if (req.status == 200) {
         //         if (req.data.success) this.rank = req.data.data;
         //     }
         // });
     },
-
 });
 </script>
 

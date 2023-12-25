@@ -16,7 +16,13 @@
                 <q-input v-model="code" name="code"></q-input>
                 <q-stepper-navigation>
                     <q-btn @click="send_code" color="green">验证</q-btn>
-                    <q-btn flat @click="step = 1" color="warning" class="q-ml-sm">返回</q-btn>
+                    <q-btn
+                        flat
+                        @click="step = 1"
+                        color="warning"
+                        class="q-ml-sm"
+                        >返回</q-btn
+                    >
                 </q-stepper-navigation>
             </q-step>
 
@@ -34,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 
 export default defineComponent({
     data() {
@@ -48,15 +54,17 @@ export default defineComponent({
     methods: {
         // 绑定邮箱
         send_email() {
-            axios.post('/api/v1/reset-password?email=' + this.email).then((req) => {
-                if (req.status == 200) {
-                    this.step = 2;
+            api.post('/api/v1/reset-password?email=' + this.email).then(
+                (req) => {
+                    if (req.status == 200) {
+                        this.step = 2;
+                    }
                 }
-            });
+            );
         },
         // 绑定代码
         send_code() {
-            axios.post('/api/v1/reset-password', {
+            api.post('/api/v1/reset-password', {
                 code: this.code,
                 email: this.email,
             }).then((req) => {

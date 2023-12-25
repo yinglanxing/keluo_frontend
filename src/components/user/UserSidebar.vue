@@ -1,7 +1,6 @@
 <template>
     <!--用户侧边栏页-->
     <div class="q-gutter-y-lg">
-
         <!--用户资料管理-->
         <q-card>
             <q-card-section class="row">
@@ -56,7 +55,10 @@
                 <q-btn class="col">{{ $t("self.safe") }}</q-btn>
             </q-card-actions> -->
 
-            <q-card-actions v-if="self.userToken && self.info.status" class="col">
+            <q-card-actions
+                v-if="self.userToken && self.info.status"
+                class="col"
+            >
                 <!--管理员模式-->
                 <q-btn class="col">{{ $t('self.ban_7') }}</q-btn>
                 <q-btn class="col">{{ $t('self.ban_ever') }}</q-btn>
@@ -105,7 +107,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -114,7 +116,6 @@ import { UserInfo } from 'stores/schemas/user';
 import RankList from 'components/user/RankList.vue';
 
 export default defineComponent({
-
     components: {
         RankList,
     },
@@ -148,25 +149,25 @@ export default defineComponent({
     methods: {
         getAll() {
             // 获取关注列表
-            axios.get('/api/v1/user/following?id=' + this.user.id).then((req) => {
+            api.get('/api/v1/user/following?id=' + this.user.id)
+                .then((req) => {
                     if (req.status == 200) {
                         this.followingList = req.data.data.results || [];
                     }
-                },
-            ).catch(() => {
+                })
+                .catch(() => {
                     this.followingList = [];
-                },
-            );
+                });
             // 获取粉丝列表
-            axios.get('/api/v1/user/follower?id=' + this.user.id).then((req) => {
+            api.get('/api/v1/user/follower?id=' + this.user.id)
+                .then((req) => {
                     if (req.status == 200) {
                         this.followerList = req.data.data.results || [];
                     }
-                },
-            ).catch(() => {
+                })
+                .catch(() => {
                     this.followerList = [];
-                },
-            );
+                });
         },
 
         // 查看用户信息
@@ -176,7 +177,7 @@ export default defineComponent({
     },
 
     watch: {
-        '$route'() {
+        $route() {
             // 切换 id 时刷新内容
             if (this.$route.params['id']) {
                 this.getAll();

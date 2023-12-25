@@ -2,14 +2,15 @@
     <!--左侧固定按钮-->
     <!--隐藏条件 xs sm-->
     <div></div>
-    <div class="q-gutter-md xs-hide sm-hide" style="width: 10px;height: 10px;top: 20vh;position: sticky;left: 0;">
+    <div
+        class="q-gutter-md xs-hide sm-hide"
+        style="width: 10px; height: 10px; top: 20vh; position: sticky; left: 0"
+    >
         <!--点赞-->
         <q-btn fab color="primary" @click="article_thumbs">
             <q-icon v-if="article.isLiked" name="thumb_up"></q-icon>
             <q-icon v-else name="thumb_up_off_alt"></q-icon>
-            <q-tooltip anchor="center left" self="center end">
-                点赞
-            </q-tooltip>
+            <q-tooltip anchor="center left" self="center end"> 点赞 </q-tooltip>
         </q-btn>
         <!--收藏-->
         <q-btn fab color="primary" @click="article_collect">
@@ -51,7 +52,11 @@
         <!--中间页面内容-->
         <div class="col-8">
             <q-card class="q-my-md q-gutter-ma-md">
-                <q-img :ratio="16 / 9" alt="bg" :src="article.image || '/card-bg.jpg'"></q-img>
+                <q-img
+                    :ratio="16 / 9"
+                    alt="bg"
+                    :src="article.image || '/card-bg.jpg'"
+                ></q-img>
 
                 <!--页头-->
                 <q-card-section>
@@ -61,12 +66,18 @@
                             {{ article.title }}
                         </div>
                         <!--时间-->
-                        <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
+                        <div
+                            class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
+                        >
                             <q-icon name="schedule"></q-icon>
-                            {{ date.formatDate(article.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
+                            {{
+                                date.formatDate(
+                                    article.createTime,
+                                    'YYYY-MM-DD | HH:mm:ss'
+                                )
+                            }}
                         </div>
                     </div>
-
                 </q-card-section>
 
                 <!--内容-->
@@ -80,9 +91,7 @@
 
                 <!--tags-->
                 <q-card-section class="q-gutter-md">
-                    <div v-if="!tags?.length" class="text-grey-3">
-                        empty
-                    </div>
+                    <div v-if="!tags?.length" class="text-grey-3">empty</div>
                     <q-chip v-for="i in tags" :key="i.id">{{ i.name }}</q-chip>
                 </q-card-section>
             </q-card>
@@ -94,12 +103,15 @@
             </q-card>
         </div>
 
-
         <!--页面右侧边栏-->
         <div class="col-3">
             <div class="q-ma-md q-gutter-md">
                 <!--页面作者的信息-->
-                <user-card v-intersection="onIntersection" :user="author" show-actions></user-card>
+                <user-card
+                    v-intersection="onIntersection"
+                    :user="author"
+                    show-actions
+                ></user-card>
 
                 <!--markdown 目录-->
                 <!-- <q-card>
@@ -116,23 +128,26 @@
                     </q-card-section>
 
                     <q-list bordered separator>
-                        <q-item v-for="item in relatedList" :key="item.id" v-ripple clickable>
+                        <q-item
+                            v-for="item in relatedList"
+                            :key="item.id"
+                            v-ripple
+                            clickable
+                        >
                             <q-item-section>
                                 {{ item.title }}
                             </q-item-section>
                         </q-item>
                     </q-list>
                 </q-card>
-
             </div>
-
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 import { date } from 'quasar';
 import { useUser } from 'src/stores/useUser';
 
@@ -145,7 +160,6 @@ import UserCard from 'components/user/UserCard.vue';
 import CommentPack from 'components/comment/CommentPack.vue';
 
 export default defineComponent({
-
     components: {
         UserCard,
         CommentPack,
@@ -176,7 +190,6 @@ export default defineComponent({
         };
     },
 
-
     mounted() {
         // 获取文章信息
         this.getData('/api/v1/article/' + this.$route.params['id']);
@@ -185,27 +198,29 @@ export default defineComponent({
     methods: {
         // 获取文章信息
         getData(url: string) {
-            axios.get(url).then((req) => {
-                if (req.status == 200) {
-                    let data: ArticleDetail = req.data;
-                    // 文章数据
-                    this.article = req.data.article;
-                    this.tags = req.data.tags;
-                    // 用户数据
-                    this.author = req.data.userInfo;
-                    this.article.isLiked = data.isLiked;
-                    this.article.isCollected = data.isCollected;
-                    // 获取相关文章
-                    // axios.get('/api/v1/article/related/' + this.$route.params['id']).then((req) => {
-                    //     if (req.status == 200) {
-                    //         this.relatedList = req.data.data || [];
-                    //     }
-                    // });
-                }
-            }).catch(() => {
-                // 无法获取信息，返回上一页
-                this.$router.back();
-            });
+            api.get(url)
+                .then((req) => {
+                    if (req.status == 200) {
+                        let data: ArticleDetail = req.data;
+                        // 文章数据
+                        this.article = req.data.article;
+                        this.tags = req.data.tags;
+                        // 用户数据
+                        this.author = req.data.userInfo;
+                        this.article.isLiked = data.isLiked;
+                        this.article.isCollected = data.isCollected;
+                        // 获取相关文章
+                        // api.get('/api/v1/article/related/' + this.$route.params['id']).then((req) => {
+                        //     if (req.status == 200) {
+                        //         this.relatedList = req.data.data || [];
+                        //     }
+                        // });
+                    }
+                })
+                .catch(() => {
+                    // 无法获取信息，返回上一页
+                    this.$router.back();
+                });
         },
 
         // 用户卡片超过可视范围
@@ -228,12 +243,14 @@ export default defineComponent({
             // 判断已登录
             if (this.self.is_login()) {
                 // 未点赞状态才能点赞
-                axios.post('/api/v1/article/like?id=' + this.article.id).then((req) => {
-                    if (req.status == 200) {
-                        // 操作成功
-                        this.article.isLiked = !this.article.isLiked;
+                api.post('/api/v1/article/like?id=' + this.article.id).then(
+                    (req) => {
+                        if (req.status == 200) {
+                            // 操作成功
+                            this.article.isLiked = !this.article.isLiked;
+                        }
                     }
-                });
+                );
             }
         },
 
@@ -241,7 +258,9 @@ export default defineComponent({
         article_collect() {
             // 判断已登录
             if (this.self.is_login()) {
-                axios.post('/api/v1/collect/', { 'aid': String(this.article.id) }).then((req) => {
+                api.post('/api/v1/collect/', {
+                    aid: String(this.article.id),
+                }).then((req) => {
                     if (req.status == 200) {
                         // 收藏成功
                         this.article.isCollected = !this.article.isCollected;
@@ -254,15 +273,18 @@ export default defineComponent({
         article_report() {
             // 判断已登录
             if (this.self.is_login()) {
-                // axios.post('')
+                // api.post('')
             }
         },
     },
 
     watch: {
-        '$route'() {
+        $route() {
             // 切换 id 时刷新内容
-            if (this.$route.params['id'] && this.$route.path.indexOf('/article') == 0) {
+            if (
+                this.$route.params['id'] &&
+                this.$route.path.indexOf('/article') == 0
+            ) {
                 this.getData('/api/v1/article/' + this.$route.params['id']);
             }
         },

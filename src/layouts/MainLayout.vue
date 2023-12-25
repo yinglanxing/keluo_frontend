@@ -26,7 +26,6 @@
 
     <!--主布局-->
     <q-layout view="lHh Lpr lFf">
-
         <!--顶部页首-->
         <header-layout></header-layout>
 
@@ -62,7 +61,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar';
-import axios from 'axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -72,7 +71,6 @@ import HeaderLayout from 'layouts/HeaderLayout.vue';
 import { useState } from 'stores/useState';
 
 export default defineComponent({
-
     components: {
         HeaderLayout,
         FooterLayout,
@@ -97,7 +95,7 @@ export default defineComponent({
             localStorage.setItem('state', JSON.stringify(state));
         });
         // 非 200 状态响应报告错误
-        axios.interceptors.response.use(null, function (req) {
+        api.interceptors.response.use(null, function (req) {
             if (req.response.status >= 400 && 500 < req.response.status) {
                 // 错误警告
                 quasar.notify({
