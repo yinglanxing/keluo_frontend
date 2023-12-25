@@ -47,7 +47,11 @@
 
         <q-card-actions>
             <!-- Continue Writing -->
-            <q-btn :to="`/edit/draft/${draft.id}`" color="primary" class="q-ma-sm">
+            <q-btn
+                :to="`/edit/draft/${draft.id}`"
+                color="primary"
+                class="q-ma-sm"
+            >
                 继续写作
             </q-btn>
             <!-- Delete -->
@@ -87,14 +91,17 @@
                 </q-item>
             </q-card-section>
 
-            <q-card-section>
-                确定要删除这篇草稿吗?
-            </q-card-section>
+            <q-card-section> 确定要删除这篇草稿吗? </q-card-section>
 
             <q-separator></q-separator>
 
             <q-card-actions class="text-right">
-                <q-btn color="negative" label="确定" @click="hideAndDelete" v-close-popup></q-btn>
+                <q-btn
+                    color="negative"
+                    label="确定"
+                    @click="hideAndDelete"
+                    v-close-popup
+                ></q-btn>
             </q-card-actions>
         </q-card>
     </q-dialog>
@@ -102,7 +109,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 import { DraftInfo } from 'src/stores/schemas/article';
 
 export default defineComponent({
@@ -116,7 +123,7 @@ export default defineComponent({
     },
 
     mounted() {
-        axios.get('/api/v1/drafts').then((req) => {
+        api.get('/api/v1/drafts').then((req) => {
             if (req.status == 200) {
                 this.draftList = req.data;
             }
@@ -125,7 +132,7 @@ export default defineComponent({
 
     methods: {
         hideAndDelete() {
-            axios.delete('/api/v1/draft?id=' + this.data.id).then((req) => {
+            api.delete('/api/v1/draft?id=' + this.data.id).then((req) => {
                 if (req.status == 200) {
                     // 删除当前页面内该id的草稿
                     this.draftList.splice(this.draftList.indexOf(this.data), 1);

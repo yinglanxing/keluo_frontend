@@ -12,7 +12,12 @@
                     {{ tagDetail.name }}
                 </q-item-section>
                 <q-item-section side>
-                    <q-btn v-if="tagDetail.isFollow" color="grey" @click="follow_cancel">取消关注</q-btn>
+                    <q-btn
+                        v-if="tagDetail.isFollow"
+                        color="grey"
+                        @click="follow_cancel"
+                        >取消关注</q-btn
+                    >
                     <q-btn v-else color="info" @click="follow_tag">关注</q-btn>
                 </q-item-section>
             </q-item>
@@ -20,7 +25,12 @@
 
         <!--内容-->
         <q-card-section>
-            <q-editor v-model="tagDetail.introduction" min-height="10vh" readonly :toolbar="[]"></q-editor>
+            <q-editor
+                v-model="tagDetail.introduction"
+                min-height="10vh"
+                readonly
+                :toolbar="[]"
+            ></q-editor>
         </q-card-section>
 
         <q-card-actions>
@@ -36,15 +46,13 @@
     </q-card>
 </template>
 
-
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 import { TagInfoDetail } from 'stores/schemas/tag';
 import { useUser } from 'src/stores/useUser';
 
 export default defineComponent({
-
     components: {},
 
     setup() {
@@ -76,20 +84,24 @@ export default defineComponent({
     methods: {
         // 获取信息
         getData(url: string) {
-            axios.get(url).then((req) => {
-                if (req.status == 200) {
-                    // 数据
-                    this.tagDetail = req.data;
-                }
-            }).catch(() => {
-                // 无法获取信息，返回上一页
-                this.$router.back();
-            });
+            api.get(url)
+                .then((req) => {
+                    if (req.status == 200) {
+                        // 数据
+                        this.tagDetail = req.data;
+                    }
+                })
+                .catch(() => {
+                    // 无法获取信息，返回上一页
+                    this.$router.back();
+                });
         },
 
         follow_tag() {
             if (this.self.is_login()) {
-                axios.post('/api/v1/tag/follow?tid='+this.$route.params['id']).then((req) => {
+                api.post(
+                    '/api/v1/tag/follow?tid=' + this.$route.params['id']
+                ).then((req) => {
                     if (req.status == 200) {
                         this.tagDetail.isFollow = true;
                     }
@@ -99,7 +111,9 @@ export default defineComponent({
 
         follow_cancel() {
             if (this.self.is_login()) {
-                axios.delete('/api/v1/tag/follow?tid='+this.$route.params['id']).then((req) => {
+                api.delete(
+                    '/api/v1/tag/follow?tid=' + this.$route.params['id']
+                ).then((req) => {
                     if (req.status == 200) {
                         this.tagDetail.isFollow = false;
                     }
@@ -109,7 +123,7 @@ export default defineComponent({
     },
 
     watch: {
-        '$route'() {
+        $route() {
             // 切换 id 时刷新内容
             if (this.$route.params['id']) {
                 this.getData('/api/v1/tag/info/' + this.$route.params['id']);

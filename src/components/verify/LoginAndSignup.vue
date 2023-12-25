@@ -1,10 +1,9 @@
 <template>
-    <q-card class="items-center q-pa-lg" style="width: 500px; max-width: 80vw;">
+    <q-card class="items-center q-pa-lg" style="width: 500px; max-width: 80vw">
         <q-card-section class="row">
             <q-tabs v-model="self.loginPlain">
                 <!--登录页面-->
-                <q-tab :label="$t('login')" :name="1">
-                </q-tab>
+                <q-tab :label="$t('login')" :name="1"> </q-tab>
                 <!--注册页面-->
                 <q-tab :label="$t('signup')" :name="2"></q-tab>
             </q-tabs>
@@ -84,26 +83,16 @@
 
         <!--卡片底部-->
         <q-card-actions>
-            <q-btn class="col" color="black">
-                Github
-            </q-btn>
-            <q-btn class="col" color="info">
-                QQ
-            </q-btn>
-            <q-btn class="col" to="/account_help/forget_pass">
-                忘记密码
-            </q-btn>
+            <q-btn class="col" color="black"> Github </q-btn>
+            <q-btn class="col" color="info"> QQ </q-btn>
+            <q-btn class="col" to="/account_help/forget_pass"> 忘记密码 </q-btn>
         </q-card-actions>
-
-
     </q-card>
-
-
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -112,7 +101,6 @@ import EmailLogin from 'components/verify/EmailLogin.vue';
 import BindPhone from 'components/verify/BindPhone.vue';
 
 export default defineComponent({
-
     components: {
         BindPhone,
         EmailLogin,
@@ -120,7 +108,6 @@ export default defineComponent({
     },
 
     setup() {
-
         const self = useUser();
         return {
             self,
@@ -129,6 +116,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

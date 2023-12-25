@@ -8,12 +8,10 @@
                 </div>
             </q-item-section>
             <q-item-section>
-                <div class="text-h6">
-                    手机号绑定
-                </div>
+                <div class="text-h6">手机号绑定</div>
             </q-item-section>
             <q-item-section side>
-                <q-btn v-if="step<4" color="red" @click="cancel">取消</q-btn>
+                <q-btn v-if="step < 4" color="red" @click="cancel">取消</q-btn>
             </q-item-section>
         </q-item>
     </q-card>
@@ -25,11 +23,16 @@
                 ............................................................
                 ............................................................
                 <q-stepper-navigation>
-                    <q-btn @click="step = 2" color="red" label="我已知晓"/>
+                    <q-btn @click="step = 2" color="red" label="我已知晓" />
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="2" title="输入手机号" icon="assignment" :done="step > 2">
+            <q-step
+                :name="2"
+                title="输入手机号"
+                icon="assignment"
+                :done="step > 2"
+            >
                 <q-input v-model="phone" name="phone" label="请输入手机号码">
                     <template v-slot:prepend>
                         <q-icon name="phone"></q-icon>
@@ -37,19 +40,35 @@
                 </q-input>
                 <q-stepper-navigation>
                     <q-btn @click="submit_phone" color="primary">提交</q-btn>
-                    <q-btn flat @click="step = 1" color="warning" class="q-ml-sm">返回</q-btn>
+                    <q-btn
+                        flat
+                        @click="step = 1"
+                        color="warning"
+                        class="q-ml-sm"
+                        >返回</q-btn
+                    >
                 </q-stepper-navigation>
             </q-step>
 
-            <q-step :name="3" title="验证并绑定" icon="assignment" :done="step > 2">
+            <q-step
+                :name="3"
+                title="验证并绑定"
+                icon="assignment"
+                :done="step > 2"
+            >
                 <q-input v-model="code" name="code" label="验证码">
                     <template #prepend>
-                        <q-icon name="article"/>
+                        <q-icon name="article" />
                     </template>
                 </q-input>
                 <q-stepper-navigation>
                     <q-btn @click="bind_phone" color="primary">绑定</q-btn>
-                    <q-btn @click="step = 1" color="green" label="返回" class="q-ml-sm"/>
+                    <q-btn
+                        @click="step = 1"
+                        color="green"
+                        label="返回"
+                        class="q-ml-sm"
+                    />
                 </q-stepper-navigation>
             </q-step>
 
@@ -79,7 +98,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -87,7 +106,6 @@ export default defineComponent({
     components: {},
 
     setup() {
-
         const self = useUser();
         return {
             self,
@@ -124,23 +142,31 @@ export default defineComponent({
             });
         },
 
-
         submit_phone() {
             if (this.token) {
-                axios.post('/api/v1/verify_phone?phone=' + this.phone).then((req) => {
-                    if (req.status == 200) {
-                        this.step = 3;
+                api.post('/api/v1/verify_phone?phone=' + this.phone).then(
+                    (req) => {
+                        if (req.status == 200) {
+                            this.step = 3;
+                        }
                     }
-                });
+                );
             }
         },
 
         bind_phone() {
             if (this.token) {
                 // 头部携带身份令牌
-                axios.post('/api/v1/bind_phone?phone=' + this.phone + '&code=' + this.code, {}, {
-                    headers: { Authorization: `Bearer ${this.token}` },
-                }).then((req) => {
+                api.post(
+                    '/api/v1/bind_phone?phone=' +
+                        this.phone +
+                        '&code=' +
+                        this.code,
+                    {},
+                    {
+                        headers: { Authorization: `Bearer ${this.token}` },
+                    }
+                ).then((req) => {
                     if (req.status == 200) {
                         this.step = 4;
                     }
