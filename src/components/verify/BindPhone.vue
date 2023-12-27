@@ -9,18 +9,25 @@
                 正在进行手机号绑定
             </q-item-section>
             <q-item-section side>
-                <q-btn color="red" @click="cancel">取消注册</q-btn>
+                <q-btn color="red" @click="cancel">取消注册
+                    <q-tooltip>
+                        已经保存账号信息，下次请通过登录绑定手机。
+                    </q-tooltip>
+                </q-btn>
             </q-item-section>
         </q-item>
         <!--账户-->
         <q-input v-model="phone_number" class="q-my-md" name="phone" label="手机号" outlined></q-input>
         <!--手机验证码-->
-        <q-btn class="full-width" color="warning" @click="submit_phone">验证手机号
-            <q-tooltip>
-                手机验证码
-            </q-tooltip>
-        </q-btn>
-        <q-input class="q-my-md" v-model="phone_code" label="验证码" name="phone_code" outlined></q-input>
+        <q-input class="q-my-md" v-model="phone_code" label="验证码" name="phone_code" outlined>
+            <template #append>
+                <q-btn round icon="mail" color="orange" @click="submit_phone">
+                    <q-tooltip>
+                        手机验证码
+                    </q-tooltip>
+                </q-btn>
+            </template>
+        </q-input>
         <!-- 自动登录 -->
         <q-toggle v-model="auto_login_flag">绑定完成后自动登录</q-toggle>
         <!--登录按钮-->

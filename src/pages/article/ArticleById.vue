@@ -188,6 +188,9 @@ export default defineComponent({
             axios.get(url).then((req) => {
                 if (req.status == 200) {
                     let data: ArticleDetail = req.data;
+                    if (data.article.id == 0){
+                        throw Error('空文章')
+                    }
                     // 文章数据
                     this.article = req.data.article;
                     this.tags = req.data.tags;

@@ -5,19 +5,22 @@
         <!--账户-->
         <q-input v-model="form.email" :label="$t('form.email')" class="q-my-md" name="email" outlined></q-input>
         <!--密码-->
-        <q-input v-model="form.pass" :label="$t('form.pass')" class="q-my-md" name="password" outlined
-                 type="password"></q-input>
+        <q-input v-model="form.pass" :label="$t('form.pass')" class="q-my-md" name="password" type="password" outlined
+        ></q-input>
         <!--确认密码-->
-        <q-input class="q-my-md" v-model="form.repass" :label="$t('form.repass')" name="repass" outlined
-                 @keyup.enter="submit"></q-input>
+        <q-input class="q-my-md" v-model="form.repass" :label="$t('form.repass')" name="repass" type="password" outlined
+        ></q-input>
         <!--邮箱验证码-->
-        <q-btn class="full-width" color="warning" @click="check_email">验证邮箱
-            <q-tooltip>
-                发送邮箱验证码
-            </q-tooltip>
-        </q-btn>
         <q-input class="q-mt-md" v-model="email_code" label="邮箱验证码" name="email_code" outlined
-                 @keyup.enter="submit"></q-input>
+                 @keyup.enter="submit">
+            <template #append>
+                <q-btn class="full-width" color="warning" icon="email" round @click="check_email">
+                    <q-tooltip>
+                        发送邮箱验证码
+                    </q-tooltip>
+                </q-btn>
+            </template>
+        </q-input>
         <!--&lt;!&ndash; 自动登录 &ndash;&gt;-->
         <!--<q-toggle v-model="auto_login">注册完成后自动登录</q-toggle>-->
         <!--验证码-->
@@ -113,9 +116,10 @@ export default defineComponent({
             axios.post('/api/v1/signup?code=' + this.email_code, formData).then((req) => {
                 if (req.status == 200) {
                     // 自动登录开启
-                    if (this.auto_login) {
-                        this.login(formData);
-                    }
+                    // if (this.auto_login) {
+                    // 主动获取身份后跳转到手机号绑定
+                    this.login(formData);
+                    // }
                 } else {
                     this.error_count++;
                 }

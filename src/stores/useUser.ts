@@ -43,19 +43,17 @@ export const useUser = defineStore('user_state', {
                     }
                     // 写入用户信息
                     this.info = req.data;
-                } else if (req instanceof AxiosError) {
-                    axios.defaults.headers.common['Authorization'] = '';
-                    if (req.request.status >= 400 && req.request.status < 500) {
-                        // 无法取得信息时清空之前存储的
-                        this.user_logout();
-                    } else if (req.request.status == 301) {
-                        this.alert_plain(0);
-                        localStorage.setItem('token', token.a_token);
-                        localStorage.setItem('token2', token.r_token);
-                        // 使用 useRouter 会变成 undefined
-                        // 跳转到手机号绑定
-                        this.alert_plain(3)
-                    }
+                } else if (req.status >= 400 && req.request.status < 500) {
+                    // 无法取得信息时清空之前存储的
+                    this.user_logout();
+                } else if (req.status == 301) {
+                    this.user_logout();
+                    // 手机号绑定
+                    localStorage.setItem('token', token.a_token);
+                    localStorage.setItem('token2', token.r_token);
+                    // 使用 useRouter 会变成 undefined
+                    // 跳转到手机号绑定
+                    this.alert_plain(3);
                 }
             });
         },

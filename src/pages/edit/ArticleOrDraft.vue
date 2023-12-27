@@ -32,8 +32,9 @@
         <q-input v-model="form.subtitle" clearable filled label="subtitle"></q-input>
 
         <!--tags组件 new-value-mode=唯一值-->
-        <q-select label="tags" v-model="selected" :options="selectable_tags" option-value="id" option-label="name" filled
-            @filter="select_filter_keys" multiple use-chips use-input>
+        <q-select label="tags" v-model="selected" :options="selectable_tags" option-value="id" option-label="name"
+                  filled
+                  @filter="select_filter_keys" multiple use-chips use-input>
 
             <template #before-options>
                 <q-item v-if="!selectable_tags.length">
@@ -49,7 +50,7 @@
 
         <!--内容-->
         <q-uploader class="full-width" label="封面上传" accept="jpg,jpeg,png" auto-upload hide-upload-btn
-            url="/api/v1/upload" disable></q-uploader>
+                    url="/api/v1/upload" disable></q-uploader>
         <q-editor v-model="form.content"></q-editor>
 
         <!-- <markdown v-bind:content="content"></markdown> -->
@@ -57,24 +58,26 @@
         <!--悬浮按钮列表-->
         <q-page-sticky :offset="fabPos" position="bottom-right">
             <!--绑定拖拽-->
-            <q-fab v-touch-pan.prevent.mouse="moveFab" direction="left" :disable="draggingFab" color="info" external-label
-                icon="edit">
+            <q-fab v-touch-pan.prevent.mouse="moveFab" direction="left" :disable="draggingFab" color="info"
+                   external-label
+                   icon="edit">
                 <!--提交按钮-->
                 <q-fab-action :disable="draggingFab" :label="$t('submit')" color="primary" external-label icon="send"
-                    label-position="top" @click="create_article">
+                              label-position="top" @click="create_article">
                     <q-tooltip>
                         创建文章
                     </q-tooltip>
                 </q-fab-action>
                 <!--草稿按钮-->
-                <q-fab-action :disable="draggingFab" :label="$t('draft')" color="primary" external-label icon="edit_note"
-                    label-position="top" @click="create_draft">
+                <q-fab-action :disable="draggingFab" :label="$t('draft')" color="primary" external-label
+                              icon="edit_note"
+                              label-position="top" @click="create_draft">
                     <q-tooltip>
                         创建草稿
                     </q-tooltip>
                 </q-fab-action>
                 <q-fab-action :disable="draggingFab" label="创建" color="green" external-label icon="send"
-                    v-if="update == 'draft'" label-position="top" @click="create_article_by_draft">
+                              v-if="update == 'draft'" label-position="top" @click="create_article_by_draft">
                     <q-tooltip>
                         通过草稿创建文章
                     </q-tooltip>
@@ -174,7 +177,7 @@ export default defineComponent({
                                 name: tag.name,
                                 num: '0',
                                 f_num: 0,
-                                isFollow: tag.isFollow
+                                isFollow: tag.isFollow,
                             });
                         }
                     }
@@ -213,7 +216,12 @@ export default defineComponent({
                 this.form.image ||
                 this.selected.length
             ) {
-                this.create_draft();
+                // 存在更新行为
+                if (this.update) {
+                    this.update_send();
+                } else {
+                    this.create_draft();
+                }
             }
         }
     },
@@ -228,7 +236,7 @@ export default defineComponent({
 
         clear_json() {
             // 清空
-            this.form = { title: '', subtitle: '', tags: [], content: '', image: '', };
+            this.form = { title: '', subtitle: '', tags: [], content: '', image: '' };
             this.selected = [];
         },
 
@@ -244,7 +252,7 @@ export default defineComponent({
                     });
                 } else if (this.update == 'draft') {
                     // 更新草稿
-                    axios.patch('/api/v1/draft/' + this.pre.id, this.form).then((req) => {
+                    axios.patch('/api/v1/draft/', { id: this.pre.id, ...this.form }).then((req) => {
                         if (req.status == 200) {
                             this.clear_json();
                         }
@@ -301,7 +309,9 @@ export default defineComponent({
                                 this.selectable_tags = req.data.list;
                             });
                         }
-                    }).catch(() => { abort(); });
+                    }).catch(() => {
+                        abort();
+                    });
                 } else {
                     // 根据关键字查询tag
                     axios.get('/api/v1/tag/value/' + val).then((req) => {
@@ -310,10 +320,12 @@ export default defineComponent({
                                 this.selectable_tags = req.data.list;
                             });
                         }
-                    }).catch(() => { abort(); });
+                    }).catch(() => {
+                        abort();
+                    });
                 }
             }
         },
-    }
+    },
 });
 </script>

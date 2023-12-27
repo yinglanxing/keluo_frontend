@@ -62,7 +62,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -98,21 +98,28 @@ export default defineComponent({
         });
         // 非 200 状态响应报告错误
         axios.interceptors.response.use(null, function (req) {
-            if (req.response.status >= 400 && 500 < req.response.status) {
-                // 错误警告
-                quasar.notify({
-                    message: 'error:' + req.response.data,
-                    color: 'red',
-                });
-            } else {
-                // 提示
-                quasar.notify({
-                    message: 'tips:' + req.response.data,
-                    color: 'info',
-                });
-            }
             // 不返回将导致后续的 req 变成 undefined
-            return req;
+            if (req instanceof AxiosError) {
+                if (req.response) {
+                    // 确认是返回后造成的错误
+                    if (req.response.status >= 400) {
+                        // 错误警告
+                        quasar.notify({
+                            message: 'error:' + req.response.data,
+                            color: 'red',
+                        });
+                    } else {
+                        // 提示
+                        quasar.notify({
+                            message: 'tips:' + req.response.data,
+                            color: 'info',
+                        });
+                    }
+                }
+                return req.response
+            } else {
+                return req;
+            }
         });
         return {
             state,

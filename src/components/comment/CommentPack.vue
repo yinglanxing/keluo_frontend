@@ -48,8 +48,17 @@
                         {{ item.comment_info.content }}
                     </q-item-label>
                     <q-item-label>
-                        <q-btn v-if="rep_id == item.comment_id" color="primary" flat @click="rep_click(0)">取消回复</q-btn>
-                        <q-btn v-else flat color="primary"  @click="rep_click(item.comment_id)">回复</q-btn>
+                        <!--点赞-->
+                        <q-btn @click="comment_thumbs(item.comment_id, item)">
+                            <q-icon v-if="item.isLiked" name="thumb_up"></q-icon>
+                            <q-icon v-else name="thumb_up_off_alt"></q-icon>
+                            <q-tooltip anchor="center left" self="center end">
+                                点赞
+                            </q-tooltip>
+                        </q-btn>
+                        <q-btn v-if="rep_id == item.comment_id" color="primary" flat @click="rep_click(0)">取消回复
+                        </q-btn>
+                        <q-btn v-else flat color="primary" @click="rep_click(item.comment_id)">回复</q-btn>
                         <div v-if="rep_id == item.comment_id" class="mt2">
                             <q-editor min-height="9vh" v-model="rep_content" :toolbar="[]"></q-editor>
                             <q-btn color="primary" class="q-my-md full-width" @click="rep_create">回复</q-btn>
@@ -82,8 +91,17 @@
                             {{ li.reply_info.reply_content }}
                         </q-item-label>
                         <q-item-label>
-                            <q-btn v-if="rep_id == li.reply_id" color="primary" flat @click="rep_click(0)">取消回复</q-btn>
-                            <q-btn v-else flat color="primary"  @click="rep_click(li.reply_id)">回复</q-btn>
+                            <!--点赞-->
+                            <q-btn @click="comment_thumbs(li.reply_id, li)">
+                                <q-icon v-if="li.isLiked" name="thumb_up"></q-icon>
+                                <q-icon v-else name="thumb_up_off_alt"></q-icon>
+                                <q-tooltip anchor="center left" self="center end">
+                                    点赞
+                                </q-tooltip>
+                            </q-btn>
+                            <q-btn v-if="rep_id == li.reply_id" color="primary" flat @click="rep_click(0)">取消回复
+                            </q-btn>
+                            <q-btn v-else flat color="primary" @click="rep_click(li.reply_id)">回复</q-btn>
                             <div v-if="rep_id == li.reply_id" class="mt2">
                                 <q-editor min-height="9vh" v-model="rep_content" :toolbar="[]"></q-editor>
                                 <q-btn color="primary" class="q-my-md full-width" @click="rep_create">回复</q-btn>
@@ -160,7 +178,7 @@ export default defineComponent({
                 if (req.status == 200) {
                     this.loading = false;
                     // 评论列表
-                    this.comment_list = req.data.data.list;
+                    this.comment_list = req.data.list;
                     // 当前页
                     this.page_num = req.data.page;
                     // 向上取整
@@ -175,7 +193,7 @@ export default defineComponent({
             // 未登录 或评论为空
             if (this.self.is_login() && this.content) {
                 this.loading = true;
-                axios.post('/api/v1/comment', {
+                axios.post('/api/v1/comment/', {
                     itemType: 2,
                     userID: this.self.info.id,
                     itemID: Number(this.$route.params['id']),
@@ -190,8 +208,8 @@ export default defineComponent({
         },
 
         // 点击事件
-        rep_click(id: number|string) {
-            id = Number(id)
+        rep_click(id: number | string) {
+            id = Number(id);
             if (this.rep_id == id) {
                 this.rep_id = 0;
             } else {
@@ -204,7 +222,7 @@ export default defineComponent({
             // 判断 未登录 或评论为空
             if (this.self.is_login() && this.content) {
                 this.loading = true;
-                axios.post('/api/v1/comment', {
+                axios.post('/api/v1/comment/', {
                     itemType: 1,
                     userID: this.self.info.id,
                     itemID: Number(this.$route.params['id']),
@@ -217,13 +235,26 @@ export default defineComponent({
                 });
             }
         },
+
+        comment_thumbs(id: string, item: object) {
+            // 判断已登录
+            if (this.self.is_login()) {
+                // 未点赞状态才能点赞
+                axios.post('/api/v1/comment/like?id=' + id).then((req) => {
+                    if (req.status == 200) {
+                        // 操作成功
+                        item.isLiked = !item.isLiked;
+                    }
+                });
+            }
+        },
     },
 
     watch: {
         '$route'() {
             // 切换 id 时刷新内容
             if (this.$route.params['id'] && this.$route.path.indexOf('/article') == 0) {
-                this.page_num = 0;
+                this.page_num = 1;
                 this.comment_get();
             }
         },
