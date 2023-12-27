@@ -32,9 +32,8 @@
         <q-input v-model="form.subtitle" clearable filled label="subtitle"></q-input>
 
         <!--tags组件 new-value-mode=唯一值-->
-        <q-select label="tags" v-model="selected" :options="selectable_tags" option-value="id" option-label="name"
-                  filled
-                  @filter="select_filter_keys" multiple use-chips use-input>
+        <q-select label="tags" v-model="selected" :options="selectable_tags" option-value="id" option-label="name" filled
+            @filter="select_filter_keys" multiple use-chips use-input>
 
             <template #before-options>
                 <q-item v-if="!selectable_tags.length">
@@ -49,47 +48,108 @@
         </q-select>
 
         <!--内容-->
-        <q-uploader class="full-width" label="封面上传" accept="jpg,jpeg,png" auto-upload hide-upload-btn
-                    url="/api/v1/upload" disable></q-uploader>
-        <q-editor v-model="form.content"></q-editor>
+        <q-uploader class="full-width" label="封面上传" accept="jpg,jpeg,png" auto-upload hide-upload-btn url="/api/v1/upload"
+            disable></q-uploader>
+        <q-editor :toolbar="[
+            [
+                {
+                    label: $q.lang.editor.align,
+                    icon: $q.iconSet.editor.align,
+                    fixedLabel: true,
+                    list: 'only-icons',
+                    options: ['left', 'center', 'right', 'justify']
+                },
+            ],
+            ['bold', 'italic', 'strike', 'underline', 'subscript', 'superscript'],
+            ['token', 'hr', 'link', 'custom_btn'],
+            ['print', 'fullscreen'],
+            [
+                {
+                    label: $q.lang.editor.fontSize,
+                    icon: $q.iconSet.editor.fontSize,
+                    fixedLabel: true,
+                    fixedIcon: true,
+                    list: 'no-icons',
+                    options: [
+                        'size-1',
+                        'size-2',
+                        'size-3',
+                        'size-4',
+                        'size-5',
+                        'size-6',
+                        'size-7'
+                    ]
+                },
+                {
+                    label: $q.lang.editor.defaultFont,
+                    icon: $q.iconSet.editor.font,
+                    fixedIcon: true,
+                    list: 'no-icons',
+                    options: [
+                        'default_font',
+                        'arial',
+                        'arial_black',
+                        'comic_sans',
+                        'courier_new',
+                        'impact',
+                        'lucida_grande',
+                        'times_new_roman',
+                        'verdana'
+                    ]
+                },
+                'removeFormat'
+            ],
+            ['quote', 'unordered', 'ordered'],
+            ['undo', 'redo'],
+            ['viewsource']
+        ]" :fonts="{
+    arial: 'Arial',
+    arial_black: 'Arial Black',
+    comic_sans: 'Comic Sans MS',
+    courier_new: 'Courier New',
+    impact: 'Impact',
+    lucida_grande: 'Lucida Grande',
+    times_new_roman: 'Times New Roman',
+    verdana: 'Verdana'
+}" v-model="form.content"></q-editor>
 
         <!-- <markdown v-bind:content="content"></markdown> -->
 
         <!--悬浮按钮列表-->
         <q-page-sticky :offset="fabPos" position="bottom-right">
             <!--绑定拖拽-->
-            <q-fab v-touch-pan.prevent.mouse="moveFab" direction="left" :disable="draggingFab" color="info"
-                   external-label
-                   icon="edit">
+            <q-fab v-touch-pan.prevent.mouse="moveFab" direction="left" :disable="draggingFab" color="info" external-label
+                icon="edit">
                 <!--提交按钮-->
                 <q-fab-action :disable="draggingFab" :label="$t('submit')" color="primary" external-label icon="send"
-                              label-position="top" @click="create_article">
+                    label-position="top" @click="create_article">
                     <q-tooltip>
                         创建文章
                     </q-tooltip>
                 </q-fab-action>
                 <!--草稿按钮-->
-                <q-fab-action :disable="draggingFab" :label="$t('draft')" color="primary" external-label
-                              icon="edit_note"
-                              label-position="top" @click="create_draft">
+                <q-fab-action :disable="draggingFab" :label="$t('draft')" color="primary" external-label icon="edit_note"
+                    label-position="top" @click="create_draft">
                     <q-tooltip>
                         创建草稿
                     </q-tooltip>
                 </q-fab-action>
                 <q-fab-action :disable="draggingFab" label="创建" color="green" external-label icon="send"
-                              v-if="update == 'draft'" label-position="top" @click="create_article_by_draft">
+                    v-if="update == 'draft'" label-position="top" @click="create_article_by_draft">
                     <q-tooltip>
                         通过草稿创建文章
                     </q-tooltip>
                 </q-fab-action>
             </q-fab>
         </q-page-sticky>
+
+        <q-inner-loading :showing="loading" label="Please wait..." label-class="text-teal" label-style="font-size: 1.1em" />
     </q-card>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 import { useUser } from 'src/stores/useUser';
 import { TouchPanEvent } from 'stores/schemas/event';
 import { SelectableTag } from 'stores/schemas/tag';
@@ -228,6 +288,8 @@ export default defineComponent({
 
     methods: {
         get_tags() {
+            // 开启加载状态
+            this.loading = true;
             // 获取id
             for (let item of this.selected) {
                 this.form.tags.push(item.id);
@@ -238,6 +300,8 @@ export default defineComponent({
             // 清空
             this.form = { title: '', subtitle: '', tags: [], content: '', image: '' };
             this.selected = [];
+            // 关闭加载状态
+            this.loading = false;
         },
 
         update_send() {
@@ -252,7 +316,7 @@ export default defineComponent({
                     });
                 } else if (this.update == 'draft') {
                     // 更新草稿
-                    api.patch('/api/v1/draft/', {id: this.pre.id, ...this.form}).then((req) => {
+                    api.patch('/api/v1/draft', { id: this.pre.id, ...this.form }).then((req) => {
                         if (req.status == 200) {
                             this.clear_json();
                         }
@@ -289,7 +353,7 @@ export default defineComponent({
             if (this.self.is_login() && this.update == 'draft') {
                 // 发送文章
                 this.get_tags();
-                api.post('/api/v1/article/', {id: this.pre.id, ...this.form}).then((req) => {
+                api.post('/api/v1/article/', { id: this.pre.id, ...this.form }).then((req) => {
                     if (req.status == 200) {
                         this.clear_json();
                     }

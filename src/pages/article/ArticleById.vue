@@ -92,8 +92,8 @@
             </q-card>
 
             <!--评论区-->
+            <div id="comment_target"></div>
             <q-card>
-                <div id="comment_target"></div>
                 <comment-pack></comment-pack>
             </q-card>
         </div>
@@ -224,8 +224,8 @@ export default defineComponent({
         // 滚动到评论区
         scroll_to_comment() {
             let target = document.getElementById('comment_target');
-            console.log(target, target?.offsetTop);
             if (target) {
+                console.log(target, target.offsetTop);
                 window.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
             }
         },
