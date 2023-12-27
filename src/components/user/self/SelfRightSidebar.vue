@@ -40,7 +40,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 import { UserInfo } from 'stores/schemas/user';
@@ -62,7 +62,7 @@ export default defineComponent({
         logout() {
             this.user.info = {} as UserInfo;
             this.user.userToken = this.user.resetToken = '';
-            axios.defaults.headers.common['Authorization'] = '';
+            api.defaults.headers.common['Authorization'] = '';
         },
     },
 

@@ -121,7 +121,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { useUser } from 'src/stores/useUser';
 import { CommentListItem } from 'src/stores/schemas/comment';
 
@@ -154,7 +154,7 @@ export default defineComponent({
 
     mounted() {
         // 测试获取评论数据
-        // axios.get('/com1.json.log').then((req) => {
+        // api.get('/com1.json.log').then((req) => {
         //     if (req.status == 200) {
         //         this.loading = false;
         //         // 评论列表
@@ -172,7 +172,7 @@ export default defineComponent({
         // 获取评论
         comment_get() {
             this.loading = true;
-            axios.get(
+            api.get(
                 `/api/v1/comment/list?page=${this.page_num}&item=${this.$route.params['id']}&uid=${this.self.info.id || 0}`,
             ).then((req) => {
                 if (req.status == 200) {
@@ -193,7 +193,7 @@ export default defineComponent({
             // 未登录 或评论为空
             if (this.self.is_login() && this.content) {
                 this.loading = true;
-                axios.post('/api/v1/comment/', {
+                api.post('/api/v1/comment/', {
                     itemType: 2,
                     userID: this.self.info.id,
                     itemID: Number(this.$route.params['id']),
@@ -222,7 +222,7 @@ export default defineComponent({
             // 判断 未登录 或评论为空
             if (this.self.is_login() && this.content) {
                 this.loading = true;
-                axios.post('/api/v1/comment/', {
+                api.post('/api/v1/comment/', {
                     itemType: 1,
                     userID: this.self.info.id,
                     itemID: Number(this.$route.params['id']),
@@ -240,7 +240,7 @@ export default defineComponent({
             // 判断已登录
             if (this.self.is_login()) {
                 // 未点赞状态才能点赞
-                axios.post('/api/v1/comment/like?id=' + id).then((req) => {
+                api.post('/api/v1/comment/like?id=' + id).then((req) => {
                     if (req.status == 200) {
                         // 操作成功
                         item.isLiked = !item.isLiked;

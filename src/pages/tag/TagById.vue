@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { TagInfoDetail } from 'stores/schemas/tag';
 import { useUser } from 'src/stores/useUser';
 
@@ -76,7 +76,7 @@ export default defineComponent({
     methods: {
         // 获取信息
         getData(url: string) {
-            axios.get(url).then((req) => {
+            api.get(url).then((req) => {
                 if (req.status == 200) {
                     // 数据
                     this.tagDetail = req.data;
@@ -89,7 +89,7 @@ export default defineComponent({
 
         follow_tag() {
             if (this.self.is_login()) {
-                axios.post('/api/v1/tag/follow?tid='+this.$route.params['id']).then((req) => {
+                api.post('/api/v1/tag/follow?tid=' + this.$route.params['id']).then((req) => {
                     if (req.status == 200) {
                         this.tagDetail.isFollow = true;
                     }
@@ -99,7 +99,7 @@ export default defineComponent({
 
         follow_cancel() {
             if (this.self.is_login()) {
-                axios.delete('/api/v1/tag/follow?tid='+this.$route.params['id']).then((req) => {
+                api.delete('/api/v1/tag/follow?tid=' + this.$route.params['id']).then((req) => {
                     if (req.status == 200) {
                         this.tagDetail.isFollow = false;
                     }

@@ -102,7 +102,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { DraftInfo } from 'src/stores/schemas/article';
 
 export default defineComponent({
@@ -116,7 +116,7 @@ export default defineComponent({
     },
 
     mounted() {
-        axios.get('/api/v1/drafts').then((req) => {
+        api.get('/api/v1/drafts').then((req) => {
             if (req.status == 200) {
                 this.draftList = req.data;
             }
@@ -125,7 +125,7 @@ export default defineComponent({
 
     methods: {
         hideAndDelete() {
-            axios.delete('/api/v1/draft?id=' + this.data.id).then((req) => {
+            api.delete('/api/v1/draft?id=' + this.data.id).then((req) => {
                 if (req.status == 200) {
                     // 删除当前页面内该id的草稿
                     this.draftList.splice(this.draftList.indexOf(this.data), 1);

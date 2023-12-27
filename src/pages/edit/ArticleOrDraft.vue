@@ -89,7 +89,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { useUser } from 'src/stores/useUser';
 import { TouchPanEvent } from 'stores/schemas/event';
 import { SelectableTag } from 'stores/schemas/tag';
@@ -155,7 +155,7 @@ export default defineComponent({
             if (this.$route.path.indexOf('article') > -1) {
                 this.update = 'article';
                 // 编辑已存在文章
-                axios.get('/api/v1/article/' + this.$route.params['id']).then((req) => {
+                api.get('/api/v1/article/' + this.$route.params['id']).then((req) => {
                     if (req.status == 200) {
                         let article: ArticleInfo = req.data.article;
                         this.pre = req.data.article;
@@ -187,7 +187,7 @@ export default defineComponent({
             } else {
                 this.update = 'draft';
                 // 编辑已存在草稿
-                axios.get('/api/v1/draft/' + this.$route.params['id']).then((req) => {
+                api.get('/api/v1/draft/' + this.$route.params['id']).then((req) => {
                     if (req.status == 200) {
                         let draft: DraftDetail = req.data;
                         this.pre = req.data;
@@ -245,14 +245,14 @@ export default defineComponent({
                 this.get_tags();
                 if (this.update == 'article') {
                     // 更新文章
-                    axios.patch('/api/v1/article/' + this.pre.id, this.form).then((req) => {
+                    api.patch('/api/v1/article/' + this.pre.id, this.form).then((req) => {
                         if (req.status == 200) {
                             this.clear_json();
                         }
                     });
                 } else if (this.update == 'draft') {
                     // 更新草稿
-                    axios.patch('/api/v1/draft/', { id: this.pre.id, ...this.form }).then((req) => {
+                    api.patch('/api/v1/draft/', {id: this.pre.id, ...this.form}).then((req) => {
                         if (req.status == 200) {
                             this.clear_json();
                         }
@@ -265,7 +265,7 @@ export default defineComponent({
             if (this.self.is_login()) {
                 // 发送文章
                 this.get_tags();
-                axios.post('/api/v1/article/', this.form).then((req) => {
+                api.post('/api/v1/article/', this.form).then((req) => {
                     if (req.status == 200) {
                         this.clear_json();
                     }
@@ -277,7 +277,7 @@ export default defineComponent({
             if (this.self.is_login()) {
                 // 存为草稿
                 this.get_tags();
-                axios.post('/api/v1/draft', this.form).then((req) => {
+                api.post('/api/v1/draft', this.form).then((req) => {
                     if (req.status == 200) {
                         this.clear_json();
                     }
@@ -289,7 +289,7 @@ export default defineComponent({
             if (this.self.is_login() && this.update == 'draft') {
                 // 发送文章
                 this.get_tags();
-                axios.post('/api/v1/article/', { id: this.pre.id, ...this.form }).then((req) => {
+                api.post('/api/v1/article/', {id: this.pre.id, ...this.form}).then((req) => {
                     if (req.status == 200) {
                         this.clear_json();
                     }
@@ -303,7 +303,7 @@ export default defineComponent({
                 // tag 过滤器
                 if (val === '') {
                     // 获取所有可选标签
-                    axios.get('/api/v1/tag/all').then((req) => {
+                    api.get('/api/v1/tag/all').then((req) => {
                         if (req.status == 200) {
                             update(() => {
                                 this.selectable_tags = req.data.list;
@@ -314,7 +314,7 @@ export default defineComponent({
                     });
                 } else {
                     // 根据关键字查询tag
-                    axios.get('/api/v1/tag/value/' + val).then((req) => {
+                    api.get('/api/v1/tag/value/' + val).then((req) => {
                         if (req.status == 200) {
                             update(() => {
                                 this.selectable_tags = req.data.list;

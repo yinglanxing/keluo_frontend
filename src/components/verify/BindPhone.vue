@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -87,7 +87,7 @@ export default defineComponent({
 
         submit_phone() {
             if (this.token) {
-                axios.post('/api/v1/verify_phone?phone=' + this.phone_number).then((req) => {
+                api.post('/api/v1/verify_phone?phone=' + this.phone_number).then((req) => {
                     if (req.status == 200) {
                         this.checked = true;
                     }
@@ -98,7 +98,7 @@ export default defineComponent({
         bind_phone() {
             if (this.token) {
                 // 头部携带身份令牌
-                axios.post('/api/v1/bind_phone?phone=' + this.phone_number + '&code=' + this.phone_code, {}, {
+                api.post('/api/v1/bind_phone?phone=' + this.phone_number + '&code=' + this.phone_code, {}, {
                     headers: { Authorization: `Bearer ${this.token}` },
                 }).then((req) => {
                     if (req.status == 200) {

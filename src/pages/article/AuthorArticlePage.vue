@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { useUser } from 'src/stores/useUser';
 import {  ArticleInfo } from 'src/stores/schemas/article';
 
@@ -108,7 +108,7 @@ export default defineComponent({
             // 获取新数据
             // if (!this.lock && url) {
             if (url && this.self.is_login()) {
-                axios.get(url + this.self.info.id).then((req) => {
+                api.get(url + this.self.info.id).then((req) => {
                     if (req.status == 200) {
                         this.max_page = Math.ceil(req.data.total / 10);
                         if (req.data.list) {
@@ -135,7 +135,7 @@ export default defineComponent({
         article_delete(item: ArticleInfo) {
             // 判断已登录
             if (this.self.is_login()) {
-                axios.delete('/api/v1/article/' + item.id).then((req) => {
+                api.delete('/api/v1/article/' + item.id).then((req) => {
                     if (req.status == 200) {
                         // 删除成功
                         this.pageItem.splice(this.pageItem.indexOf(item), 1);

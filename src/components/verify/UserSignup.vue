@@ -25,12 +25,19 @@
         <!--<q-toggle v-model="auto_login">注册完成后自动登录</q-toggle>-->
         <!--验证码-->
         <q-card-section horizontal v-show="error_count>2">
-            <q-img
-                :src="captchaUrl"
-                class="q-mt-md cursor-pointer lh-9" @click="getCaptchaId"
-            ></q-img>
-            <q-input v-model="v_code" :label="$t('form.v_code')" class="lh-9"
-                     name="captchaCode"></q-input>
+            <q-input v-model="v_code" :label="$t('form.v_code')"
+                     name="captchaCode">
+                <template #after>
+                    <q-btn @click="getCaptchaId">
+                        <q-img
+                            :src="captchaUrl"
+                            style="height: 40px; width: 200px"
+                            :ratio="1"
+                            class="q-mt-md cursor-pointer bd1"
+                        ></q-img>
+                    </q-btn>
+                </template>
+            </q-input>
         </q-card-section>
         <!--登录按钮-->
         <q-btn :disable="!email_checked" class="full-width q-mt-md" color="green-3" @click="submit">
@@ -41,7 +48,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -77,7 +84,7 @@ export default defineComponent({
     methods: {
         check_email() {
             if (this.form.email) {
-                axios.get('/api/v1/email_verify?email=' + this.form.email).then((req) => {
+                api.get('/api/v1/email_verify?email=' + this.form.email).then((req) => {
                     if (req.status == 200) {
                         // 以发送验证码
                         this.email_checked = true;
@@ -101,7 +108,7 @@ export default defineComponent({
 
         // 获取验证码
         getCaptchaId() {
-            axios.get('/api/v1/captcha').then((req) => {
+            api.get('/api/v1/captcha').then((req) => {
                     if (req.status == 200) {
                         this.captchaId = req.data.id;
                         this.captchaUrl = req.data.image;
@@ -113,7 +120,7 @@ export default defineComponent({
         // 注册
         submit() {
             const formData = this.getForm();
-            axios.post('/api/v1/signup?code=' + this.email_code, formData).then((req) => {
+            api.post('/api/v1/signup?code=' + this.email_code, formData).then((req) => {
                 if (req.status == 200) {
                     // 自动登录开启
                     // if (this.auto_login) {
@@ -128,7 +135,7 @@ export default defineComponent({
 
         // 登录
         login(formData: object) {
-            axios.post('/api/v1/login', formData).then((req) => {
+            api.post('/api/v1/login', formData).then((req) => {
                 if (req.status == 200) {
                     this.self.user_login(req.data);
                 } else {

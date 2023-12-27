@@ -4,6 +4,7 @@ import router from 'src/router/index';
 import { defineStore } from 'pinia';
 
 import { SelfInfo, UserInfo, TokenJson } from 'stores/schemas/user';
+import {api} from 'boot/axios';
 
 
 export const useUser = defineStore('user_state', {
@@ -31,8 +32,8 @@ export const useUser = defineStore('user_state', {
         // 完成登录
         user_login(token: TokenJson, status = 1) {
             // 获取 token 写入请求头部
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + token.a_token;
-            axios.get('/api/v1/user/self').then((req) => {
+            api.defaults.headers.common['Authorization'] = 'Bearer ' + token.a_token;
+            api.get('/api/v1/user/self').then((req) => {
                 if (req.status == 200) {
                     // 成功后写入token
                     this.userToken = token.a_token;
@@ -62,14 +63,14 @@ export const useUser = defineStore('user_state', {
             // 清空信息
             this.info = {} as UserInfo;
             this.userToken = this.resetToken = '';
-            axios.defaults.headers.common['Authorization'] = '';
+            api.defaults.headers.common['Authorization'] = '';
             // 清空登录信息
             localStorage.setItem('a_token', '');
             localStorage.setItem('r_token', '');
         },
         // 刷新数据
         flash_info() {
-            axios.get('/api/v1/user/self').then((req) => {
+            api.get('/api/v1/user/self').then((req) => {
                 if (req.status == 200) {
                     // 写入用户信息
                     this.info = req.data;

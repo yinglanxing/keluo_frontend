@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 export default defineComponent({
     data() {
@@ -39,7 +39,7 @@ export default defineComponent({
     methods: {
         create_tag() {
             // 创建 tag
-            axios.post('/api/v1/tag', this.form).then(() => {
+            api.post('/api/v1/tag', this.form).then(() => {
                 // 清空
                 this.form.name = this.form.introduction = '';
             });

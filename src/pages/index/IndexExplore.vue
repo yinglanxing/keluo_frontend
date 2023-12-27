@@ -61,7 +61,7 @@
 </template>
 
 <script lang='ts'>
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { SelectableTag } from 'src/stores/schemas/tag';
 import { useUser } from 'src/stores/useUser';
 import { defineComponent } from 'vue';
@@ -79,13 +79,13 @@ export default defineComponent({
     },
     mounted() {
         // 获取所有可选标签
-        axios.get('/api/v1/recommend/tag').then((req) => {
+        api.get('/api/v1/recommend/tag').then((req) => {
             if (req.status == 200) {
                 this.hot_tags = req.data;
             }
         });
         // 获取所有可选标签
-        axios.get('/api/v1/tag/all').then((req) => {
+        api.get('/api/v1/tag/all').then((req) => {
             if (req.status == 200) {
                 this.all_tags = req.data.list;
             }
@@ -94,7 +94,7 @@ export default defineComponent({
     methods: {
         follow(item: SelectableTag) {
             if (this.self.is_login()) {
-                axios.post('/api/v1/tag/follow?tid=' + item.id).then((req) => {
+                api.post('/api/v1/tag/follow?tid=' + item.id).then((req) => {
                     if (req.status == 200) {
                         item.isFollow = true;
                     }

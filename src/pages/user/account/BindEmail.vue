@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 export default defineComponent({
     data() {
@@ -48,7 +48,7 @@ export default defineComponent({
     methods: {
         // 绑定邮箱
         send_email() {
-            axios.post('/api/v1/reset-password?email=' + this.email).then((req) => {
+            api.post('/api/v1/reset-password?email=' + this.email).then((req) => {
                 if (req.status == 200) {
                     this.step = 2;
                 }
@@ -56,7 +56,7 @@ export default defineComponent({
         },
         // 绑定代码
         send_code() {
-            axios.post('/api/v1/reset-password', {
+            api.post('/api/v1/reset-password', {
                 code: this.code,
                 email: this.email,
             }).then((req) => {

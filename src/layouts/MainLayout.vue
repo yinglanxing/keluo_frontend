@@ -62,7 +62,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar';
-import axios, { AxiosError } from 'axios';
+import {AxiosError} from 'axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -70,6 +70,7 @@ import LoginAndSignup from 'components/verify/LoginAndSignup.vue';
 import FooterLayout from 'layouts/FooterLayout.vue';
 import HeaderLayout from 'layouts/HeaderLayout.vue';
 import { useState } from 'stores/useState';
+import {api} from 'boot/axios';
 
 export default defineComponent({
 
@@ -97,7 +98,7 @@ export default defineComponent({
             localStorage.setItem('state', JSON.stringify(state));
         });
         // 非 200 状态响应报告错误
-        axios.interceptors.response.use(null, function (req) {
+        api.interceptors.response.use(null, function (req) {
             // 不返回将导致后续的 req 变成 undefined
             if (req instanceof AxiosError) {
                 if (req.response) {

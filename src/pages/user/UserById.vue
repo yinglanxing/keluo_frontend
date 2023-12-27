@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -73,7 +73,7 @@ export default defineComponent({
     methods: {
         getUser() {
             // 获取用户数据
-            axios.get('/api/v1/user_id/' + this.$route.params['id']).then((req) => {
+            api.get('/api/v1/user_id/' + this.$route.params['id']).then((req) => {
                 if (req.status == 200) {
                     this.user = req.data;
                     // 定位到用户的文章列表

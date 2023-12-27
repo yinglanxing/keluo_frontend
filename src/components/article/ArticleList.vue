@@ -146,7 +146,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 // import { date } from 'quasar';
 import { useUser } from 'src/stores/useUser';
 import { ApiArticleInfo, ArticleInfo } from 'src/stores/schemas/article';
@@ -205,7 +205,7 @@ export default defineComponent({
             // 获取新数据
             // if (!this.lock && url) {
             if (url) {
-                axios.get(url).then((req) => {
+                api.get(url).then((req) => {
                     if (req.status == 200) {
                         // // 如果存在数据则装载数据
                         // if (req.data.data.results?.length) {
@@ -252,7 +252,7 @@ export default defineComponent({
             // 判断已登录
             if (this.self.is_login()) {
                 // 未点赞状态才能点赞
-                axios.post('/api/v1/article/like?id=' + item.id).then((req) => {
+                api.post('/api/v1/article/like?id=' + item.id).then((req) => {
                     if (req.status == 200) {
                         // 操作成功
                         item.isLiked = !item.isLiked;
@@ -265,7 +265,7 @@ export default defineComponent({
         article_collect(item: ArticleInfo) {
             // 判断已登录
             if (this.self.is_login()) {
-                axios.post('/api/v1/collect/', { 'aid': String(item.id) }).then((req) => {
+                api.post('/api/v1/collect/', {'aid': String(item.id)}).then((req) => {
                     if (req.status == 200) {
                         // 收藏成功
                         item.isCollected = !item.isCollected;

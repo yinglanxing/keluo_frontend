@@ -103,7 +103,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 

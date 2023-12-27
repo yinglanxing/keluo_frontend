@@ -83,7 +83,11 @@
                     <div v-if="!tags?.length" class="text-grey-3">
                         empty
                     </div>
-                    <q-chip v-for="i in tags" :key="i.id">{{ i.name }}</q-chip>
+
+                    <q-btn size="sm" v-for="i in tags" :key="i.id" :to="'/tag/' + i.id">
+                        {{ i.name }}
+                    </q-btn>
+                    <!-- <q-chip v-for="i in tags" :key="i.id">{{ i.name }}</q-chip> -->
                 </q-card-section>
             </q-card>
 
@@ -132,7 +136,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { date } from 'quasar';
 import { useUser } from 'src/stores/useUser';
 
@@ -185,7 +189,7 @@ export default defineComponent({
     methods: {
         // 获取文章信息
         getData(url: string) {
-            axios.get(url).then((req) => {
+            api.get(url).then((req) => {
                 if (req.status == 200) {
                     let data: ArticleDetail = req.data;
                     if (data.article.id == 0){
@@ -199,7 +203,7 @@ export default defineComponent({
                     this.article.isLiked = data.isLiked;
                     this.article.isCollected = data.isCollected;
                     // 获取相关文章
-                    // axios.get('/api/v1/article/related/' + this.$route.params['id']).then((req) => {
+                    // api.get('/api/v1/article/related/' + this.$route.params['id']).then((req) => {
                     //     if (req.status == 200) {
                     //         this.relatedList = req.data.data || [];
                     //     }
@@ -231,7 +235,7 @@ export default defineComponent({
             // 判断已登录
             if (this.self.is_login()) {
                 // 未点赞状态才能点赞
-                axios.post('/api/v1/article/like?id=' + this.article.id).then((req) => {
+                api.post('/api/v1/article/like?id=' + this.article.id).then((req) => {
                     if (req.status == 200) {
                         // 操作成功
                         this.article.isLiked = !this.article.isLiked;
@@ -244,7 +248,7 @@ export default defineComponent({
         article_collect() {
             // 判断已登录
             if (this.self.is_login()) {
-                axios.post('/api/v1/collect/', { 'aid': String(this.article.id) }).then((req) => {
+                api.post('/api/v1/collect/', {'aid': String(this.article.id)}).then((req) => {
                     if (req.status == 200) {
                         // 收藏成功
                         this.article.isCollected = !this.article.isCollected;
@@ -257,7 +261,7 @@ export default defineComponent({
         article_report() {
             // 判断已登录
             if (this.self.is_login()) {
-                // axios.post('')
+                // api.post('')
             }
         },
     },

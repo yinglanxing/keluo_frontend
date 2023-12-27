@@ -48,7 +48,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 import { SelectableTag } from 'stores/schemas/tag';
 
 
@@ -69,7 +69,7 @@ export default defineComponent({
 
     mounted() {
         // 获取推荐 tag
-        axios.get('/api/v1/recommend/tag').then((req) => {
+        api.get('/api/v1/recommend/tag').then((req) => {
             if (req.status == 200) {
                 this.hot_tag = req.data;
             }

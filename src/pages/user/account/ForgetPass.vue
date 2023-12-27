@@ -59,7 +59,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 export default defineComponent({
     data() {
@@ -74,7 +74,7 @@ export default defineComponent({
 
     methods: {
         send_email() {
-            axios.get('/api/v1/reset_verify?email' + this.email).then((req) => {
+            api.get('/api/v1/reset_verify?email' + this.email).then((req) => {
                 if (req.status == 200) {
                     this.step = 3;
                 }
@@ -90,7 +90,7 @@ export default defineComponent({
             }
             formTable.append('email', this.email);
             formTable.append('password', this.pass);
-            axios.post('/api/v1/reset_password', formTable).then((req) => {
+            api.post('/api/v1/reset_password', formTable).then((req) => {
                 if (req.status == 200) {
                     this.step = 4;
                 }

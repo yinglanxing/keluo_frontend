@@ -105,7 +105,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import axios from 'axios';
+import {api} from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -148,7 +148,7 @@ export default defineComponent({
     methods: {
         getAll() {
             // 获取关注列表
-            axios.get('/api/v1/user/following?id=' + this.user.id).then((req) => {
+            api.get('/api/v1/user/following?id=' + this.user.id).then((req) => {
                     if (req.status == 200) {
                         this.followingList = req.data.data.results || [];
                     }
@@ -158,7 +158,7 @@ export default defineComponent({
                 },
             );
             // 获取粉丝列表
-            axios.get('/api/v1/user/follower?id=' + this.user.id).then((req) => {
+            api.get('/api/v1/user/follower?id=' + this.user.id).then((req) => {
                     if (req.status == 200) {
                         this.followerList = req.data.data.results || [];
                     }
