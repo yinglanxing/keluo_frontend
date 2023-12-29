@@ -52,6 +52,7 @@
                         <q-btn @click="comment_thumbs(item.comment_id, item)">
                             <q-icon v-if="item.isLiked" name="thumb_up"></q-icon>
                             <q-icon v-else name="thumb_up_off_alt"></q-icon>
+                            {{ item.comment_info.likes }}
                             <q-tooltip anchor="center left" self="center end">
                                 点赞
                             </q-tooltip>
@@ -95,6 +96,7 @@
                             <q-btn @click="comment_thumbs(li.reply_id, li)">
                                 <q-icon v-if="li.isLiked" name="thumb_up"></q-icon>
                                 <q-icon v-else name="thumb_up_off_alt"></q-icon>
+                                {{ item.comment_info.likes }}
                                 <q-tooltip anchor="center left" self="center end">
                                     点赞
                                 </q-tooltip>
@@ -111,6 +113,8 @@
                 </q-item>
             </div>
         </div>
+
+        <q-inner-loading :showing="loading" label="Please wait..." label-class="text-teal" label-style="font-size: 1.1em" />
     </q-list>
 
     <!--翻页器-->
@@ -137,13 +141,12 @@ export default defineComponent({
         let comment_list: CommentListItem[] = [];
         return {
             max_page: 0,
-            // page_num: 0,
             page_num: 1,
             // 评论
             comment_list,
             content: '',
             // 回复
-            rep_id: 0,
+            rep_id: '',
             rep_content: '',
             // loading 状态
             loading: false,
@@ -153,22 +156,16 @@ export default defineComponent({
     },
 
     mounted() {
-        // 测试获取评论数据
-        // api.get('/com1.json.log').then((req) => {
-        //     if (req.status == 200) {
-        //         this.loading = false;
-        //         // 评论列表
-        //         this.comment_list = req.data.list;
-        //         // 当前页
-        //         this.page_num = req.data.page;
-        //         // 向上取整
-        //         this.max_page = Math.ceil(req.data.total / 10);
-        //     }
-        // });
         this.comment_get();
     },
 
     methods: {
+        clear_content(){
+            // 清空所有状态与内容
+            this.rep_id = this.content = this.rep_content = ''
+            this.loading = false
+        },
+
         // 获取评论
         comment_get() {
             this.loading = true;
@@ -200,18 +197,19 @@ export default defineComponent({
                     content: this.content,
                 }).then((req) => {
                     if (req.status == 200) {
-                        comment_get();
-                        //动态加载 this.loading = false;
+                        this.clear_content()
+                        this.comment_get();
+                        //动态加载
+                        // this.loading = false;
                     }
                 });
             }
         },
 
         // 点击事件
-        rep_click(id: number | string) {
-            id = Number(id);
+        rep_click(id: string) {
             if (this.rep_id == id) {
-                this.rep_id = 0;
+                this.rep_id = '';
             } else {
                 this.rep_id = id;
             }
@@ -230,7 +228,7 @@ export default defineComponent({
                     content: this.rep_content,
                 }).then((req) => {
                     if (req.status == 200) {
-                        this.loading = false;
+                        this.clear_content()
                     }
                 });
             }
@@ -260,8 +258,4 @@ export default defineComponent({
         },
     },
 });
-
-function comment_get() {
-    throw new Error('Function not implemented.');
-}
 </script>

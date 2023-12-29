@@ -1,10 +1,8 @@
-import axios, { AxiosError } from 'axios';
-import router from 'src/router/index';
 // 用户状态
 import { defineStore } from 'pinia';
 
 import { SelfInfo, UserInfo, TokenJson } from 'stores/schemas/user';
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 
 
 export const useUser = defineStore('user_state', {
@@ -31,13 +29,15 @@ export const useUser = defineStore('user_state', {
         },
         // 完成登录
         user_login(token: TokenJson, status = 1) {
-            // 获取 token 写入请求头部
-            api.defaults.headers.common['Authorization'] = 'Bearer ' + token.a_token;
-            api.get('/api/v1/user/self').then((req) => {
+            api.get('/api/v1/user/self', {
+                headers: { authorization: 'Bearer ' + token.a_token },
+            }).then((req) => {
                 if (req.status == 200) {
                     // 成功后写入token
                     this.userToken = token.a_token;
                     this.resetToken = token.r_token;
+                    // 获取 token 写入请求头部
+                    api.defaults.headers.common['Authorization'] = 'Bearer ' + token.a_token;
                     if (status) {
                         localStorage.setItem('a_token', token.a_token);
                         localStorage.setItem('r_token', token.r_token);
@@ -51,7 +51,7 @@ export const useUser = defineStore('user_state', {
                     this.user_logout();
                     // 手机号绑定
                     localStorage.setItem('token', token.a_token);
-                    localStorage.setItem('token2', token.r_token);
+                    localStorage.setItem('r_token', token.r_token);
                     // 使用 useRouter 会变成 undefined
                     // 跳转到手机号绑定
                     this.alert_plain(3);

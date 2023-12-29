@@ -21,7 +21,10 @@
         <!--手机验证码-->
         <q-input class="q-my-md" v-model="phone_code" label="验证码" name="phone_code" outlined>
             <template #append>
-                <q-btn round icon="mail" color="orange" @click="submit_phone">
+                <q-btn :loading="loading" class="full-width" round icon="mail" color="orange" @click="submit_phone">
+                    <template #loading>
+                        <q-spinner-gears/>
+                    </template>
                     <q-tooltip>
                         手机验证码
                     </q-tooltip>
@@ -31,7 +34,7 @@
         <!-- 自动登录 -->
         <q-toggle v-model="auto_login_flag">绑定完成后自动登录</q-toggle>
         <!--登录按钮-->
-        <q-btn :disable="!checked" class="full-width q-mt-md" color="green" @click="bind_phone">
+        <q-btn class="full-width q-mt-md" color="green" @click="bind_phone">
             绑定
         </q-btn>
     </q-form>
@@ -39,7 +42,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -55,51 +58,50 @@ export default defineComponent({
     data() {
         return {
             // 数据内容
-            token: '',
             phone_number: '',
             phone_code: '',
             auto_login_flag: false,
-            checked: false,
+            loading: false,
         };
     },
 
-    mounted() {
-        // todo 判断是否已绑定
-        this.token = localStorage.getItem('token') || '';
+    unmounted() {
+        localStorage.setItem('token', '');
+        localStorage.setItem('r_token', '');
     },
 
     methods: {
         cancel() {
             // 取消行为
-            this.token = '';
             localStorage.setItem('token', '');
-            localStorage.setItem('token2', '');
+            localStorage.setItem('r_token', '');
             this.self.alert_plain(1);
         },
 
         auto_login() {
             this.self.user_login({
                 a_token: localStorage.getItem('token') || '',
-                r_token: localStorage.getItem('token2') || '',
+                r_token: localStorage.getItem('r_token') || '',
             });
         },
 
 
         submit_phone() {
-            if (this.token) {
+            if (localStorage.getItem('token') && this.phone_number.length > 10) {
+                this.loading = true;
                 api.post('/api/v1/verify_phone?phone=' + this.phone_number).then((req) => {
                     if (req.status == 200) {
-                        this.checked = true;
+                        this.loading = false;
                     }
                 });
             }
         },
 
         bind_phone() {
-            if (this.token) {
+            if (localStorage.getItem('token') && this.phone_number.length > 10 && this.phone_code.length) {
                 // 头部携带身份令牌
                 api.post('/api/v1/bind_phone?phone=' + this.phone_number + '&code=' + this.phone_code, {}, {
-                    headers: { Authorization: `Bearer ${this.token}` },
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                 }).then((req) => {
                     if (req.status == 200) {
                         // 打开自动登录

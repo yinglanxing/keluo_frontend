@@ -14,7 +14,10 @@
         <q-input class="q-mt-md" v-model="email_code" label="邮箱验证码" name="email_code" outlined
                  @keyup.enter="submit">
             <template #append>
-                <q-btn class="full-width" color="warning" icon="email" round @click="check_email">
+                <q-btn :loading="loading" class="full-width" color="warning" icon="email" round @click="check_email">
+                    <template #loading>
+                        <q-spinner-gears/>
+                    </template>
                     <q-tooltip>
                         发送邮箱验证码
                     </q-tooltip>
@@ -40,7 +43,7 @@
             </q-input>
         </q-card-section>
         <!--登录按钮-->
-        <q-btn :disable="!email_checked" class="full-width q-mt-md" color="green-3" @click="submit">
+        <q-btn class="full-width q-mt-md" color="green-3" @click="submit">
             {{ $t('signup') }}
         </q-btn>
     </q-form>
@@ -48,7 +51,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -72,7 +75,7 @@ export default defineComponent({
             },
             email_code: '',
             auto_login: false,
-            email_checked: false,
+            loading: false,
             // 验证码相关
             captchaId: '',
             captchaUrl: '',
@@ -84,10 +87,11 @@ export default defineComponent({
     methods: {
         check_email() {
             if (this.form.email) {
+                this.loading = true;
                 api.get('/api/v1/email_verify?email=' + this.form.email).then((req) => {
                     if (req.status == 200) {
                         // 以发送验证码
-                        this.email_checked = true;
+                        this.loading = false;
                     }
                 });
             }

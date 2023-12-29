@@ -1,91 +1,52 @@
 <template>
-    <q-card class="q-my-md">
+    <q-form>
         <q-item>
             <q-item-section avatar>
                 <!--头像-->
-                <div>
-                    <q-avatar icon="phone"></q-avatar>
-                </div>
+                <q-avatar icon="info"></q-avatar>
             </q-item-section>
             <q-item-section>
-                <div class="text-h6">
-                    手机号绑定
-                </div>
+                正在进行手机号绑定
             </q-item-section>
             <q-item-section side>
-                <q-btn v-if="step<4" color="red" @click="cancel">取消</q-btn>
+                <q-btn color="red" @click="cancel">取消注册
+                    <q-tooltip>
+                        已经保存账号信息，下次请通过登录绑定手机。
+                    </q-tooltip>
+                </q-btn>
             </q-item-section>
         </q-item>
-    </q-card>
-    <q-card v-if="token">
-        <q-stepper v-model="step" vertical color="primary" animated>
-            <q-step :name="1" title="须知事项" :done="step > 1">
-                ............................................................
-                ............................................................
-                ............................................................
-                ............................................................
-                <q-stepper-navigation>
-                    <q-btn @click="step = 2" color="red" label="我已知晓"/>
-                </q-stepper-navigation>
-            </q-step>
-
-            <q-step :name="2" title="输入手机号" icon="assignment" :done="step > 2">
-                <q-input v-model="phone" name="phone" label="请输入手机号码">
-                    <template v-slot:prepend>
-                        <q-icon name="phone"></q-icon>
+        <!--账户-->
+        <q-input v-model="phone_number" class="q-my-md" name="phone" label="手机号" outlined></q-input>
+        <!--手机验证码-->
+        <q-input class="q-my-md" v-model="phone_code" label="验证码" name="phone_code" outlined>
+            <template #append>
+                <q-btn :loading="loading" class="full-width" round icon="mail" color="orange" @click="submit_phone">
+                    <template #loading>
+                        <q-spinner-gears/>
                     </template>
-                </q-input>
-                <q-stepper-navigation>
-                    <q-btn @click="submit_phone" color="primary">提交</q-btn>
-                    <q-btn flat @click="step = 1" color="warning" class="q-ml-sm">返回</q-btn>
-                </q-stepper-navigation>
-            </q-step>
-
-            <q-step :name="3" title="验证并绑定" icon="assignment" :done="step > 2">
-                <q-input v-model="code" name="code" label="验证码">
-                    <template #prepend>
-                        <q-icon name="article"/>
-                    </template>
-                </q-input>
-                <q-stepper-navigation>
-                    <q-btn @click="bind_phone" color="primary">绑定</q-btn>
-                    <q-btn @click="step = 1" color="green" label="返回" class="q-ml-sm"/>
-                </q-stepper-navigation>
-            </q-step>
-
-            <q-step :name="4" title="绑定成功" icon="assignment">
-                成功绑定
-                <q-stepper-navigation>
-                    <q-btn color="primary" to="/">返回重新登录</q-btn>
-                    <q-btn color="green" @click="auto_login" class="q-ml-sm">
-                        直接登录
-                    </q-btn>
-                </q-stepper-navigation>
-            </q-step>
-        </q-stepper>
-    </q-card>
-
-    <!--localStorage 无 token-->
-    <q-card v-else>
-        <q-card-section>
-            <q-img src="/image/wind-turbine.png"></q-img>
-        </q-card-section>
-        <q-card-section class="text-center">
-            <q-icon name="error"></q-icon>
-            没有身份令牌，无法绑定手机号。
-        </q-card-section>
-    </q-card>
+                    <q-tooltip>
+                        手机验证码
+                    </q-tooltip>
+                </q-btn>
+            </template>
+        </q-input>
+        <!-- 自动登录 -->
+        <q-toggle v-model="auto_login">绑定完成后自动登录</q-toggle>
+        <!--登录按钮-->
+        <q-btn class="full-width q-mt-md" color="green" @click="bind_phone">
+            绑定
+        </q-btn>
+    </q-form>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
 export default defineComponent({
-    components: {},
-
     setup() {
 
         const self = useUser();
@@ -94,55 +55,57 @@ export default defineComponent({
         };
     },
 
-    mounted() {
-        // todo 判断是否已绑定
-        this.token = localStorage.getItem('token') || '';
-    },
-
     data() {
         return {
-            step: 1,
-            token: '',
-            phone: '',
-            code: '',
+            // 数据内容
+            phone_number: '',
+            phone_code: '',
+            auto_login: false,
+            loading: false,
         };
+    },
+
+    unmounted() {
+        localStorage.setItem('token', '');
+        localStorage.setItem('r_token', '');
     },
 
     methods: {
         cancel() {
             // 取消行为
-            this.token = '';
             localStorage.setItem('token', '');
-            localStorage.setItem('token2', '');
-            this.$router.back();
+            localStorage.setItem('r_token', '');
+            this.self.alert_plain(1);
         },
-
-        auto_login() {
-            this.self.user_login({
-                a_token: localStorage.getItem('token') || '',
-                r_token: localStorage.getItem('token2') || '',
-            });
-        },
-
 
         submit_phone() {
-            if (this.token) {
-                api.post('/api/v1/verify_phone?phone=' + this.phone).then((req) => {
+            if (localStorage.getItem('token') && this.phone_number.length > 10) {
+                this.loading = true;
+                api.post('/api/v1/verify_phone?phone=' + this.phone_number).then((req) => {
                     if (req.status == 200) {
-                        this.step = 3;
+                        this.loading = false;
                     }
                 });
             }
         },
 
         bind_phone() {
-            if (this.token) {
+            if (localStorage.getItem('token') && this.phone_number.length > 10 && this.phone_code.length) {
                 // 头部携带身份令牌
-                api.post('/api/v1/bind_phone?phone=' + this.phone + '&code=' + this.code, {}, {
-                    headers: { Authorization: `Bearer ${this.token}` },
+                api.post('/api/v1/bind_phone?phone=' + this.phone_number + '&code=' + this.phone_code, {}, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
                 }).then((req) => {
                     if (req.status == 200) {
-                        this.step = 4;
+                        // 打开自动登录
+                        if (this.auto_login) {
+                            this.self.user_login({
+                                a_token: localStorage.getItem('token') || '',
+                                r_token: localStorage.getItem('r_token') || '',
+                            });
+                        } else {
+                            // 跳转到登录页面
+                            this.self.alert_plain(1);
+                        }
                     }
                 });
             }
