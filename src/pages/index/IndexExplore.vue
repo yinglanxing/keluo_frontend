@@ -9,8 +9,8 @@
     <q-card>
         <q-card>
             <q-tabs v-model="tab" dense active-color="primary">
-                <q-tab name="1" label="热门" />
-                <q-tab name="2" label="全部标签" />
+                <q-tab name="1" label="热门"/>
+                <q-tab name="2" label="全部标签"/>
             </q-tabs>
 
             <q-tab-panels v-model="tab" animated>
@@ -20,15 +20,17 @@
                         <q-card bordered>
                             <q-item>
                                 <!--tag image -->
-                                <q-item-section avatar>
+                                <q-item-section avatar class="cursor-pointer" @click="goto(i.id)">
                                     <q-avatar square>
                                         <q-img :src="i.image"></q-img>
                                     </q-avatar>
                                 </q-item-section>
-                                <q-item-section>tag:{{ i.name }}</q-item-section>
+                                <q-item-section class="cursor-pointer" @click="goto(i.id)">
+                                    tag:{{ i.name }}
+                                </q-item-section>
                                 <q-item-section side>
-                                    <q-btn v-if="!i.isFollow" size="xs" round icon="add" @click="follow(i)"></q-btn>
-                                    <q-btn v-else size="xs" round icon="dash" @click="follow(i)"></q-btn>
+                                    <q-btn v-if="!i.isFollow" size="xs" round icon="star_border" @click="follow(i)"></q-btn>
+                                    <q-btn v-else size="xs" round icon="star" @click="cancel_follow(i)"></q-btn>
                                 </q-item-section>
                             </q-item>
                         </q-card>
@@ -41,15 +43,17 @@
                         <q-card bordered>
                             <q-item>
                                 <!--tag image -->
-                                <q-item-section avatar>
+                                <q-item-section avatar class="cursor-pointer" @click="goto(i.id)">
                                     <q-avatar square>
                                         <q-img :src="i.image"></q-img>
                                     </q-avatar>
                                 </q-item-section>
-                                <q-item-section>tag:{{ i.name }}</q-item-section>
+                                <q-item-section class="cursor-pointer" @click="goto(i.id)">
+                                    tag:{{ i.name }}
+                                </q-item-section>
                                 <q-item-section side>
-                                    <q-btn v-if="!i.isFollow" size="xs" round icon="add" @click="follow(i)"></q-btn>
-                                    <q-btn v-else size="xs" round icon="dash" @click="follow(i)"></q-btn>
+                                    <q-btn v-if="!i.isFollow" size="xs" round icon="star_border" @click="follow(i)"></q-btn>
+                                    <q-btn v-else size="xs" round icon="star" @click="cancel_follow(i)"></q-btn>
                                 </q-item-section>
                             </q-item>
                         </q-card>
@@ -61,10 +65,11 @@
 </template>
 
 <script lang='ts'>
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 import { SelectableTag } from 'src/stores/schemas/tag';
 import { useUser } from 'src/stores/useUser';
 import { defineComponent } from 'vue';
+
 export default defineComponent({
     data() {
         let hot_tags: SelectableTag[] = [];
@@ -92,6 +97,10 @@ export default defineComponent({
         });
     },
     methods: {
+        goto(id: number | string) {
+            this.$router.push('/tag/' + id);
+        },
+
         follow(item: SelectableTag) {
             if (this.self.is_login()) {
                 api.post('/api/v1/tag/follow?tid=' + item.id).then((req) => {
@@ -100,7 +109,16 @@ export default defineComponent({
                     }
                 });
             }
-        }
+        },
+        cancel_follow(item: SelectableTag) {
+            if (this.self.is_login()) {
+                api.post('/api/v1/tag/follow?tid=' + item.id).then((req) => {
+                    if (req.status == 200) {
+                        item.isFollow = true;
+                    }
+                });
+            }
+        },
     },
 });
 </script>

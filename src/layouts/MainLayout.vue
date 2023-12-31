@@ -62,7 +62,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useQuasar } from 'quasar';
-import {AxiosError} from 'axios';
+import { AxiosError } from 'axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -70,7 +70,7 @@ import LoginAndSignup from 'components/verify/LoginAndSignup.vue';
 import FooterLayout from 'layouts/FooterLayout.vue';
 import HeaderLayout from 'layouts/HeaderLayout.vue';
 import { useState } from 'stores/useState';
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 
 export default defineComponent({
 
@@ -97,10 +97,21 @@ export default defineComponent({
             // 本地存储
             localStorage.setItem('state', JSON.stringify(state));
         });
-        // 非 200 状态响应报告错误
-        api.interceptors.response.use(null, function (req) {
-            // 不返回将导致后续的 req 变成 undefined
-            if (req instanceof AxiosError) {
+        api.interceptors.response.use(
+            // 正常响应
+            function (req) {
+                if (req.status == 200 && typeof req.data == 'string') {
+                    // 错误警告
+                    quasar.notify({
+                        message: 'tips:' + req.data,
+                        color: 'green',
+                    });
+                }
+                return req;
+            },
+            // 非 200 状态响应报告错误
+            function (req: AxiosError) {
+                // 不返回将导致后续的 req 变成 undefined
                 if (req.response) {
                     // 确认是返回后造成的错误
                     if (req.response.status >= 400) {
@@ -117,11 +128,8 @@ export default defineComponent({
                         });
                     }
                 }
-                return req.response
-            } else {
-                return req;
-            }
-        });
+                return req.response;
+            });
         return {
             state,
             self,

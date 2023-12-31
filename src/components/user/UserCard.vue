@@ -2,7 +2,7 @@
     <!--用户信息卡片-->
     <q-card>
         <!--统计数据-->
-        <q-card-section class="row">
+        <q-card-section class="row" @click="moreAboutUser">
             <!--名字-->
             <div class="text-h5">
                 {{ user?.username }}
@@ -11,7 +11,7 @@
             <q-space></q-space>
 
             <!--头像-->
-            <q-avatar @click="moreAboutUser">
+            <q-avatar>
                 <q-img v-if="user?.avatar" :src="user?.avatar"></q-img>
                 <q-icon v-else name="person"></q-icon>
             </q-avatar>
@@ -33,13 +33,14 @@
         </q-card-actions>
 
         <!--底部分割线-->
-        <q-separator v-if="showActions" inset></q-separator>
-
+        <q-separator v-if="showActions && user?.id != self.info.id" inset></q-separator>
         <!--操作按钮-->
         <!--<q-card-actions v-if="user?.id != self.id">-->
         <q-card-actions v-if="showActions && user?.id != self.info.id">
-            <q-btn v-if="!user?.isFollow" color="green" class="col">{{ $t('self.follow') }}</q-btn>
-            <q-btn v-else color="indigo-5" class="col">已关注</q-btn>
+            <q-btn :loading="loading" v-if="!follow" color="green" class="col" @click="user_follow">
+                {{ $t('self.follow') }}
+            </q-btn>
+            <q-btn :loading="loading" v-else color="indigo-5" class="col" @click="cancel_follow">已关注</q-btn>
         </q-card-actions>
     </q-card>
 
@@ -51,6 +52,7 @@ import { defineComponent, PropType } from 'vue';
 import { useUser } from 'stores/useUser';
 
 import { UserInfo } from 'stores/schemas/user';
+import { api } from 'boot/axios';
 
 export default defineComponent({
     props: {
@@ -61,16 +63,22 @@ export default defineComponent({
         // 操作栏可见
         showActions: {
             type: Boolean,
-            default: false,
+            default: true,
         },
     },
 
-    setup() {
+    data() {
         // 自身状态
         const self = useUser();
         return {
             self,
+            follow: this.user?.isFollow || false,
+            loading: false,
         };
+    },
+
+    mounted() {
+        this.follow = this.user?.isFollow || false;
     },
 
     methods: {
@@ -78,10 +86,37 @@ export default defineComponent({
         moreAboutUser() {
             this.$router.push('/user/' + this.user?.id);
         },
+
+        // 关注用户
+        user_follow() {
+            if (this.self.is_login()) {
+                this.loading = true;
+                api.post('/api/v1/user/follow?fid=' + this.user?.id).then((req) => {
+                    if (req.status == 200) {
+                        this.follow = !this.follow;
+                        this.loading = false;
+                    }
+                });
+            }
+        },
+
+        // 取消关注
+        cancel_follow() {
+            if (this.self.is_login()) {
+                this.loading = true;
+                api.delete('/api/v1/user/follow?fid=' + this.user?.id).then((req) => {
+                    if (req.status == 200) {
+                        this.follow = !this.follow;
+                        this.loading = false;
+                    }
+                });
+            }
+        },
+    },
+    watch: {
+        'user'() {
+            this.follow = this.user?.isFollow || false;
+        },
     },
 });
 </script>
-
-<style scoped>
-
-</style>

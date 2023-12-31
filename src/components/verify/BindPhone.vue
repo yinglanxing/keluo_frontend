@@ -32,7 +32,7 @@
             </template>
         </q-input>
         <!-- 自动登录 -->
-        <q-toggle v-model="auto_login_flag">绑定完成后自动登录</q-toggle>
+        <q-toggle v-model="auto_login">绑定完成后自动登录</q-toggle>
         <!--登录按钮-->
         <q-btn class="full-width q-mt-md" color="green" @click="bind_phone">
             绑定
@@ -60,31 +60,21 @@ export default defineComponent({
             // 数据内容
             phone_number: '',
             phone_code: '',
-            auto_login_flag: false,
+            auto_login: false,
             loading: false,
         };
     },
 
     unmounted() {
         localStorage.setItem('token', '');
-        localStorage.setItem('r_token', '');
     },
 
     methods: {
         cancel() {
             // 取消行为
             localStorage.setItem('token', '');
-            localStorage.setItem('r_token', '');
             this.self.alert_plain(1);
         },
-
-        auto_login() {
-            this.self.user_login({
-                a_token: localStorage.getItem('token') || '',
-                r_token: localStorage.getItem('r_token') || '',
-            });
-        },
-
 
         submit_phone() {
             if (localStorage.getItem('token') && this.phone_number.length > 10) {
@@ -105,8 +95,11 @@ export default defineComponent({
                 }).then((req) => {
                     if (req.status == 200) {
                         // 打开自动登录
-                        if (this.auto_login_flag) {
-                            this.auto_login();
+                        if (this.auto_login) {
+                            this.self.user_login({
+                                a_token: localStorage.getItem('token') || '',
+                                r_token: localStorage.getItem('r_token') || '',
+                            });
                         } else {
                             // 跳转到登录页面
                             this.self.alert_plain(1);

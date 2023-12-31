@@ -19,13 +19,13 @@
             <!--头部-->
             <q-card-section>
                 <!--标题-->
-                <router-link :to="'/article/' + item.articleInfo.id" class="q-btn ellipsis-2-lines text-left">
+                <router-link :to="'/article/' + item.articleInfo.id" class="q-btn ellipsis-2-lines text-left cursor-pointer">
                     <q-item-label class="ell_title text-h6 ellipsis">
                         {{ item.articleInfo.title }}
                     </q-item-label>
                 </router-link>
 
-                <q-item class="q-pb-md">
+                <q-item class="q-pb-md cursor-pointer">
                     <!--头像-->
                     <q-item-section avatar>
                         <q-avatar>
@@ -52,7 +52,7 @@
                 <!--<q-rating v-model="stars" :max="5" size="32px"><q-rating>-->
 
                 <!--文章内容，超过两行省略-->
-                <div class="text-subtitle1 ellipsis-2-lines" style="height: 3.2em">
+                <div @click="goto(item.articleInfo.id)" class="text-subtitle1 ellipsis-2-lines cursor-pointer" style="height: 3.2em">
                     {{ item.articleInfo.content }}
                 </div>
             </q-card-section>
@@ -146,7 +146,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {api} from 'boot/axios';
+import { api } from 'boot/axios';
 // import { date } from 'quasar';
 import { useUser } from 'src/stores/useUser';
 import { ApiArticleInfo, ArticleInfo } from 'src/stores/schemas/article';
@@ -201,8 +201,12 @@ export default defineComponent({
     },
 
     methods: {
+        goto(take: number | string) {
+            this.$router.push('/article/' + take);
+        },
+
+        // 获取新数据
         getData(url: string) {
-            // 获取新数据
             // if (!this.lock && url) {
             if (url) {
                 api.get(url).then((req) => {
@@ -265,7 +269,7 @@ export default defineComponent({
         article_collect(item: ArticleInfo) {
             // 判断已登录
             if (this.self.is_login()) {
-                api.post('/api/v1/collect/', {'aid': String(item.id)}).then((req) => {
+                api.post('/api/v1/collect/', { 'aid': String(item.id) }).then((req) => {
                     if (req.status == 200) {
                         // 收藏成功
                         item.isCollected = !item.isCollected;

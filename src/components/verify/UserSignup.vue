@@ -27,6 +27,9 @@
         <!--&lt;!&ndash; 自动登录 &ndash;&gt;-->
         <!--<q-toggle v-model="auto_login">注册完成后自动登录</q-toggle>-->
         <!--验证码-->
+        <!--邀请码-->
+        <q-input class="q-my-md" v-model="inv_code" label="邀请码" name="invitation" outlined
+        ></q-input>
         <q-card-section horizontal v-show="error_count>2">
             <q-input v-model="v_code" :label="$t('form.v_code')"
                      name="captchaCode">
@@ -74,6 +77,7 @@ export default defineComponent({
                 repass: '',
             },
             email_code: '',
+            inv_code: '',
             auto_login: false,
             loading: false,
             // 验证码相关
@@ -124,6 +128,8 @@ export default defineComponent({
         // 注册
         submit() {
             const formData = this.getForm();
+            // 附加邀请码
+            formData.append('invitation', this.inv_code);
             api.post('/api/v1/signup?code=' + this.email_code, formData).then((req) => {
                 if (req.status == 200) {
                     // 自动登录开启

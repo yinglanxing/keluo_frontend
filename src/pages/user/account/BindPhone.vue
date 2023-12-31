@@ -67,14 +67,12 @@ export default defineComponent({
 
     unmounted() {
         localStorage.setItem('token', '');
-        localStorage.setItem('r_token', '');
     },
 
     methods: {
         cancel() {
             // 取消行为
             localStorage.setItem('token', '');
-            localStorage.setItem('r_token', '');
             this.self.alert_plain(1);
         },
 

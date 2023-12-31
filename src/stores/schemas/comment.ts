@@ -51,7 +51,7 @@ export interface ReplyInfos {
     reply_info: CommentReply,
     parent_reply: CommentReply,
     user_info: CommentUserInfo,
-    reply_user: CommentUserInfo,
+    reply_user?: CommentUserInfo,
 }
 
 

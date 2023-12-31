@@ -20,8 +20,6 @@ export interface UserInfo {
 
     // "userID": "203492",
     // "email": "root@qq.com",
-    // "github": "",
-    // "position": "",
 
     // id
     id: number,
@@ -31,6 +29,8 @@ export interface UserInfo {
     backgroundImage: string,
     // 账号名
     username: string,
+    // 介绍
+    introduction: string,
 
     // 积分
     score: number,
@@ -44,10 +44,13 @@ export interface UserInfo {
     following: number,
     // 创建时间
     createTime: number,
+
     // 用户主页
     homePage: string,
-    // 介绍
-    introduction: string,
+    // github
+    github: string,
+    // 地址
+    position: string,
     // 已关注
     isFollow: boolean,
 
