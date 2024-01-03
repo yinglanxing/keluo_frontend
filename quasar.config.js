@@ -74,7 +74,7 @@ module.exports = configure(function (ctx) {
             // publicPath: '/',
             // analyze: true,
             env: {
-                API: ctx.dev ? 'http://localhost:8000' : '',
+                API: ctx.dev ? 'http://api.geek-heart.com/' : '',
             },
             // rawDefine: {}
             // ignorePublicFolder: true,
