@@ -4,9 +4,9 @@
         <login-tips></login-tips>
 
         <!-- 签到组件 -->
-        <q-card>
+        <!-- <q-card>
             <check-in></check-in>
-        </q-card>
+        </q-card> -->
 
         <!--积分排行-->
         <q-card>
@@ -24,7 +24,7 @@
 import { defineComponent } from 'vue';
 
 import RankList from 'components/user/RankList.vue';
-import CheckIn from 'components/index/CheckIn.vue';
+// import CheckIn from 'components/index/CheckIn.vue';
 import LoginTips from 'components/index/LoginTips.vue';
 
 import { UserInfo } from 'stores/schemas/user';
@@ -32,7 +32,7 @@ import { UserInfo } from 'stores/schemas/user';
 export default defineComponent({
 
     components: {
-        CheckIn,
+        // CheckIn,
         RankList,
         LoginTips,
     },

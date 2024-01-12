@@ -97,13 +97,10 @@
 
 
     </q-card>
-
-
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {api} from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
@@ -129,6 +126,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

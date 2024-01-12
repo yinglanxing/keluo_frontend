@@ -17,13 +17,13 @@
             </q-item-section>
         </q-item>
         <!--账户-->
-        <q-input v-model="phone_number" class="q-my-md" name="phone" label="手机号" outlined></q-input>
+        <q-input v-model="phone_number" :rules="rules.phone" lazy-rules class="q-my-md" name="phone" label="手机号" outlined></q-input>
         <!--手机验证码-->
-        <q-input class="q-my-md" v-model="phone_code" label="验证码" name="phone_code" outlined>
+        <q-input class="q-my-md" v-model="phone_code" lazy-rules :rules="rules.phone" label="验证码" name="phone_code" outlined>
             <template #append>
                 <q-btn :loading="loading" class="full-width" round icon="mail" color="orange" @click="submit_phone">
                     <template #loading>
-                        <q-spinner-gears/>
+                        <q-spinner-gears />
                     </template>
                     <q-tooltip>
                         手机验证码
@@ -52,6 +52,16 @@ export default defineComponent({
         const self = useUser();
         return {
             self,
+            rules: {
+                phone: [
+                    (val: string) => (val !== null && val !== '' || '请输入手机号'),
+                    (val: string) => (val.length == 11 || '手机号格式不正确')
+                ],
+                code: [
+                    (val: string) => (val !== null && val !== '' || '请输入验证码'),
+                    (val: string) => (val.length == 6 || '验证码长度应为6')
+                ],
+            }
         };
     },
 
@@ -77,7 +87,7 @@ export default defineComponent({
         },
 
         submit_phone() {
-            if (localStorage.getItem('token') && this.phone_number.length > 10) {
+            if (localStorage.getItem('token') && this.phone_number.length == 11) {
                 this.loading = true;
                 api.post('/api/v1/verify_phone?phone=' + this.phone_number).then((req) => {
                     if (req.status == 200) {
@@ -88,7 +98,7 @@ export default defineComponent({
         },
 
         bind_phone() {
-            if (localStorage.getItem('token') && this.phone_number.length > 10 && this.phone_code.length) {
+            if (localStorage.getItem('token') && this.phone_number.length == 11 && this.phone_code.length == 6) {
                 // 头部携带身份令牌
                 api.post('/api/v1/bind_phone?phone=' + this.phone_number + '&code=' + this.phone_code, {}, {
                     headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },

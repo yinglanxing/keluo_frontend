@@ -5,10 +5,10 @@
             <q-tabs v-model="tab" vertical inline-label>
                 <q-route-tab v-for="item in dockerList" :key="item.text" :name="item.to" :to="item.to">
                     <q-avatar square>
-                        <q-img :src="'/icons/' + item.icon + '.svg'"></q-img>
+                        <q-img width="44px" :src="'/icons/' + item.icon + '.svg'"></q-img>
                     </q-avatar>
                     <div class="m-1"></div>
-                    {{ item.text }}
+                    <div style="font-size: 16px;">{{ item.text }}</div>
                 </q-route-tab>
 
             </q-tabs>
