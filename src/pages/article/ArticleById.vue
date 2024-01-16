@@ -50,7 +50,7 @@
 
         <!--中间页面内容-->
         <div class="col-8">
-            <q-card class="q-my-md q-gutter-ma-md">
+            <q-card flat bordered class="q-my-md q-gutter-ma-md">
                 <q-img :ratio="16 / 9" alt="bg" :src="article.image || '/card-bg.jpg'"></q-img>
 
                 <!--页头-->
@@ -93,7 +93,7 @@
 
             <!--评论区-->
             <div id="comment_target"></div>
-            <q-card>
+            <q-card flat bordered>
                 <comment-pack></comment-pack>
             </q-card>
         </div>
@@ -106,14 +106,14 @@
                 <user-card v-intersection="onIntersection" :user="author" show-actions></user-card>
 
                 <!--markdown 目录-->
-                <!-- <q-card>
+                <!-- <q-card flat bordered>
                     <q-card-section>
                         {{ $t('dir') }}
                     </q-card-section>
                 </q-card> -->
 
                 <!--推荐-->
-                <q-card>
+                <q-card flat bordered>
                     <!--精选内容-->
                     <q-card-section>
                         {{ $t('side.related') }}

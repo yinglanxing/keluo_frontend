@@ -3,18 +3,18 @@
     <div class="q-gutter-y-lg">
 
         <!--列表为空-->
-        <q-card v-if="pageItem.length == 0">
+        <q-card flat bordered v-if="pageItem.length == 0">
             <q-card-section class="q-pa-md q-gutter-md">
                 <div class="text-h6">一片无人探索的领域</div>
             </q-card-section>
             <q-card-actions>
                 <!-- 刷新 -->
-                <q-btn class="full-width" icon="refresh" @click="getData(url)"></q-btn>
+                <q-btn outline class="full-width" icon="refresh" @click="getData(url)"></q-btn>
             </q-card-actions>
         </q-card>
 
         <!--列表内容-->
-        <q-card v-for="item in pageItem" :key="item.articleInfo.id">
+        <q-card flat bordered v-for="item in pageItem" :key="item.articleInfo.id">
 
             <!--头部-->
             <q-card-section>

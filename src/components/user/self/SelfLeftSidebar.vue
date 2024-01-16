@@ -1,5 +1,5 @@
 <template>
-    <q-card class="q-pa-lg">
+    <q-card flat bordered class="q-pa-lg">
         <q-btn color="primary" class="full-width" to="/edit/article">写文章</q-btn>
 
         <div class="q-ma-md"></div>

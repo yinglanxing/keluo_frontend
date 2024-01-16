@@ -1,6 +1,6 @@
 <template>
     <!--用户面板-->
-    <q-card>
+    <q-card flat bordered>
         <q-item>
             <q-item-section avatar>
                 <!--头像-->
@@ -28,7 +28,7 @@
     </q-card>
     <div class="q-ma-md"></div>
     <!--数据板-->
-    <q-card>
+    <q-card flat bordered>
         <q-item clickable>
             <q-item-section class="text-h6 q-ma-sm">
                 <q-item-label>
@@ -49,7 +49,7 @@
         <q-separator></q-separator>
         <q-card-actions>
             <div v-for="i in 6" :key="i" class="col-4 q-pa-xs">
-                <q-card bordered >
+                <q-card flat bordered>
                     <q-card-section>
                         **数
                     </q-card-section>
@@ -65,7 +65,7 @@
     </q-card>
     <div class="q-ma-md"></div>
     <!--用户任务-->
-    <q-card>
+    <q-card flat bordered>
         <q-item>
             <q-item-section class="text-h6 q-ma-sm">
                 <q-item-label>
@@ -76,7 +76,7 @@
         <q-separator></q-separator>
         <q-card-actions>
             <div v-for="i in 2" :key="i" class="col-6 q-pa-xs">
-                <q-card bordered >
+                <q-card flat bordered>
                     <q-card-section>
                         发布文章
                         <q-icon color="grey" size="15px" name="bi-question-circle-fill">

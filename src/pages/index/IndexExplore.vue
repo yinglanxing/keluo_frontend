@@ -1,13 +1,13 @@
 <template>
-    <q-card>
+    <q-card flat bordered>
         <q-card-section class="text-center">
             <div class="text-h5">探索技术博客&标签</div>
             <div>在这里你能找到社区中的优质博客和你感兴趣的领域</div>
         </q-card-section>
     </q-card>
     <div class="q-ma-md"></div>
-    <q-card>
-        <q-card>
+    <q-card flat bordered>
+        <q-card flat bordered>
             <q-tabs v-model="tab" dense active-color="primary">
                 <q-tab name="1" label="热门"/>
                 <q-tab name="2" label="全部标签"/>
@@ -17,7 +17,7 @@
                 <!-- 热门 -->
                 <q-tab-panel name="1" class="row">
                     <div class="col-6 p3" v-for="i in hot_tags" :key="i.id">
-                        <q-card bordered>
+                        <q-card flat bordered>
                             <q-item>
                                 <!--tag image -->
                                 <q-item-section avatar class="cursor-pointer" @click="goto(i.id)">
@@ -40,7 +40,7 @@
                 <!-- 全部标签 -->
                 <q-tab-panel name="2" class="row">
                     <div class="col-6 p3" v-for="i in all_tags" :key="i.id">
-                        <q-card bordered>
+                        <q-card flat bordered>
                             <q-item>
                                 <!--tag image -->
                                 <q-item-section avatar class="cursor-pointer" @click="goto(i.id)">

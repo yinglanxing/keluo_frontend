@@ -3,7 +3,7 @@
     <div class="q-gutter-y-lg">
 
         <!--用户资料管理-->
-        <q-card>
+        <q-card flat bordered>
             <q-card-section class="row">
                 <span>
                     {{ $t('self.info') }}
@@ -64,7 +64,7 @@
         </q-card>
 
         <!--用户状态统计-->
-        <q-card>
+        <q-card flat bordered>
             <q-card-section>
                 {{ $t('self.achievements') }}
             </q-card-section>
@@ -90,13 +90,13 @@
         </q-card>
 
         <!--关注列表-->
-        <q-card>
+        <q-card flat bordered>
             <q-card-section>{{ $t('self.follow') }}</q-card-section>
             <rank-list :rank="followingList"></rank-list>
         </q-card>
 
         <!--粉丝列表-->
-        <q-card>
+        <q-card flat bordered>
             <q-card-section>{{ $t('self.fans') }}</q-card-section>
             <rank-list :rank="followerList"></rank-list>
         </q-card>

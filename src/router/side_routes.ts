@@ -2,8 +2,9 @@ import { RouteRecordSingleViewWithChildren } from 'vue-router';
 import { useUser } from 'stores/useUser';
 
 export const sideRoute: RouteRecordSingleViewWithChildren = {
-    path: 'index', component: () => import('pages/IndexPage.vue'),
+    path: 'index', component: () => import('pages/index/IndexPage.vue'),
     children: [
+        {path: '', component: () => import('pages/index/IndexBase.vue')},
         { path: 'explore', component: () => import('pages/index/IndexExplore.vue') },
         {
             path: 'drafts',

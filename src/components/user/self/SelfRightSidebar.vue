@@ -1,6 +1,6 @@
 <template>
     <!--  推广-->
-    <q-card>
+    <q-card flat bordered>
         <q-item>
             <q-item-section class="text-h6 q-ma-sm">
                 创作活动
@@ -17,7 +17,7 @@
     <div class="q-ma-md"></div>
 
     <!--  话题-->
-    <q-card>
+    <q-card flat bordered>
         <q-list bordered>
             <q-item clickable>
                 <q-item-section class="text-h6 q-ma-sm">

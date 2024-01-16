@@ -9,7 +9,8 @@ const routes: RouteRecordRaw[] = [
         component: () => import('layouts/MainLayout.vue'),
         children: [
             // 主页
-            { path: '', component: () => import('pages/IndexPage.vue') },
+            // { path: '', component: () => import('pages/IndexPage.vue') },
+            {path: '', redirect: '/index'},
 
             // 侧边栏路由
             sideRoute,
@@ -88,7 +89,6 @@ const routes: RouteRecordRaw[] = [
             {
                 path: 'article',
                 children: [
-                    { path: '', component: () => import('pages/IndexPage.vue') },
                     { path: ':id', component: () => import('pages/article/ArticleById.vue') },
                 ],
             },

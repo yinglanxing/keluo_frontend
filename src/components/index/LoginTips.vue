@@ -2,7 +2,7 @@
     <!--用户登录信息-->
 
     <!--非登录状态-->
-    <q-card v-if="!self.userToken" class="q-pa-lg">
+    <q-card flat bordered v-if="!self.userToken" class="q-pa-lg">
         <div class="row q-col-gutter-lg">
             <!--提示标题-->
             <div class="col-12 text-h5">

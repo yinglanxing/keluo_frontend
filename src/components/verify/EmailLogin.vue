@@ -24,7 +24,7 @@
             </q-input>
         </q-card-section>
         <!--登录按钮-->
-        <q-btn class="full-width q-mt-md" color="primary" @click="submit">
+        <q-btn class="full-width" color="primary" @click="submit">
             {{ $t('login') }}
         </q-btn>
     </q-form>
@@ -49,11 +49,16 @@ export default defineComponent({
             rules: {
                 email: [
                     (val: string) => (val !== null && val !== '' || '请输入账号'),
-                    (val: string) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) || '账号格式不正确')
+                    (val: string) => (/^[^\s@]{2,}@[^\s@]{2,}\.[^\s@]{2,}$/.test(val) || '账号格式不正确')
                 ],
                 pass: [
                     (val: string) => (val !== null && val !== '' || '请输入密码'),
                     (val: string) => (val.length >= 6 && val.length <= 18 || '密码长度应为6到18'),
+                ],
+                // 验证码
+                v_code: [
+                    (val: string) => (val !== null && val !== '' || '输入不能为空'),
+                    (val: string) => (val.length == 4 || '验证码长度应为4')
                 ],
             },
         };
@@ -90,8 +95,7 @@ export default defineComponent({
                     this.captchaId = req.data.id;
                     this.captchaUrl = req.data.image;
                 }
-            },
-            );
+            });
         },
 
         // 登录

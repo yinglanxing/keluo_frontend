@@ -1,10 +1,13 @@
-
+// 弱密码表
 const week_pass_list = [
     '01234567890',
     '09876543210',
     'qwertyuiopasdfghjklzxcvbnm',
+    'QWERTYUIOPASDFGHJKLZXCVBNM',
     'mnbvcxzlkjhgfdsapoiuytrewq',
+    'MNBVCXZLKJHGFDSAPOIUYTREWQ',
     'zyxwvutsrqponmlkjihgfedcba',
+    'ZYXWVUTSRQPONMLKJIHGFEDCBA',
 ];
 
 // 检查是否全部属性通过验证 返回等级 0 - 3

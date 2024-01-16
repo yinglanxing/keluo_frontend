@@ -2,7 +2,7 @@
     <!--用户页面-->
     <!--顶部卡片-->
     <!--<div class="q-ma-lg">-->
-    <!--    <q-card>-->
+    <!--    <q-card flat bordered>-->
     <!--        &lt;!&ndash;视差滚动&ndash;&gt;-->
     <!--        <q-parallax src="/card-bg.jpg" style="height: 30vh"></q-parallax>-->
     <!--        &lt;!&ndash;头像&ndash;&gt;-->
@@ -30,7 +30,7 @@
                     <user-card :user="user"></user-card>
 
                     <!--用户资料-->
-                    <q-card>
+                    <q-card flat bordered>
                         <q-card-section>
                             <q-list class="overflow-hidden">
                                 <!--git-->
@@ -80,13 +80,13 @@
                     </q-card>
 
                     <!--关注列表-->
-                    <q-card>
+                    <q-card flat bordered>
                         <q-card-section>{{ $t('self.follow') }}</q-card-section>
                         <rank-list :rank="followingList"></rank-list>
                     </q-card>
 
                     <!--粉丝列表-->
-                    <q-card>
+                    <q-card flat bordered>
                         <q-card-section>{{ $t('self.fans') }}</q-card-section>
                         <rank-list :rank="followerList"></rank-list>
                     </q-card>

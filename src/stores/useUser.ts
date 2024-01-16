@@ -38,6 +38,7 @@ export const useUser = defineStore('user_state', {
                     this.resetToken = token.r_token;
                     // 获取 token 写入请求头部
                     api.defaults.headers.common['Authorization'] = 'Bearer ' + token.a_token;
+                    // 保持身份
                     if (status) {
                         localStorage.setItem('a_token', token.a_token);
                         localStorage.setItem('r_token', token.r_token);

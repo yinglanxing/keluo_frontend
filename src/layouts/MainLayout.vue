@@ -112,7 +112,7 @@ export default defineComponent({
             // 非 200 状态响应报告错误
             function (req: AxiosError) {
                 // 不返回将导致后续的 req 变成 undefined
-                if (req.response) {
+                if (req.response && typeof req.response?.data == 'string') {
                     // 确认是返回后造成的错误
                     if (req.response.status >= 400) {
                         // 错误警告

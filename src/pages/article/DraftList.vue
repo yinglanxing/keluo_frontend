@@ -1,6 +1,6 @@
 <template>
     <!-- Header -->
-    <q-card class="q-my-md">
+    <q-card flat bordered class="q-my-md">
         <q-card-section class="q-pa-md q-gutter-md">
             <div class="text-h6">草稿</div>
             <div class="q-mt-sm text-subtitle2">所有待发布的草稿</div>
@@ -15,7 +15,7 @@
     </q-card>
 
     <!-- Draft List -->
-    <q-card v-for="draft in draftList" :key="draft.id" class="q-my-md">
+    <q-card flat bordered v-for="draft in draftList" :key="draft.id" class="q-my-md">
         <q-card-section>
             <!-- Article -->
             <q-item class="q-flex q-dir-column">
@@ -58,7 +58,7 @@
     </q-card>
 
     <!-- End Message -->
-    <q-card class="q-mt-md q-pa-md q-text-center">
+    <q-card flat bordered class="q-mt-md q-pa-md q-text-center">
         <q-card-section>
             <span class="text-h6 font-semibold">到底啦！👋</span>
         </q-card-section>
@@ -66,7 +66,7 @@
 
     <!-- Confirm Modal -->
     <q-dialog v-model="dialog">
-        <q-card style="width: 300px">
+        <q-card flat bordered style="width: 300px">
             <q-card-section>
                 <div class="text-h6">确认操作</div>
             </q-card-section>

@@ -1,6 +1,6 @@
 <template>
     <!--用户面板-->
-    <q-card>
+    <q-card flat bordered>
         <q-item>
             <q-item-section avatar>
                 <!--头像-->
@@ -23,7 +23,7 @@
 
     <div class="q-ma-md"></div>
 
-    <q-card>
+    <q-card flat bordered>
         <q-card-section>
             <div class="q-gutter-y-lg">
                 <q-uploader

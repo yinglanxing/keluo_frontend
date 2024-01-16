@@ -14,11 +14,11 @@
             <q-item-section>
                 <!--名称-->
                 <q-item-label>
-                    {{ item.nickname }}
+                    {{ item.username }}
                 </q-item-label>
                 <!--介绍-->
                 <q-item-label caption class="ellipsis-2-lines" style="height: 1.2em;">
-                    {{ item.description }}
+                    {{ item.introduction }}
                 </q-item-label>
             </q-item-section>
 

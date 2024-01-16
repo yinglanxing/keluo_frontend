@@ -3,9 +3,20 @@
         <!--名称-->
         <q-input v-model="form.name" lazy-rules :rules="rules.name" :label="$t('form.name')" class="q-my-xs" name="name"
             outlined></q-input>
-        <!--账户-->
+        <!--邮箱账户-->
         <q-input v-model="form.email" lazy-rules :rules="rules.email" :label="$t('form.email')" class="q-my-xs" name="email"
-            outlined></q-input>
+                 outlined>
+            <template #append>
+                <q-btn :loading="loading" class="full-width" color="warning" icon="email" round @click="show_dialog">
+                    <template #loading>
+                        <q-spinner-gears/>
+                    </template>
+                    <q-tooltip>
+                        发送邮箱验证码
+                    </q-tooltip>
+                </q-btn>
+            </template>
+        </q-input>
         <!--密码-->
         <q-input v-model="form.pass" :rules="rules.pass" debounce="500" :label="$t('form.pass')" class="q-my-xs"
             name="password" type="password" outlined autocomplete="off">
@@ -24,37 +35,50 @@
         <!--邮箱验证码-->
         <q-input class="q-my-xs" v-model="email_code" lazy-rules :rules="rules.email_code" label="邮箱验证码" name="email_code"
             outlined @keyup.enter="submit">
-            <template #append>
-                <q-btn :loading="loading" class="full-width" color="warning" icon="email" round @click="check_email">
-                    <template #loading>
-                        <q-spinner-gears />
-                    </template>
-                    <q-tooltip>
-                        发送邮箱验证码
-                    </q-tooltip>
-                </q-btn>
-            </template>
         </q-input>
-        <!--&lt;!&ndash; 自动登录 &ndash;&gt;-->
-        <!--<q-toggle v-model="auto_login">注册完成后自动登录</q-toggle>-->
-        <!--验证码-->
         <!--邀请码-->
-        <q-input class="q-my-xs" lazy-rules :rules="rules.inv_code" v-model="inv_code" label="邀请码" name="invitation"
-            outlined></q-input>
-        <q-card-section horizontal v-show="error_count > 2">
-            <q-input v-model="v_code" lazy-rules :rules="rules.v_code" :label="$t('form.v_code')" name="captchaCode">
-                <template #after>
-                    <q-btn @click="get_captcha_id">
-                        <q-img :src="captchaUrl" style="height: 40px; width: 200px" :ratio="1"
-                            class="q-mt-md cursor-pointer bd1"></q-img>
-                    </q-btn>
-                </template>
-            </q-input>
-        </q-card-section>
+        <q-input class="q-my-xs" lazy-rules :rules="rules.inv_code" v-model="inv_code" label="邀请码(请咨询管理员获取)"
+                 name="invitation" outlined></q-input>
         <!--登录按钮-->
-        <q-btn class="full-width q-mt-md" color="green-3" @click="submit">
+        <q-btn class="full-width" color="green" @click="submit">
             {{ $t('signup') }}
         </q-btn>
+
+
+        <!-- 验证码弹窗 -->
+        <q-dialog v-model="dialog">
+            <q-card flat bordered v-if="checked">
+                <q-card-section>
+                    <div class="text-h6">请输入验证码</div>
+                </q-card-section>
+
+                <q-card-section>
+                    <!--验证码-->
+                    <q-input v-model="v_code" :rules="rules.v_code" :label="$t('form.v_code')" name="captchaCode">
+                        <template #after>
+                            <q-btn @click="get_captcha_id">
+                                <q-img :src="captchaUrl" style="height: 40px; width: 200px" :ratio="1"
+                                       class="q-mt-md cursor-pointer bd1"></q-img>
+                            </q-btn>
+                        </template>
+                    </q-input>
+                </q-card-section>
+
+                <q-card-actions>
+                    <q-btn label="提交" color="primary" @click="check_email" v-close-popup/>
+                </q-card-actions>
+            </q-card>
+
+            <q-card flat bordered v-else>
+                <q-card-section>
+                    <div class="text-h6">请输入正确格式邮箱</div>
+                </q-card-section>
+
+                <q-card-actions>
+                    <q-btn label="确定" v-close-popup/>
+                </q-card-actions>
+            </q-card>
+        </q-dialog>
     </q-form>
 </template>
 
@@ -90,7 +114,6 @@ export default defineComponent({
         };
 
         return {
-            // 数据内容
             rules: {
                 // 名称
                 name: [
@@ -100,13 +123,13 @@ export default defineComponent({
                 // 邮箱
                 email: [
                     (val: string) => (val !== null && val !== '' || '账号输入不能为空'),
-                    (val: string) => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val) || '账号格式不正确')
+                    (val: string) => (/^[^\s@]{2,}@[^\s@]{2,}\.[^\s@]{2,}$/.test(val) || '账号格式不正确')
                 ],
                 // 密码
                 pass: [
                     (val: string) => (val !== null && val !== '' || '输入不能为空'),
                     (val: string) => (val.length >= 6 && val.length <= 18 || '密码长度应为6到18'),
-                    (val: string) => (val.length && pass_level.level != 0 || '密码强度不足'),
+                    (val: string) => (val.length && pass_level.level != 0 || '请不要使用连续数字或英文大小写'),
                 ],
                 // 确认密码
                 repass: [
@@ -116,44 +139,55 @@ export default defineComponent({
                 // 邮箱验证码
                 email_code: [
                     (val: string) => (val !== null && val !== '' || '输入不能为空'),
-                    (val: string) => (val.length == 6 || '验证码长度应为6'),
+                    (val: string) => (val.length == 6 || '邮箱验证码长度应为6'),
+                ],
+                // 验证码
+                v_code: [
+                    (val: string) => (val !== null && val !== '' || '输入不能为空'),
+                    (val: string) => (val.length == 4 || '验证码长度应为4')
                 ],
                 // 邀请码
                 inv_code: [
                     (val: string) => (val !== null && val !== '' || '输入不能为空'),
                     (val: string) => (val.length == 10 || '邀请码长度应为10')
                 ],
-                // 验证码
-                v_code: [
-                    (val: string) => (val !== null && val !== '' || '输入不能为空'),
-                    (val: string) => (val.length == 6 || '验证码长度应为6')
-                ],
             },
+            // 数据内容
             form,
-            email_code: '',
+            // 邀请码
             inv_code: '',
-            auto_login: false,
-            loading: false,
-            // 验证码相关
+            // 邮箱验证码
+            email_code: '',
+            // 验证码
+            v_code: '',
             captchaId: '',
             captchaUrl: '',
-            v_code: '',
-            error_count: 0,
+            // 人机验证防御
+            dialog: false,
+            checked: false,
+            loading: false,
+            // 密码强度
             pass_level,
         };
     },
 
     methods: {
         check_email() {
-            if (check_rules({ email: this.form.email }, this.rules)) {
+            if (check_rules({email: this.form.email, v_code: this.v_code}, this.rules)) {
                 this.loading = true;
-                api.get('/api/v1/email_verify?email=' + this.form.email).then((req) => {
+                api.get('/api/v1/email_verify?email=' + this.form.email + '&code=' + this.v_code).then((req) => {
                     if (req.status == 200) {
                         // 以发送验证码
                         this.loading = false;
                     }
                 });
             }
+        },
+
+        show_dialog() {
+            this.dialog = true;
+            this.checked = check_rules({email: this.form.email}, this.rules);
+            this.get_captcha_id();
         },
 
         // 获取 form 数据
@@ -176,8 +210,7 @@ export default defineComponent({
                     this.captchaId = req.data.id;
                     this.captchaUrl = req.data.image;
                 }
-            },
-            );
+            });
         },
 
         // 注册
@@ -193,8 +226,6 @@ export default defineComponent({
                         // 主动获取身份后跳转到手机号绑定
                         this.login(formData);
                         // }
-                    } else {
-                        this.error_count++;
                     }
                 });
             }
@@ -205,8 +236,6 @@ export default defineComponent({
             api.post('/api/v1/login', formData).then((req) => {
                 if (req.status == 200) {
                     this.self.user_login(req.data);
-                } else {
-                    this.error_count++;
                 }
             });
         },

@@ -1,7 +1,7 @@
 <template>
     <!--设置-->
 
-<!--    <q-card>-->
+    <!--    <q-card flat bordered>-->
         <!--  国际化-->
         <q-card-section>
             <div class="text-h4">language</div>

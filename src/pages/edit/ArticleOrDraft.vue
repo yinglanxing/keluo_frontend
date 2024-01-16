@@ -1,6 +1,6 @@
 <template>
     <!-- 存在更新行为 -->
-    <q-card class="q-ma-lg" v-if="pre.id">
+    <q-card flat bordered class="q-ma-lg" v-if="pre.id">
         <q-item class="q-flex q-dir-column">
             <q-item-section>
                 <q-item-label class="q-ma-xs">
@@ -25,7 +25,7 @@
         </q-item>
     </q-card>
     <!--创建页面-->
-    <q-card class="q-ma-lg q-pa-lg q-gutter-y-md column">
+    <q-card flat bordered class="q-ma-lg q-pa-lg q-gutter-y-md column">
         <!--标题-->
         <q-input v-model="form.title" clearable filled label="title"></q-input>
         <!--副标题-->

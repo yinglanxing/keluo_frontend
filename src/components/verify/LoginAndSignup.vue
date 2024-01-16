@@ -1,5 +1,5 @@
 <template>
-    <q-card class="items-center q-pa-lg" style="width: 500px; max-width: 80vw;">
+    <q-card flat bordered class="items-center q-pa-lg" style="width: 500px; max-width: 80vw;">
         <q-card-section class="row">
             <q-tabs v-model="self.loginPlain">
                 <!--登录页面-->
@@ -84,18 +84,16 @@
 
         <!--卡片底部-->
         <q-card-actions>
-            <q-btn class="col" color="black">
+            <!-- <q-btn class="col" color="black">
                 Github
             </q-btn>
             <q-btn class="col" color="info">
                 QQ
-            </q-btn>
-            <q-btn class="col" to="/account_help/forget_pass">
+            </q-btn> -->
+            <q-btn class="col-4" to="/account_help/forget_pass">
                 忘记密码
             </q-btn>
         </q-card-actions>
-
-
     </q-card>
 </template>
 

@@ -4,16 +4,16 @@
         <login-tips></login-tips>
 
         <!-- 签到组件 -->
-        <!-- <q-card>
+        <!-- <q-card flat bordered >
             <check-in></check-in>
         </q-card> -->
 
         <!--积分排行-->
-        <q-card>
+        <q-card flat bordered>
             <q-card-section>
                 {{ $t('side.point_rank') }}
             </q-card-section>
-            <q-list bordered separator>
+            <q-list v-if="rank.length" bordered separator>
                 <rank-list :rank="rank" extar></rank-list>
             </q-list>
         </q-card>

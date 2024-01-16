@@ -1,5 +1,5 @@
 <template>
-    <q-card class="q-my-md q-gutter-ma-md">
+    <q-card flat bordered class="q-my-md q-gutter-ma-md">
         <!--页头-->
         <q-card-section>
             <q-item>

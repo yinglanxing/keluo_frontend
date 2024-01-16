@@ -3,7 +3,7 @@
     <div class="q-gutter-y-lg">
 
         <!--列表为空-->
-        <q-card v-if="pageItem.length == 0">
+        <q-card flat bordered v-if="pageItem.length == 0">
             <q-card-section class="q-pa-md q-gutter-md">
                 <div class="text-h6">一片无人探索的领域</div>
                 <q-btn color="primary" icon="add" to="/edit/article">创建</q-btn>
@@ -15,7 +15,7 @@
         </q-card>
 
         <!--列表内容-->
-        <q-card v-for="item in pageItem" :key="item.id">
+        <q-card flat bordered v-for="item in pageItem" :key="item.id">
 
             <!--头部-->
 

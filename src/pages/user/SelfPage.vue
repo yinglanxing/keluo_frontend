@@ -2,7 +2,7 @@
     <!--用户页面-->
     <!--    &lt;!&ndash;顶部卡片&ndash;&gt;-->
     <!--    <div class="q-ma-lg">-->
-    <!--        <q-card>-->
+    <!--        <q-card flat bordered>-->
     <!--            &lt;!&ndash;视差滚动&ndash;&gt;-->
     <!--            <q-parallax src="/card-bg.jpg" style="height: 30vh"></q-parallax>-->
     <!--            &lt;!&ndash;头像&ndash;&gt;-->

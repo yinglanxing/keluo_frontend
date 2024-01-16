@@ -117,7 +117,7 @@
 
     <!--菜单抽屉-->
     <q-drawer v-model="leftDrawerOpen" bordered>
-        <q-card flat>
+        <q-card flat bordered>
             <q-card-section>
                 <q-tabs v-model="$route.path" inline-label outside-arrows shrink vertical>
                     <q-tab v-for="item in essentialLinks" :key="item.title" :icon="item.icon" :label="item.title"

@@ -1,5 +1,5 @@
 <template>
-    <q-card>
+    <q-card flat bordered>
         <q-card-section>
 
             <q-tabs v-model="tab" vertical inline-label>

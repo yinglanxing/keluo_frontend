@@ -1,6 +1,6 @@
 <template>
     <!--用户信息卡片-->
-    <q-card>
+    <q-card flat bordered>
         <!--统计数据-->
         <q-card-section class="row" @click="moreAboutUser">
             <!--名字-->
