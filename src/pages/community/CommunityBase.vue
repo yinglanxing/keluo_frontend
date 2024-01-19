@@ -63,7 +63,7 @@ export default defineComponent({
         // 切换查询排序
         tab() {
             if (this.keywords) {
-                this.article_url += `/api/v1/article/search?category=${this.tab}&key=${this.keywords}`;
+                this.article_url = `/api/v1/article/search?category=${this.tab}&key=${this.keywords}`;
             } else {
                 this.article_url = `/api/v1/recommend/article?category=${this.tab}`;
             }
