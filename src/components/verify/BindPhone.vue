@@ -15,9 +15,8 @@
         <!-- 窄屏 -->
         <q-btn class="sm-hide md-hide lg-hide xl-hide full-width q-my-md" color="red" @click="cancel">返回</q-btn>
         <!--账户-->
-        <q-input v-model="phone_number" :rules="rules.phone_number" lazy-rules class="q-my-xs" name="phone"
-                 label="手机号"
-                 outlined>
+        <q-input v-model="phone_number" :rules="rules.phone_number" lazy-rules class="q-my-xs" name="phone" label="手机号"
+            outlined>
             <template #append>
                 <q-btn :loading="loading" class="full-width" round icon="mail" color="orange" @click="show_dialog">
                     <template #loading>
@@ -30,9 +29,8 @@
             </template>
         </q-input>
         <!--手机验证码-->
-        <q-input class="q-my-xs" v-model="phone_code" lazy-rules :rules="rules.phone_code" label="验证码"
-                 name="phone_code"
-                 outlined></q-input>
+        <q-input class="q-my-xs" v-model="phone_code" lazy-rules :rules="rules.phone_code" label="验证码" name="phone_code"
+            outlined></q-input>
         <!-- 自动登录 -->
         <q-toggle v-model="auto_login">绑定完成后自动登录</q-toggle>
         <!-- 自动登录 -->
@@ -56,14 +54,14 @@
                         <template #after>
                             <q-btn @click="get_captcha_id">
                                 <q-img :src="captchaUrl" style="height: 40px; width: 200px" :ratio="1"
-                                       class="q-mt-md cursor-pointer bd1"></q-img>
+                                    class="q-mt-md cursor-pointer bd1"></q-img>
                             </q-btn>
                         </template>
                     </q-input>
                 </q-card-section>
 
                 <q-card-actions>
-                    <q-btn label="提交" color="primary" @click="submit_phone" v-close-popup/>
+                    <q-btn label="提交" color="primary" @click="submit_phone" v-close-popup />
                 </q-card-actions>
             </q-card>
 
@@ -73,7 +71,7 @@
                 </q-card-section>
 
                 <q-card-actions>
-                    <q-btn label="确定" v-close-popup/>
+                    <q-btn label="确定" v-close-popup />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -86,7 +84,7 @@ import { api } from 'boot/axios';
 
 import { useUser } from 'stores/useUser';
 
-import {check_rules} from 'src/utils/rulesCheck';
+import { check_rules } from 'src/utils/rulesCheck';
 
 export default defineComponent({
     setup() {
@@ -145,7 +143,7 @@ export default defineComponent({
 
         show_dialog() {
             this.dialog = true;
-            this.checked = check_rules({phone_number: this.phone_number}, this.rules);
+            this.checked = check_rules({ phone_number: this.phone_number }, this.rules);
             this.get_captcha_id();
         },
 
@@ -160,9 +158,9 @@ export default defineComponent({
         },
 
         submit_phone() {
-            if (localStorage.getItem('token') && this.phone_number.length == 11) {
+            if (localStorage.getItem('token') && this.phone_number.length == 11, this.v_code.length == 4) {
                 this.loading = true;
-                api.post('/api/v1/verify_phone?phone=' + this.phone_number).then((req) => {
+                api.post(`/api/v1/verify_phone?phone=${this.phone_number}&verify_code=${this.v_code}&verify_id=${this.captchaId}`).then((req) => {
                     if (req.status == 200) {
                         this.loading = false;
                     }

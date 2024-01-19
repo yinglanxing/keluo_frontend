@@ -1,96 +1,50 @@
 <template>
-    <!--主页-->
+    <div class="q-pa-md">
+        <div>
+            <!-- 顶部幻灯片 -->
+            <q-carousel animated v-model="slide" navigation infinite :autoplay="autoplay" arrows
+                transition-prev="slide-right" transition-next="slide-left" @mouseenter="autoplay = false"
+                @mouseleave="autoplay = true">
+                <!-- 内容 -->
+                <q-carousel-slide v-for="li in carousel_data" :key="li.id" :name="li.id" :img-src="li.src" />
+            </q-carousel>
+        </div>
 
-    <!--<section class="index">-->
-    <!--    <div class="wings">-->
-    <!--        <div class="row q-col-gutter-lg">-->
-    <!--                <index-left-sidebar/>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!--    <div class="torso">-->
-    <!--        &lt;!&ndash;页面内容&ndash;&gt;-->
-    <!--        <div class="col-md-6">-->
-    <!--            &lt;!&ndash; 顶部nav&ndash;&gt;-->
-    <!--            &lt;!&ndash;<default-nav></default-nav>&ndash;&gt;-->
-    <!--            <article-list/>-->
-    <!--        </div>-->
-    <!--    </div>-->
-    <!--    <div class="wings"><index-right-sidebar/></div>-->
-    <!--</section>-->
-    <!--<section>-->
-    <!--    <div class="wings">左下角占位</div>-->
-    <!--    <div class="torso">文章占位</div>-->
-    <!--    <div class="wings">右下角占位</div>-->
-    <!--</section>-->
-    <div class="index q-ma-md">
-        <!--文侧边栏始终吸顶-->
-        <div class="row q-col-gutter-lg">
-            <!--页面左侧边栏-->
-            <!-- <div class="col-md-2" v-if="$q.screen.gt.md"> -->
-            <div class="col-md-2 xs-hide sm-hide">
-                <!--吸顶-->
-                <index-left-sidebar class="sticky top-17"></index-left-sidebar>
-            </div>
-
-            <!--页面内容-->
-            <div class="col-12 col-md-6">
-                <!-- 顶部nav-->
-                <!--<default-nav></default-nav>-->
-                <router-view></router-view>
-            </div>
-
-            <!--页面右侧边栏-->
-            <!-- <div class="col-md-3" v-if="$q.screen.gt.md"> -->
-            <div class="col-md-3 xs-hide sm-hide">
-                <!--吸顶-->
-                <index-right-sidebar class="sticky top-17"></index-right-sidebar>
+        <div class="row q-py-md q-col-gutter-x-md q-col-gutter-y-md">
+            <!-- 自适应大小 -->
+            <div class="col-6 col-md-4 col-lg-3 col-xl-2" v-for="n in 12" :key="n">
+                <q-card flat bordered>
+                    <q-card-section>
+                        {{ n }}
+                    </q-card-section>
+                </q-card>
             </div>
         </div>
+
+        <article-list></article-list>
     </div>
 </template>
 
-
 <script lang="ts">
-import {defineComponent} from 'vue';
-
-import IndexLeftSidebar from '../../components/index/IndexLeftSidebar.vue';
-import IndexRightSidebar from '../../components/index/IndexRightSidebar.vue';
+import ArticleList from 'src/components/article/ArticleList.vue';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-
     components: {
-        IndexLeftSidebar,
-        IndexRightSidebar,
+        ArticleList,
     },
-
-    setup() {
+    data() {
         return {
-            count: 0,
+            slide: 1,
+            autoplay: true,
+            // 幻灯片内容
+            carousel_data: [
+                { label: '1', id: 1, src: 'https://cdn.quasar.dev/img/mountains.jpg' },
+                { label: '2', id: 2, src: 'https://cdn.quasar.dev/img/parallax1.jpg' },
+                { label: '3', id: 3, src: 'https://cdn.quasar.dev/img/parallax2.jpg' },
+                { label: '4', id: 4, src: 'https://cdn.quasar.dev/img/quasar.jpg' },
+            ],
         };
     },
 });
 </script>
-
-<style scoped lang="scss">
-//.index {
-//     height: 100%;
-//     background-color: aquamarine;
-//
-//    //@media screen and (min-width: 1920px) {
-//    //    height: calc(100svh - 50px);
-//    //}
-//}
-
-//section {
-//    display: grid;
-//    gap: 16px;
-//
-//    & > * {
-//        background-color: azure;
-//    }
-//
-//    @media screen and (min-width: 1920px) {
-//        grid-template-columns: $wings-width $torso-width $wings-width;
-//    }
-// }
-</style>

@@ -1,3 +1,4 @@
+
 // 弱密码表
 const week_pass_list = [
     '01234567890',

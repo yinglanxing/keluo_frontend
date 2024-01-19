@@ -5,11 +5,11 @@
             outlined></q-input>
         <!--邮箱账户-->
         <q-input v-model="form.email" lazy-rules :rules="rules.email" :label="$t('form.email')" class="q-my-xs" name="email"
-                 outlined>
+            outlined>
             <template #append>
                 <q-btn :loading="loading" class="full-width" color="warning" icon="email" round @click="show_dialog">
                     <template #loading>
-                        <q-spinner-gears/>
+                        <q-spinner-gears />
                     </template>
                     <q-tooltip>
                         发送邮箱验证码
@@ -38,7 +38,7 @@
         </q-input>
         <!--邀请码-->
         <q-input class="q-my-xs" lazy-rules :rules="rules.inv_code" v-model="inv_code" label="邀请码(请咨询管理员获取)"
-                 name="invitation" outlined></q-input>
+            name="invitation" outlined></q-input>
         <!--登录按钮-->
         <q-btn class="full-width" color="green" @click="submit">
             {{ $t('signup') }}
@@ -58,14 +58,14 @@
                         <template #after>
                             <q-btn @click="get_captcha_id">
                                 <q-img :src="captchaUrl" style="height: 40px; width: 200px" :ratio="1"
-                                       class="q-mt-md cursor-pointer bd1"></q-img>
+                                    class="q-mt-md cursor-pointer bd1"></q-img>
                             </q-btn>
                         </template>
                     </q-input>
                 </q-card-section>
 
                 <q-card-actions>
-                    <q-btn label="提交" color="primary" @click="check_email" v-close-popup/>
+                    <q-btn label="提交" color="primary" @click="check_email" v-close-popup />
                 </q-card-actions>
             </q-card>
 
@@ -75,7 +75,7 @@
                 </q-card-section>
 
                 <q-card-actions>
-                    <q-btn label="确定" v-close-popup/>
+                    <q-btn label="确定" v-close-popup />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -173,9 +173,9 @@ export default defineComponent({
 
     methods: {
         check_email() {
-            if (check_rules({email: this.form.email, v_code: this.v_code}, this.rules)) {
+            if (check_rules({ email: this.form.email, v_code: this.v_code }, this.rules)) {
                 this.loading = true;
-                api.get('/api/v1/email_verify?email=' + this.form.email + '&code=' + this.v_code).then((req) => {
+                api.get(`/api/v1/email_verify?email=${this.form.email}&verify_code=${this.v_code}&verify_id=${this.captchaId}`).then((req) => {
                     if (req.status == 200) {
                         // 以发送验证码
                         this.loading = false;
@@ -186,7 +186,7 @@ export default defineComponent({
 
         show_dialog() {
             this.dialog = true;
-            this.checked = check_rules({email: this.form.email}, this.rules);
+            this.checked = check_rules({ email: this.form.email }, this.rules);
             this.get_captcha_id();
         },
 

@@ -49,7 +49,7 @@
         <q-separator></q-separator>
         <q-card-actions>
             <div v-for="i in 6" :key="i" class="col-4 q-pa-xs">
-                <q-card flat bordered>
+                <q-card flat bordered >
                     <q-card-section>
                         **数
                     </q-card-section>
@@ -76,7 +76,7 @@
         <q-separator></q-separator>
         <q-card-actions>
             <div v-for="i in 2" :key="i" class="col-6 q-pa-xs">
-                <q-card flat bordered>
+                <q-card flat bordered >
                     <q-card-section>
                         发布文章
                         <q-icon color="grey" size="15px" name="bi-question-circle-fill">

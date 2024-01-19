@@ -117,7 +117,7 @@
 
     <!--菜单抽屉-->
     <q-drawer v-model="leftDrawerOpen" bordered>
-        <q-card flat bordered>
+        <q-card flat>
             <q-card-section>
                 <q-tabs v-model="$route.path" inline-label outside-arrows shrink vertical>
                     <q-tab v-for="item in essentialLinks" :key="item.title" :icon="item.icon" :label="item.title"
@@ -151,14 +151,32 @@ const linksList = [
         title: '首页',
         caption: 'index',
         icon: 'home',
-        link: '/',
+        link: '/index',
     },
-    // {
-    //     title: '话题',
-    //     caption: 'subject',
-    //     icon: 'subject',
-    //     link: '/talks',
-    // },
+    {
+        title: '社区',
+        caption: 'community',
+        icon: 'view_headline',
+        link: '/community',
+    },
+    {
+        title: '问答',
+        caption: 'qa',
+        icon: 'forum',
+        link: '/qa',
+    },
+    {
+        title: '资料站',
+        caption: 'information',
+        icon: 'feed',
+        link: '/information',
+    },
+    {
+        title: '组件',
+        caption: 'component',
+        icon: 'apps',
+        link: '/component',
+    },
 ];
 
 export default defineComponent({
