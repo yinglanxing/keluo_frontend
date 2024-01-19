@@ -1,6 +1,6 @@
 <template>
     <!-- 签到组件 -->
-    <q-date v-model:model-value="date" :events="events" :title="date" class="full-width" event-color="info">
+    <q-date v-model:model-value="date_value" :events="events" :title="date_value" class="full-width" event-color="info">
         <q-btn class="full-width">
             {{ $t('checkin') }}
         </q-btn>
@@ -15,7 +15,7 @@ export default defineComponent({
     data() {
         return {
             // 日期
-            date: date.formatDate(Date.now(), 'YYYY/MM/DD'),
+            date_value: date.formatDate(Date.now(), 'YYYY/MM/DD'),
             // 事件日期
             events: [
                 date.formatDate(date.addToDate(Date.now(), { days: -1 }), 'YYYY/MM/DD'),

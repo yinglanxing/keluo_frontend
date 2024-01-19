@@ -63,7 +63,7 @@
                         <!--时间-->
                         <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
                             <q-icon name="schedule"></q-icon>
-                            {{ date.formatDate(article.createTime, 'YYYY-MM-DD | HH:mm:ss') }}
+                            {{ article.format }}
                         </div>
                     </div>
 
@@ -136,8 +136,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {api} from 'boot/axios';
-import { date } from 'quasar';
+import { api } from 'boot/axios';
 import { useUser } from 'src/stores/useUser';
 
 import { UserInfo } from 'stores/schemas/user';
@@ -163,8 +162,6 @@ export default defineComponent({
         let self = useUser();
         return {
             self,
-            // 日期api
-            date,
             // 状态切换
             renderReady: false,
             showNavUser: false,
@@ -192,8 +189,8 @@ export default defineComponent({
             api.get(url).then((req) => {
                 if (req.status == 200) {
                     let data: ArticleDetail = req.data;
-                    if (data.article.id == 0){
-                        throw Error('空文章')
+                    if (data.article.id == 0) {
+                        throw Error('空文章');
                     }
                     // 文章数据
                     this.article = req.data.article;
@@ -248,7 +245,7 @@ export default defineComponent({
         article_collect() {
             // 判断已登录
             if (this.self.is_login()) {
-                api.post('/api/v1/collect/', {'aid': String(this.article.id)}).then((req) => {
+                api.post('/api/v1/collect/', { 'aid': String(this.article.id) }).then((req) => {
                     if (req.status == 200) {
                         // 收藏成功
                         this.article.isCollected = !this.article.isCollected;

@@ -42,7 +42,6 @@
                             <div class="text-grey row no-wrap">
                                 <q-icon name="schedule"></q-icon>
                                 {{ item.articleInfo.format }}
-                                <!-- {{ date.formatDate(item.articleInfo.createTime, 'YYYY-MM-DD | HH:mm:ss') }} -->
                             </div>
                         </q-item-label>
                     </q-item-section>
@@ -147,7 +146,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { api } from 'boot/axios';
-// import { date } from 'quasar';
 import { useUser } from 'src/stores/useUser';
 import { ApiArticleInfo, ArticleInfo } from 'src/stores/schemas/article';
 
@@ -164,8 +162,6 @@ export default defineComponent({
         let self = useUser();
         return {
             self,
-            // 日期api
-            // date,
         };
     },
 

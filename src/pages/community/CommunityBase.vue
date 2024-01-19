@@ -52,7 +52,7 @@ export default defineComponent({
             if (this.text) {
                 //
                 this.keywords = this.text;
-                this.article_url = `/api/v1/article?keywords=${this.keywords}`;
+                this.article_url = `/api/v1/article/search?category=${this.tab}&key=${this.keywords}`;
             } else {
                 this.keywords = '';
                 this.article_url = '/api/v1/recommend/article';
